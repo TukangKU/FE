@@ -2,9 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./pages/App.tsx";
 import "./styles/index.css";
+import "@/styles/index.css";
+import DetailHistory from "./pages/worker/detail-history.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <DetailHistory/>
   </React.StrictMode>
 );

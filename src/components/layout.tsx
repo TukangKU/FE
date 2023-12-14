@@ -13,7 +13,7 @@ const Layout = (props: Readonly<Props>) => {
   return (
     <div className="w-full h-screen bg-white dark:bg-black font-poppins flex flex-col overflow-auto">
       <Navbar />
-      <div className="container grow mx-auto py-4 px-8 flex flex-col">
+      <div className="flex flex-col grow">
         {children}
       </div>
       <Toaster />
