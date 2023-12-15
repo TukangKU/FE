@@ -6,6 +6,7 @@ import { MultiSelect } from "react-multi-select-component";
 import React, { FormEvent, useState } from "react";
 import { UpdateWorker } from "@/utils/apis/worker/types";
 import { editWorkerProfile } from "@/utils/apis/worker/api";
+import { Link } from "react-router-dom";
 
 const EditProfile = () => {
   const [profile, setProfile] = useState<Partial<UpdateWorker>>({
@@ -114,7 +115,9 @@ const EditProfile = () => {
             <Input className="border border-slate-300 w-96" />
           </div>
           <div className="flex items-center gap-3">
-            <Button className="w-20">Batal</Button>
+            <Link to="/profile/worker">
+              <Button className="w-20">Batal</Button>
+            </Link>
             <Button className="w-20">Simpan</Button>
           </div>
         </form>
