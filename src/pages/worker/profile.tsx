@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Worker } from "@/utils/apis/worker";
 import { getWorkerProfile } from "@/utils/apis/worker/api";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [worker, setWorker] = useState<Worker>();
@@ -35,11 +36,17 @@ const Profile = () => {
         <div className="relative flex flex-col gap-4">
           <div className="flex flex-col gap-3">
             <Label className="text-lg">Username</Label>
-            <Input className="border border-slate-300 w-96" value={worker?.username}/>
+            <Input
+              className="border border-slate-300 w-96"
+              value={worker?.username}
+            />
           </div>
           <div className="flex flex-col gap-3">
             <Label className="text-lg">Nama</Label>
-            <Input className="border border-slate-300 w-96" value={worker?.name}/>
+            <Input
+              className="border border-slate-300 w-96"
+              value={worker?.name}
+            />
           </div>
           <div className="flex flex-col gap-3">
             <Label className="text-lg">Skill</Label>
@@ -47,17 +54,28 @@ const Profile = () => {
           </div>
           <div className="flex flex-col gap-3">
             <Label className="text-lg">Email</Label>
-            <Input className="border border-slate-300 w-96" value={worker?.email}/>
+            <Input
+              className="border border-slate-300 w-96"
+              value={worker?.email}
+            />
           </div>
           <div className="flex flex-col gap-3">
             <Label className="text-lg">No HP</Label>
-            <Input className="border border-slate-300 w-96" value={worker?.phone}/>
+            <Input
+              className="border border-slate-300 w-96"
+              value={worker?.phone}
+            />
           </div>
           <div className="flex flex-col gap-3">
             <Label className="text-lg">Alamat</Label>
-            <Input className="border border-slate-300 w-96" value={worker?.address}/>
+            <Input
+              className="border border-slate-300 w-96"
+              value={worker?.address}
+            />
           </div>
-          <Button className="w-20">Edit</Button>
+          <Link to="/profile/worker/edit">
+            <Button className="w-20">Edit</Button>
+          </Link>
         </div>
       </div>
     </Layout>

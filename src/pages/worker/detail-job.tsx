@@ -7,16 +7,18 @@ const DetailJob = () => {
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute bottom-[43.7rem]"></div>
+        <div className="bg-tukangku w-full h-32 absolute bottom-[45.5rem]"></div>
         <div className="z-10 relative flex flex-col justify-center items-center">
           <img
             src="/src/assets/worker/default-avatar.jpg"
             alt=""
             className="w-52 rounded-full"
           />
-          <p className="font-bold text-xl">Sri wulandari</p>
         </div>
         <div className="flex flex-col gap-4 mt-10">
+          <div className="bg-slate-200 p-2 rounded-lg flex items-center">
+            <p className="">Nama pemesan : Sri wulandari</p>
+          </div>
           <div className="bg-slate-200 p-2 rounded-lg flex items-center">
             <p className="">Mulai tanggal : 12/10/2023</p>
           </div>
