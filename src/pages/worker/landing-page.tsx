@@ -1,6 +1,5 @@
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
-import React from "react";
 
 const LandingPage = () => {
   return (

@@ -1,13 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { Worker } from "@/utils/apis/worker";
 import { getWorkerProfile } from "@/utils/apis/worker/api";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
+  const { toast } = useToast();
   const [worker, setWorker] = useState<Worker>();
 
   useEffect(() => {
@@ -18,8 +22,12 @@ const Profile = () => {
     try {
       const result = await getWorkerProfile();
       setWorker(result.data);
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
     }
   };
   return (

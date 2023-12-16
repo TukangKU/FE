@@ -3,19 +3,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MultiSelect } from "react-multi-select-component";
-import React, { FormEvent, useState } from "react";
-import { UpdateWorker } from "@/utils/apis/worker/types";
-import { editWorkerProfile } from "@/utils/apis/worker/api";
+import { FormEvent, useEffect, useState } from "react";
+import { Worker } from "@/utils/apis/worker/types";
+import {
+  deleteProfile,
+  editWorkerProfile,
+  getSkillsWorker,
+} from "@/utils/apis/worker/api";
 import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 const EditProfile = () => {
-  const [profile, setProfile] = useState<Partial<UpdateWorker>>({
+  const { toast } = useToast();
+  const [profile, setProfile] = useState<Partial<Worker>>({
+    user_id: 1,
     username: "",
     name: "",
     email: "",
-    skill: [""],
+    skills: [""],
     phone: "",
+    address: "",
   });
+
+  useEffect(() => {
+    fetchDataSkills();
+  }, []);
+
+  const fetchDataSkills = async () => {
+    try {
+      const result = await getSkillsWorker();
+      setSkill(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [selectedSkills, setSelectedSkills] = useState([]);
   const options = [
@@ -39,6 +60,20 @@ const EditProfile = () => {
 
     try {
       const result = await editWorkerProfile(body);
+      toast({
+        description: result?.message,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteProfile = async (id: string) => {
+    try {
+      const result = await deleteProfile(id);
+      toast({
+        description: result?.message,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -114,11 +149,19 @@ const EditProfile = () => {
             <Label className="text-lg">Alamat</Label>
             <Input className="border border-slate-300 w-96" />
           </div>
-          <div className="flex items-center gap-3">
-            <Link to="/profile/worker">
-              <Button className="w-20">Batal</Button>
-            </Link>
-            <Button className="w-20">Simpan</Button>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <Link to="/profile/worker">
+                <Button className="w-20">Batal</Button>
+              </Link>
+              <Button className="w-20">Simpan</Button>
+            </div>
+            <Button
+              variant={"destructive"}
+              onClick={() => handleDeleteProfile(`${profile.user_id}`)}
+            >
+              Hapus akun
+            </Button>
           </div>
         </form>
       </div>

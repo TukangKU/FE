@@ -42,17 +42,13 @@ export interface Worker {
   email: string;
   phone: string;
   address: string;
+  skills: Skills;
   image: string;
 }
 
-export interface UpdateWorker {
-  id: number;
-  username: string;
-  name: string;
-  skill: string[];
-  email: string;
-  phone: string;
-  image: string;
+export interface Skills {
+  skill_id: number;
+  skill_name: string;
 }
 
 export interface JobWorker {
