@@ -9,6 +9,10 @@ import DetailJob from "@/pages/worker/detail-job";
 import Home from "@/pages/home";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
+import ProfileClient from "@/pages/client/profile";
+import EditProfileClient from "@/pages/client/edit-profile";
+import AvailableWorker from "@/pages/client/available-worker";
+import DetailWorker from "@/pages/client/detail-worker";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -21,6 +25,10 @@ const App = () => {
     { path: "/worker/history/detail", element: <DetailHistory /> },
     { path: "/worker/job/request", element: <RequestJob /> },
     { path: "/worker/job/detail", element: <DetailJob /> },
+    { path: "/profile/client", element: <ProfileClient /> },
+    { path: "/profile/client/edit", element: <EditProfileClient /> },
+    { path: "/client/available-worker", element: <AvailableWorker /> },
+    { path: "/client/detail-worker", element: <DetailWorker /> },
   ]);
   return <RouterProvider router={router} />;
 };
