@@ -93,7 +93,7 @@ const AvailableWorker = () => {
           <Cardworker key={worker.id} data={worker} />
         ))}
       </div>
-      <div className="flex justify-between my-4 mx-20">
+      <div className="flex justify-between my-3 mx-20">
         <Button className="w-20">Prev</Button>
         <Button className="w-20">Next</Button>
       </div>

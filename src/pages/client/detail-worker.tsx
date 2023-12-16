@@ -16,7 +16,7 @@ const workerData: Worker = {
   email: "john@example.com",
   address: "123 Street, City",
   skills: ["Skill A", "Skill B", "Skill C"],
-  projectHistory: ["Project 1", "Project 2"],
+  projectHistory: ["Project 1", "Project 2", "Project 3"],
   profileImage: "https://via.placeholder.com/300",
 };
 
