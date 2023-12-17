@@ -1,12 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MultiSelect } from "react-multi-select-component";
-import { useState } from "react";
-import { deleteProfile, editWorkerProfile } from "@/utils/apis/worker/api";
+import { useEffect, useState } from "react";
+import {
+  deleteProfile,
+  editWorkerProfile,
+  getWorkerProfile,
+} from "@/utils/apis/worker/api";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
+  Worker,
   WorkerUpdateType,
   workerProfileUpdateSchema,
 } from "@/utils/apis/worker/types";
@@ -14,15 +20,37 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/custom-formfield";
+import Alert from "@/components/alert";
 
 const EditProfile = () => {
   const { toast } = useToast();
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const [worker, setWorker] = useState<Worker>();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await getWorkerProfile();
+      setWorker(result.data);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleEditProfile = async (data: WorkerUpdateType) => {
     data.image = data.image[0].name;
     try {
       const result = await editWorkerProfile(data);
+      toast({
+        description: result.message,
+      });
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -101,7 +129,7 @@ const EditProfile = () => {
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute bottom-[62.5rem]"></div>
+        <div className="bg-tukangku w-full h-32 absolute bottom-[50rem]"></div>
         <div className="z-10 relative">
           <img
             src="/src/assets/worker/default-avatar.jpg"
@@ -142,11 +170,7 @@ const EditProfile = () => {
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
-              <CustomFormField
-                control={form.control}
-                name="name"
-                label="Nama"
-              >
+              <CustomFormField control={form.control} name="name" label="Nama">
                 {(field) => <Input type="text" {...field} placeholder="Nama" />}
               </CustomFormField>
             </div>
@@ -214,16 +238,23 @@ const EditProfile = () => {
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Link to="/profile/worker">
-                  <Button className="w-20">Batal</Button>
+                  <Button className="w-20" type="button">
+                    Batal
+                  </Button>
                 </Link>
-                <Button className="w-20">Simpan</Button>
+                <Button className="w-20" type="submit">
+                  Simpan
+                </Button>
               </div>
-              <Button
-                variant={"destructive"}
-                onClick={() => handleDeleteProfile("1")}
+              <Alert
+                title="Apakah anda yakin ?"
+                description="Tindakan ini tidak dapat dibatalkan dan semua data yang terkait dengan akun ini akan dihapus secara permanen."
+                onAction={() => handleDeleteProfile(`${worker?.user_id}`)}
               >
-                Hapus akun
-              </Button>
+                <Button variant={"destructive"} type="button">
+                  Hapus akun
+                </Button>
+              </Alert>
             </div>
           </form>
         </Form>

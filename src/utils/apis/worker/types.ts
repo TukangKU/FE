@@ -14,7 +14,7 @@ export const workerProfileUpdateSchema = z.object({
   // password: z
   //   .string()
   //   .min(6, { message: "Password must be at least 6 characters" }),
-  skills: z.any().array().min(1),
+  skills: z.any().array(),
   phone: z.string().min(1, { message: "Phone number is required" }),
   address: z.string().min(1, { message: "Address is required" }),
   image: z
