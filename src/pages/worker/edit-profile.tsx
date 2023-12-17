@@ -1,72 +1,89 @@
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { MultiSelect } from "react-multi-select-component";
-import { FormEvent, useEffect, useState } from "react";
-import { Worker } from "@/utils/apis/worker/types";
-import {
-  deleteProfile,
-  editWorkerProfile,
-  getSkillsWorker,
-} from "@/utils/apis/worker/api";
+import { useState } from "react";
+import { deleteProfile, editWorkerProfile } from "@/utils/apis/worker/api";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  WorkerUpdateType,
+  workerProfileUpdateSchema,
+} from "@/utils/apis/worker/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form } from "@/components/ui/form";
+import CustomFormField from "@/components/custom-formfield";
 
 const EditProfile = () => {
   const { toast } = useToast();
-  const [profile, setProfile] = useState<Partial<Worker>>({
-    user_id: 1,
-    username: "",
-    name: "",
-    email: "",
-    skills: [""],
-    phone: "",
-    address: "",
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const handleEditProfile = async (data: WorkerUpdateType) => {
+    data.image = data.image[0].name;
+    try {
+      const result = await editWorkerProfile(data);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const form = useForm<WorkerUpdateType>({
+    resolver: zodResolver(workerProfileUpdateSchema),
+    defaultValues: {
+      user_id: 1,
+      username: "",
+      name: "",
+      email: "",
+      // password: "",
+      address: "",
+      phone: "",
+      skills: [],
+      image: "",
+    },
   });
 
-  useEffect(() => {
-    fetchDataSkills();
-  }, []);
-
-  const fetchDataSkills = async () => {
-    try {
-      const result = await getSkillsWorker();
-      setSkill(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const [selectedSkills, setSelectedSkills] = useState([]);
   const options = [
-    { label: "Plumber", value: "plumber" },
-    { label: "Decoration", value: "decoration" },
-    { label: "AC service", value: "service ac" },
-    { label: "Cleaning", value: "cleaning" },
-    { label: "CCTV", value: "cctv" },
+    {
+      label: "Plumber",
+      value: {
+        skill_id: 1,
+        skill_name: "Service AC",
+      },
+    },
+    {
+      label: "Cleaning",
+      value: {
+        skill_id: 2,
+        skill_name: "Cleaning",
+      },
+    },
+    {
+      label: "Plumber",
+      value: {
+        skill_id: 3,
+        skill_name: "Plumber",
+      },
+    },
+    {
+      label: "Decoration",
+      value: {
+        skill_id: 4,
+        skill_name: "Decoration",
+      },
+    },
+    {
+      label: "CCTV",
+      value: {
+        skill_id: 5,
+        skill_name: "CCTV",
+      },
+    },
   ];
-  console.log(selectedSkills);
-
-  const handleEditProfile = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const body = {
-      username: profile.username,
-      name: profile.name,
-      email: profile.email,
-      skill: selectedSkills,
-      phone: profile.phone,
-    };
-
-    try {
-      const result = await editWorkerProfile(body);
-      toast({
-        description: result?.message,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleDeleteProfile = async (id: string) => {
     try {
@@ -79,10 +96,12 @@ const EditProfile = () => {
     }
   };
 
+  const fileRef = form.register("image", { required: true });
+
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute bottom-[45.5rem]"></div>
+        <div className="bg-tukangku w-full h-32 absolute bottom-[62.5rem]"></div>
         <div className="z-10 relative">
           <img
             src="/src/assets/worker/default-avatar.jpg"
@@ -90,80 +109,124 @@ const EditProfile = () => {
             className="w-52 rounded-full"
           />
         </div>
-        <form className="flex flex-col gap-4" onSubmit={handleEditProfile}>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">Username</Label>
-            <Input
-              className="border border-slate-300 w-96"
-              onChange={(e) =>
-                setProfile((prevState) => {
-                  return { ...prevState, username: e.target.value };
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">Nama</Label>
-            <Input
-              className="border border-slate-300 w-96"
-              onChange={(e) =>
-                setProfile((prevState) => {
-                  return { ...prevState, full_name: e.target.value };
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">Skill</Label>
-            <MultiSelect
-              value={selectedSkills}
-              options={options}
-              onChange={setSelectedSkills}
-              labelledBy={""}
-              disableSearch
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">Email</Label>
-            <Input
-              className="border border-slate-300 w-96"
-              onChange={(e) =>
-                setProfile((prevState) => {
-                  return { ...prevState, email: e.target.value };
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">No HP</Label>
-            <Input
-              className="border border-slate-300 w-96"
-              onChange={(e) =>
-                setProfile((prevState) => {
-                  return { ...prevState, phone: e.target.value };
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label className="text-lg">Alamat</Label>
-            <Input className="border border-slate-300 w-96" />
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <Link to="/profile/worker">
-                <Button className="w-20">Batal</Button>
-              </Link>
-              <Button className="w-20">Simpan</Button>
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-4 w-[35rem]"
+            onSubmit={form.handleSubmit(handleEditProfile)}
+          >
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="image"
+                label="Foto profil"
+              >
+                {() => (
+                  <Input
+                    type="file"
+                    {...fileRef}
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                  />
+                )}
+              </CustomFormField>
             </div>
-            <Button
-              variant={"destructive"}
-              onClick={() => handleDeleteProfile(`${profile.user_id}`)}
-            >
-              Hapus akun
-            </Button>
-          </div>
-        </form>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="username"
+                label="Username"
+              >
+                {(field) => (
+                  <Input type="text" {...field} placeholder="Username" />
+                )}
+              </CustomFormField>
+            </div>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="name"
+                label="Nama"
+              >
+                {(field) => <Input type="text" {...field} placeholder="Nama" />}
+              </CustomFormField>
+            </div>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="skills"
+                label="Skills"
+              >
+                {() => (
+                  <MultiSelect
+                    value={selectedSkills}
+                    options={options}
+                    onChange={setSelectedSkills}
+                    labelledBy={""}
+                    disableSearch
+                  />
+                )}
+              </CustomFormField>
+            </div>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="email"
+                label="Email"
+              >
+                {(field) => (
+                  <Input type="text" {...field} placeholder="Email" />
+                )}
+              </CustomFormField>
+            </div>
+            <div className="flex flex-col gap-3">
+              {/* <CustomFormField
+                control={form.control}
+                name="password"
+                label="Password"
+              >
+                {(field) => (
+                  <Input type="text" {...field} placeholder="Password" />
+                )}
+              </CustomFormField> */}
+            </div>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="phone"
+                label="No HP"
+              >
+                {(field) => (
+                  <Input type="text" {...field} placeholder="No HP" />
+                )}
+              </CustomFormField>
+            </div>
+            <div className="flex flex-col gap-3">
+              <CustomFormField
+                control={form.control}
+                name="address"
+                label="Alamat"
+              >
+                {(field) => (
+                  <Input type="text" {...field} placeholder="Alamat" />
+                )}
+              </CustomFormField>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Link to="/profile/worker">
+                  <Button className="w-20">Batal</Button>
+                </Link>
+                <Button className="w-20">Simpan</Button>
+              </div>
+              <Button
+                variant={"destructive"}
+                onClick={() => handleDeleteProfile("1")}
+              >
+                Hapus akun
+              </Button>
+            </div>
+          </form>
+        </Form>
       </div>
     </Layout>
   );

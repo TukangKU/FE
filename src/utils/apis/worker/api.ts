@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import { Response } from ".";
+import { Response, Worker } from ".";
 
 export const getWorkerProfile = async () => {
   try {
