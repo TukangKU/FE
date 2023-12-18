@@ -79,14 +79,12 @@ const AvailableWorker = () => {
       skills: ["Skill 7", "Skill 8", "Skill 9"],
     },
 
-    // ... dan seterusnya
+
   ];
   return (
     <div className="">
-      <Head>
-        <div className="flex justify-center item center text-gray-600">
+      <Head>  
           Available Worker
-        </div>
       </Head>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center p-8">
         {workers.map((worker) => (

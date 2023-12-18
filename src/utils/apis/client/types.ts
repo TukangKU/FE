@@ -55,10 +55,10 @@ export interface UpdateClient {
   address: string;
 }
 
-// export interface JobOrder {
-//   workername: string;
-//   start_date: string;
-//   end_date: string;
-//   price: number;
-//   deskripsi: string;
-// }
+export interface JobOrder {
+  workername: string;
+  start_date: string;
+  end_date: string;
+  price: number;
+  deskripsi: string;
+}

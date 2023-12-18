@@ -13,6 +13,9 @@ import ProfileClient from "@/pages/client/profile";
 import EditProfileClient from "@/pages/client/edit-profile";
 import AvailableWorker from "@/pages/client/available-worker";
 import DetailWorker from "@/pages/client/detail-worker";
+import JobDetail from "@/pages/client/job-detail";
+import Negosiasi from "@/pages/client/negosiasi";
+import Payment from "@/pages/client/payment";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -29,6 +32,10 @@ const App = () => {
     { path: "/profile/client/edit", element: <EditProfileClient /> },
     { path: "/client/available-worker", element: <AvailableWorker /> },
     { path: "/client/detail-worker", element: <DetailWorker /> },
+    { path: "/client/job-detail", element: <JobDetail /> },
+    { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
+    { path: "/client/payment", element: <Payment /> },
+    
   ]);
   return <RouterProvider router={router} />;
 };
