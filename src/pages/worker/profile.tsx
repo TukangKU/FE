@@ -22,7 +22,7 @@ const Profile = () => {
     try {
       const result = await getWorkerProfile();
       setWorker(result.data);
-    } catch (error:any) {
+    } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
         description: error.toString(),
@@ -33,51 +33,51 @@ const Profile = () => {
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute bottom-[45.5rem]"></div>
+        <div className="bg-tukangku w-full h-32 absolute lg:bottom-[45.5rem] md:bottom-[44.5rem] bottom-[40.5rem]"></div>
         <div className="z-10 relative">
           <img
             src="/src/assets/worker/default-avatar.jpg"
             alt=""
-            className="w-52 rounded-full"
+            className="lg:w-52 md:w-48 w-44 rounded-full"
           />
         </div>
         <div className="relative flex flex-col gap-4">
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">Username</Label>
+            <Label className="lg:text-lg md:text-base text-sm">Username</Label>
             <Input
-              className="border border-slate-300 w-96"
+              className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
               value={worker?.username}
             />
           </div>
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">Nama</Label>
+            <Label className="lg:text-lg md:text-base text-sm">Nama</Label>
             <Input
-              className="border border-slate-300 w-96"
+              className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
               value={worker?.name}
             />
           </div>
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">Skill</Label>
-            <Input className="border border-slate-300 w-96" />
+            <Label className="lg:text-lg md:text-base text-sm">Skill</Label>
+            <Input className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60" />
           </div>
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">Email</Label>
+            <Label className="lg:text-lg md:text-base text-sm">Email</Label>
             <Input
-              className="border border-slate-300 w-96"
+              className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
               value={worker?.email}
             />
           </div>
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">No HP</Label>
+            <Label className="lg:text-lg md:text-base text-sm">No HP</Label>
             <Input
-              className="border border-slate-300 w-96"
+              className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
               value={worker?.phone}
             />
           </div>
           <div className="flex flex-col gap-3">
-            <Label className="text-lg">Alamat</Label>
+            <Label className="lg:text-lg md:text-base text-sm">Alamat</Label>
             <Input
-              className="border border-slate-300 w-96"
+              className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
               value={worker?.address}
             />
           </div>

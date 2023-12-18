@@ -40,7 +40,7 @@ import {
         name={name}
         render={({ field }) => (
           <FormItem>
-            {label &&<FormLabel className="text-lg">{label}</FormLabel>}
+            {label &&<FormLabel className="lg:text-lg md:text-base text-sm">{label}</FormLabel>}
             <FormControl>{children(field)}</FormControl>
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage/>
