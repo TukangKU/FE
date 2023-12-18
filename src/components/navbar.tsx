@@ -14,7 +14,7 @@ const Navbar = () => {
   const location = useLocation();
   console.log(location);
 
-  const dataNav = [
+  const dataNavClient = [
     {
       name: "Home",
       pathname: "/",
@@ -29,6 +29,7 @@ const Navbar = () => {
     },
   ];
 
+
   return (
     <header
       className="w-full sticky top-0 bg-white/90 z-50"
@@ -41,7 +42,7 @@ const Navbar = () => {
         />
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
-            {dataNav.map((item) => {
+            {dataNavClient.map((item) => {
               return (
                 <Link to={item.pathname}>
                   <li

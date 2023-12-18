@@ -6,7 +6,7 @@ const Category = () => {
   return (
     <Layout>
       <div className="bg-gray-100 min-h-screen">
-        <div className="container p-6 flex flex-row flex-wrap w-full gap-3 ">
+        <div className="container p-6 flex flex-row flex-wrap w-full gap-10 ">
           {Service.map((item) => {
             return (
               <CategoryCard
@@ -16,7 +16,7 @@ const Category = () => {
               />
             );
           })}
-          <div className="hidden md:block md:w-[49%] lg:w-[33%]"></div>
+          <div className="hidden md:block md:w-[49%] lg:w-[32%]"></div>
         </div>
       </div>
     </Layout>
