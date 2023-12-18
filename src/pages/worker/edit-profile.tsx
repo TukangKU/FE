@@ -129,17 +129,17 @@ const EditProfile = () => {
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute bottom-[50rem]"></div>
+        <div className="bg-tukangku w-full h-32 absolute lg:bottom-[50.5rem] md:bottom-[48rem] bottom-[50rem]"></div>
         <div className="z-10 relative">
           <img
             src="/src/assets/worker/default-avatar.jpg"
             alt=""
-            className="w-52 rounded-full"
+            className="lg:w-52 md:w-48 w-44 rounded-full"
           />
         </div>
         <Form {...form}>
           <form
-            className="flex flex-col gap-4 w-[35rem]"
+            className="flex flex-col gap-4 lg:w-[35rem] md:w-[33rem] w-60"
             onSubmit={form.handleSubmit(handleEditProfile)}
           >
             <div className="flex flex-col gap-3">
@@ -235,7 +235,7 @@ const EditProfile = () => {
                 )}
               </CustomFormField>
             </div>
-            <div className="flex items-center justify-between gap-3">
+            <div className="lg:flex md:flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Link to="/profile/worker">
                   <Button className="w-20" type="button">
@@ -251,7 +251,7 @@ const EditProfile = () => {
                 description="Tindakan ini tidak dapat dibatalkan dan semua data yang terkait dengan akun ini akan dihapus secara permanen."
                 onAction={() => handleDeleteProfile(`${worker?.user_id}`)}
               >
-                <Button variant={"destructive"} type="button">
+                <Button variant={"destructive"} type="button" className="lg:mt-0 md:mt-0 mt-4">
                   Hapus akun
                 </Button>
               </Alert>
