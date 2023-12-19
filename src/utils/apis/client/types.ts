@@ -62,3 +62,15 @@ export interface JobOrder {
   price: number;
   deskripsi: string;
 }
+export type RoleType = "client" | "worker";
+
+export interface ProfileType {
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  role: RoleType;
+  image: string;
+  phone: string;
+  address: string;
+}

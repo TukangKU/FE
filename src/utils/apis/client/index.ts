@@ -1,3 +1,3 @@
-import { Response, Client } from "./types";
+import { RoleType, ProfileType, Response, Client } from "./types";
 
-export type { Response, Client };
+export type {RoleType, ProfileType, Response, Client}
