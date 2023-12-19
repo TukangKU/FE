@@ -31,10 +31,6 @@ export const workerProfileUpdateSchema = z.object({
 
 export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
 
-export interface Response {
-  message: string;
-  data: any;
-}
 
 export interface Worker {
   user_id: number;

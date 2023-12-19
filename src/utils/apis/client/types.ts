@@ -30,10 +30,6 @@ export const clientProfileUpdateSchema = z.object({
 
 export type ClientUpdateType = z.infer<typeof clientProfileUpdateSchema>;
 
-export interface Response {
-  message: string;
-  data: any
-}
 
 export interface Client {
   user_id: number;

@@ -29,7 +29,7 @@ const Navbar = () => {
     },
     {
       name: "Notification",
-      pathname: "/notification",
+      pathname: "/client/notification",
     },
   ];
 
@@ -67,7 +67,7 @@ const Navbar = () => {
         />
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
-            {user.role === "pekerja"
+            {user.role === "worker"
               ? dataNavWorker.map((item) => {
                   return (
                     <Link to={item.pathname}>
