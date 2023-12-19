@@ -10,6 +10,9 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
+    role: z.enum(["client", "worker"], {
+      required_error: "You need to select a role.",
+    }),
     username: z.string().min(1, { message: "Username is required" }),
     email: z
       .string()
@@ -21,10 +24,6 @@ export const registerSchema = z
     repassword: z
       .string()
       .min(6, { message: "Retype password must be at least 6 characters" }),
-    role: z.string().default("user"),
-    type: z.enum(["all", "mentions", "none"], {
-      required_error: "You need to select a role.",
-    }),
   })
   .refine((data) => data.password === data.repassword, {
     message: "Passwords don't match",

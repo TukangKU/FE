@@ -8,11 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useToken } from "@/utils/contexts/token";
+import { useToast } from "./ui/use-toast";
 
 const Navbar = () => {
   const location = useLocation();
-  console.log(location);
+  const { token, user, changeToken } = useToken();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const dataNavClient = [
     {
@@ -29,6 +33,27 @@ const Navbar = () => {
     },
   ];
 
+  const dataNavWorker = [
+    {
+      name: "Home",
+      pathname: "/",
+    },
+    {
+      name: "Job Request",
+      pathname: "/job-request",
+    },
+    {
+      name: "History",
+      pathname: "/history",
+    },
+  ];
+
+  function handleLogout() {
+    changeToken();
+    toast({
+      description: "Logout Successfully",
+    });
+  }
 
   return (
     <header
@@ -42,41 +67,66 @@ const Navbar = () => {
         />
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
-            {dataNavClient.map((item) => {
-              return (
-                <Link to={item.pathname}>
-                  <li
-                    className={` ${
-                      location.pathname === item.pathname
-                        ? "text-tukangku"
-                        : ""
-                    }`}>
-                    {item.name}
-                  </li>
-                </Link>
-              );
-            })}
+            {user.role === "pekerja"
+              ? dataNavWorker.map((item) => {
+                  return (
+                    <Link to={item.pathname}>
+                      <li
+                        className={` ${
+                          location.pathname === item.pathname
+                            ? "text-tukangku"
+                            : ""
+                        }`}>
+                        {item.name}
+                      </li>
+                    </Link>
+                  );
+                })
+              : dataNavClient.map((item) => {
+                  return (
+                    <Link to={item.pathname}>
+                      <li
+                        className={` ${
+                          location.pathname === item.pathname
+                            ? "text-tukangku"
+                            : ""
+                        }`}>
+                        {item.name}
+                      </li>
+                    </Link>
+                  );
+                })}
           </ul>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={user.image} alt={user.name} />
               <AvatarFallback>TK</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Hi, User</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem className="lg:hidden">Category</DropdownMenuItem>
-            <DropdownMenuItem className="lg:hidden">
-              Notification
-            </DropdownMenuItem>
-            <DropdownMenuItem>Login</DropdownMenuItem>
-            <DropdownMenuItem>Register</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuContent align="end" forceMount>
+            {token ? (
+              <>
+                <DropdownMenuLabel>Hi, {user.name}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleLogout()}>
+                  Logout
+                </DropdownMenuItem>
+              </>
+            ) : (
+              <>
+                <DropdownMenuItem onClick={() => navigate("/login")}>
+                  Login
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/register")}>
+                  Register
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </nav>

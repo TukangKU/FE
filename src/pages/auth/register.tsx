@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,7 +7,7 @@ import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
-import { RegisterType, registerSchema } from "@/utils/apis/auth";
+import { RegisterType, registerSchema, userRegister } from "@/utils/apis/auth";
 import Logo from "@/assets/tukangku.svg";
 import {
   FormControl,
@@ -18,9 +19,11 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import ClientBlack from "@/assets/clientblack.svg";
 import Pekerja from "@/assets/pekerjablack.svg";
+import { useToast } from "@/components/ui/use-toast";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const form = useForm<RegisterType>({
     resolver: zodResolver(registerSchema),
@@ -31,6 +34,22 @@ const Register = () => {
       repassword: "",
     },
   });
+
+  async function onSubmit(data: RegisterType) {
+    try {
+      const result = await userRegister(data);
+      toast({
+        description: result.message,
+      });
+      navigate("/login");
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.message.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <div className="lg:flex lg:flex-row lg:gap-10 font-poppins">
@@ -64,7 +83,10 @@ const Register = () => {
           <p>Silahkan pilih peran Anda</p>
         </div>
         <Form {...form}>
-          <form className="space-y-6 pt-3 pb-10" data-testid="form-login">
+          <form
+            className="space-y-6 pt-3 pb-10"
+            data-testid="form-register"
+            onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="role"
@@ -94,15 +116,15 @@ const Register = () => {
                         <div className="w-[360px] h-[150px] lg:h-[180px] xl:h-[200px] border-2 border-black rounded-lg  hover:border-tukangku">
                           <FormItem className="flex flex-col space-x-3 space-y-0 p-3">
                             <FormControl>
-                              <RadioGroupItem value="pekerja" />
+                              <RadioGroupItem value="worker" />
                             </FormControl>
                             <FormLabel className="flex flex-col items-center justify-center font-bold text-lg lg:text-xl">
                               <img
                                 src={Pekerja}
-                                alt="Client"
+                                alt="Worker"
                                 className="w-16 lg:w-24 pb-3"
                               />
-                              <p>Pekerja</p>
+                              <p>Worker</p>
                             </FormLabel>
                           </FormItem>
                         </div>

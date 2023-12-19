@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,11 +7,15 @@ import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
-import { LoginType, loginSchema } from "@/utils/apis/auth";
+import { LoginType, loginSchema, userLogin } from "@/utils/apis/auth";
 import Logo from "@/assets/tukangku.svg";
+import { useToken } from "@/utils/contexts/token";
+import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
+  const { changeToken } = useToken();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
@@ -19,6 +24,23 @@ const Login = () => {
       password: "",
     },
   });
+
+  async function onSubmit(data: LoginType) {
+    try {
+      const result = await userLogin(data);
+      changeToken(result.data.token);
+      toast({
+        description: "Selamat datang kembali di TukangKU",
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.message.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <div className="lg:flex lg:flex-row lg:gap-10 font-poppins">
@@ -50,7 +72,10 @@ const Login = () => {
           <p>Masuk sekarang dan nikmati layanan kami</p>
         </div>
         <Form {...form}>
-          <form className="space-y-6 pt-10" data-testid="form-login">
+          <form
+            className="space-y-6 pt-10"
+            data-testid="form-login"
+            onSubmit={form.handleSubmit(onSubmit)}>
             <CustomFormField control={form.control} name="email" label="Email">
               {(field) => (
                 <Input
