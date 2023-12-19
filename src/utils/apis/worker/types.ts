@@ -3,20 +3,21 @@ import * as z from "zod";
 const MAX_FILE_SIZE = 500000000;
 const ACCEPTED_IMAGE_TYPE = ["image/jpeg", "image/jpg", "image/png"];
 
-export const clientProfileUpdateSchema = z.object({
+export const workerProfileUpdateSchema = z.object({
+  user_id: z.number(),
   username: z.string().min(1, { message: "Fullname is required" }),
-  full_name: z.string().min(1, { message: "Fullname is required" }),
+  name: z.string().min(1, { message: "Fullname is required" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email("Not valid email"),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-  skills: z.string().min(1),
-  phone_number: z.string().min(1, { message: "Phone number is required" }),
+  // password: z
+  //   .string()
+  //   .min(6, { message: "Password must be at least 6 characters" }),
+  skills: z.any().array(),
+  phone: z.string().min(1, { message: "Phone number is required" }),
   address: z.string().min(1, { message: "Address is required" }),
-  profile_picture: z
+  image: z
     .any()
     .refine(
       (files) => files?.[0]?.size <= MAX_FILE_SIZE,
@@ -28,49 +29,34 @@ export const clientProfileUpdateSchema = z.object({
     ),
 });
 
-export type ClientUpdateType = z.infer<typeof clientProfileUpdateSchema>;
+export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
 
 export interface Response {
   message: string;
-  data: any
+  data: any;
 }
 
-export interface Client {
+export interface Worker {
   user_id: number;
   username: string;
   name: string;
   email: string;
+  // passowrd: string;
   phone: string;
   address: string;
+  skills: Skills[];
   image: string;
 }
 
-export interface UpdateClient {
-  id: number;
-  username: string;
-  name: string;
-  email: string;
-  phone: string;
-  image: string;
-  address: string;
+export interface Skills {
+  skill_id: number;
+  skill_name: string;
 }
 
-export interface JobOrder {
+export interface JobWorker {
   workername: string;
   start_date: string;
   end_date: string;
   price: number;
   deskripsi: string;
-}
-export type RoleType = "client" | "worker";
-
-export interface ProfileType {
-  id: number;
-  username: string;
-  name: string;
-  email: string;
-  role: RoleType;
-  image: string;
-  phone: string;
-  address: string;
 }
