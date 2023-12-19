@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
-import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
@@ -20,6 +19,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import ClientBlack from "@/assets/clientblack.svg";
 import Pekerja from "@/assets/pekerjablack.svg";
 import { useToast } from "@/components/ui/use-toast";
+import CustomFormField from "@/components/custom-formfield";
 
 const Register = () => {
   const navigate = useNavigate();
