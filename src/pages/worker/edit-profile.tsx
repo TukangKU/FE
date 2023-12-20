@@ -1,18 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MultiSelect } from "react-multi-select-component";
 import { useEffect, useState } from "react";
-import {
-  deleteProfile,
-  editWorkerProfile,
-  getWorkerProfile,
-} from "@/utils/apis/worker/api";
-import { Link } from "react-router-dom";
+import { editWorkerProfile } from "@/utils/apis/worker/api";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
-  Worker,
   WorkerUpdateType,
   workerProfileUpdateSchema,
 } from "@/utils/apis/worker/types";
@@ -20,60 +16,49 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/custom-formfield";
-import Alert from "@/components/alert";
+import { useToken } from "@/utils/contexts/token";
 
 const EditProfile = () => {
+  const { worker, id } = useToken();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [selectedSkills, setSelectedSkills] = useState([]);
-  const [worker, setWorker] = useState<Worker>();
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const result = await getWorkerProfile();
-      setWorker(result.data);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleEditProfile = async (data: WorkerUpdateType) => {
-    data.image = data.image[0].name;
-    try {
-      const result = await editWorkerProfile(data);
-      toast({
-        description: result.message,
-      });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  };
 
   const form = useForm<WorkerUpdateType>({
     resolver: zodResolver(workerProfileUpdateSchema),
     defaultValues: {
-      user_id: 1,
       username: "",
-      name: "",
+      nama: "",
       email: "",
-      // password: "",
-      address: "",
-      phone: "",
-      skills: [],
-      image: "",
+      alamat: "",
+      nohp: "",
     },
   });
+
+  useEffect(() => {
+    form.setValue("username", worker.username!);
+    form.setValue("nama", worker.nama!);
+    form.setValue("email", worker.email!);
+    form.setValue("alamat", worker.alamat!);
+    form.setValue("nohp", worker.nohp!);
+  }, [worker]);
+
+  async function onSubmit(data: WorkerUpdateType) {
+    try {
+      const result = await editWorkerProfile(id, data);
+      console.log("result", result);
+      toast({
+        description: result.message,
+      });
+      navigate("/profile/client");
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.message.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   const options = [
     {
@@ -113,18 +98,7 @@ const EditProfile = () => {
     },
   ];
 
-  const handleDeleteProfile = async (id: string) => {
-    try {
-      const result = await deleteProfile(id);
-      toast({
-        description: result?.message,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fileRef = form.register("image", { required: true });
+  const fileRef = form.register("foto", { required: true });
 
   return (
     <Layout>
@@ -140,14 +114,12 @@ const EditProfile = () => {
         <Form {...form}>
           <form
             className="flex flex-col gap-4 lg:w-[35rem] md:w-[33rem] w-60"
-            onSubmit={form.handleSubmit(handleEditProfile)}
-          >
+            onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-3">
               <CustomFormField
                 control={form.control}
-                name="image"
-                label="Foto profil"
-              >
+                name="foto"
+                label="Foto profil">
                 {() => (
                   <Input
                     type="file"
@@ -162,15 +134,14 @@ const EditProfile = () => {
               <CustomFormField
                 control={form.control}
                 name="username"
-                label="Username"
-              >
+                label="Username">
                 {(field) => (
                   <Input type="text" {...field} placeholder="Username" />
                 )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
-              <CustomFormField control={form.control} name="name" label="Nama">
+              <CustomFormField control={form.control} name="nama" label="Nama">
                 {(field) => <Input type="text" {...field} placeholder="Nama" />}
               </CustomFormField>
             </div>
@@ -178,8 +149,7 @@ const EditProfile = () => {
               <CustomFormField
                 control={form.control}
                 name="skills"
-                label="Skills"
-              >
+                label="Skills">
                 {() => (
                   <MultiSelect
                     value={selectedSkills}
@@ -195,30 +165,15 @@ const EditProfile = () => {
               <CustomFormField
                 control={form.control}
                 name="email"
-                label="Email"
-              >
+                label="Email">
                 {(field) => (
                   <Input type="text" {...field} placeholder="Email" />
                 )}
               </CustomFormField>
             </div>
+            <div className="flex flex-col gap-3"></div>
             <div className="flex flex-col gap-3">
-              {/* <CustomFormField
-                control={form.control}
-                name="password"
-                label="Password"
-              >
-                {(field) => (
-                  <Input type="text" {...field} placeholder="Password" />
-                )}
-              </CustomFormField> */}
-            </div>
-            <div className="flex flex-col gap-3">
-              <CustomFormField
-                control={form.control}
-                name="phone"
-                label="No HP"
-              >
+              <CustomFormField control={form.control} name="nohp" label="No HP">
                 {(field) => (
                   <Input type="text" {...field} placeholder="No HP" />
                 )}
@@ -227,9 +182,8 @@ const EditProfile = () => {
             <div className="flex flex-col gap-3">
               <CustomFormField
                 control={form.control}
-                name="address"
-                label="Alamat"
-              >
+                name="alamat"
+                label="Alamat">
                 {(field) => (
                   <Input type="text" {...field} placeholder="Alamat" />
                 )}
@@ -246,15 +200,6 @@ const EditProfile = () => {
                   Simpan
                 </Button>
               </div>
-              <Alert
-                title="Apakah anda yakin ?"
-                description="Tindakan ini tidak dapat dibatalkan dan semua data yang terkait dengan akun ini akan dihapus secara permanen."
-                onAction={() => handleDeleteProfile(`${worker?.user_id}`)}
-              >
-                <Button variant={"destructive"} type="button" className="lg:mt-0 md:mt-0 mt-4">
-                  Hapus akun
-                </Button>
-              </Alert>
             </div>
           </form>
         </Form>

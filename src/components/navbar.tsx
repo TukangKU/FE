@@ -14,7 +14,7 @@ import { useToast } from "./ui/use-toast";
 
 const Navbar = () => {
   const location = useLocation();
-  const { token, user, changeToken } = useToken();
+  const { token, role, client, worker, changeToken } = useToken();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const Navbar = () => {
         />
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
-            {user.role === "worker"
+            {role === "worker"
               ? dataNavWorker.map((item) => {
                   return (
                     <Link to={item.pathname}>
@@ -101,18 +101,36 @@ const Navbar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src={user.image} alt={user.name} />
+              {role === "worker" ? (
+                <AvatarImage src={worker.foto} alt={worker.nama} />
+              ) : (
+                <AvatarImage src={client.foto} alt={client.nama} />
+              )}
               <AvatarFallback>TK</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" forceMount>
             {token ? (
               <>
-                <DropdownMenuLabel>Hi, {user.name}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/profile")}>
-                  Profile
-                </DropdownMenuItem>
+                {role === "worker" ? (
+                  <>
+                    <DropdownMenuLabel>Hi, {worker.nama}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => navigate("/profile/worker")}>
+                      Profile
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuLabel>Hi, {client.nama}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => navigate("/profile/client")}>
+                      Profile
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuItem onClick={() => handleLogout()}>
                   Logout
                 </DropdownMenuItem>

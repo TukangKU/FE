@@ -5,23 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Worker } from "@/utils/apis/worker";
 import { getWorkerProfile } from "@/utils/apis/worker/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useToken } from "@/utils/contexts/token";
+import { ProfileType } from "@/utils/types/api";
 
 const Profile = () => {
+  const { role, id } = useToken();
   const { toast } = useToast();
-  const [worker, setWorker] = useState<Worker>();
+  const [worker, setWorker] = useState<ProfileType>();
 
   useEffect(() => {
-    fetchData();
+    role === "worker" && fetchData(id);
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (id: string) => {
     try {
-      const result = await getWorkerProfile();
-      setWorker(result.data);
+      const result = await getWorkerProfile(id);
+      setWorker(result);
+      console.log('result', result)
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -36,8 +39,8 @@ const Profile = () => {
         <div className="bg-tukangku w-full h-32 absolute lg:bottom-[45.5rem] md:bottom-[44.5rem] bottom-[40.5rem]"></div>
         <div className="z-10 relative">
           <img
-            src="/src/assets/worker/default-avatar.jpg"
-            alt=""
+            src={worker?.foto}
+            alt={worker?.nama}
             className="lg:w-52 md:w-48 w-44 rounded-full"
           />
         </div>
@@ -53,7 +56,7 @@ const Profile = () => {
             <Label className="lg:text-lg md:text-base text-sm">Nama</Label>
             <Input
               className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
-              value={worker?.name}
+              value={worker?.nama}
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -71,14 +74,14 @@ const Profile = () => {
             <Label className="lg:text-lg md:text-base text-sm">No HP</Label>
             <Input
               className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
-              value={worker?.phone}
+              value={worker?.nohp}
             />
           </div>
           <div className="flex flex-col gap-3">
             <Label className="lg:text-lg md:text-base text-sm">Alamat</Label>
             <Input
               className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60"
-              value={worker?.address}
+              value={worker?.alamat}
             />
           </div>
           <Link to="/profile/worker/edit">

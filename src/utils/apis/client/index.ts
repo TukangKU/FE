@@ -1,3 +1,5 @@
-import { RoleType, ProfileType, Response, Client } from "./types";
+import { ProfileClientType, Client } from "./types";
+import { getClientProfile } from "./api";
 
-export type {RoleType, ProfileType, Response, Client}
+export type { ProfileClientType, Client };
+export { getClientProfile };

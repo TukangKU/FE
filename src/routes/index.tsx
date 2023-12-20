@@ -18,13 +18,13 @@ import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
 import Notification from "@/pages/client/notification";
 import NotFound from "@/pages/404";
-import ProtectedRoute from "./protected-route";
+// import ProtectedRoute from "./protected-route";
 
 const App = () => {
   const router = createBrowserRouter([
-    {
-      element: <ProtectedRoute />,
-      children: [
+    // {
+    //   element: <ProtectedRoute />,
+    //   children: [
         { path: "/", element: <Home /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
@@ -44,8 +44,8 @@ const App = () => {
         { path: "/category", element: <Category /> },
         { path: "/client/notification", element: <Notification /> },
         { path: "*", element: <NotFound /> },
-      ],
-    },
+    //   ],
+    // },
   ]);
   return <RouterProvider router={router} />;
 };

@@ -1,37 +1,29 @@
-import axios from "axios";
-import { Response } from ".";
-import { UpdateClient } from "./types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ProfileType } from "@/utils/types/api";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { ClientUpdateType } from "./types";
 
-export const getClientProfile = async () => {
+export const getClientProfile = async (id: string) => {
   try {
-    const response = await axios.get(
-      "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/client/2"
+    const response = await axiosWithConfig.get(
+      `https://tukangku.online/client/${id}`
     );
-    return response.data as Response;
+    console.log("response client", response.data);
+    return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const editClientProfile = async (body: UpdateClient) => {
+export const updateProfile = async (id:string, body: ClientUpdateType) => {
   try {
-    const response = await axios.put(
-      "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/client/2",
+    const response = await axiosWithConfig.put(
+      `https://tukangku.online/client/${id}`,
       body
     );
-    return response.data as Response;
+    console.log("response", response.data);
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
-
-// export const getJobWorker = async () => {
-//   try {
-//     const response = await axios.get(
-//       "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/job/accepted"
-//     );
-//     return response.data as Response;
-//   } catch (error: any) {
-//     throw Error(error.response.data.message);
-//   }
-// };
