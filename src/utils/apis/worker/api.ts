@@ -1,37 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { Response } from ".";
-import { UpdateWorker } from "./types";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { ProfileType, Response } from "@/utils/types/api";
+import { WorkerUpdateType } from "./types";
 
-export const getWorkerProfile = async () => {
+export const getWorkerProfile = async (id: string) => {
   try {
-    const response = await axios.get(
-      "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/worker/1"
+    const response = await axiosWithConfig.get(
+      `https://tukangku.online/worker/${id}`
     );
-    return response.data as Response;
+    console.log("response worker", response.data.data);
+    return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const editWorkerProfile = async (body: UpdateWorker, id: string) => {
+export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
   try {
-    const response = await axios.put(
-      `https://tukangku.online/worker/${id}`,
+    const response = await axiosWithConfig.put(
+      `https://tukangku.online/client/${id}`,
       body
     );
-    return response.data as Response;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
-export const deleteProfile = async (id: string) => {
-  try {
-    const response = await axios.delete(
-      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/workers/${id}`
-    );
-    return response.data as Response;
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -39,7 +29,7 @@ export const deleteProfile = async (id: string) => {
 
 export const getSkillsWorker = async () => {
   try {
-    const response = await axios.get(
+    const response = await axiosWithConfig.get(
       "https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/skills"
     );
     return response.data as Response;
@@ -50,7 +40,7 @@ export const getSkillsWorker = async () => {
 
 export const getJobWorker = async () => {
   try {
-    const response = await axios.get(
+    const response = await axiosWithConfig.get(
       "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/job/accepted"
     );
     return response.data as Response;
