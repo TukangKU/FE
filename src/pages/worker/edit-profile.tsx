@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MultiSelect } from "react-multi-select-component";
 import { useEffect, useState } from "react";
-import {
-  deleteProfile,
-  editWorkerProfile,
-  getWorkerProfile,
-} from "@/utils/apis/worker/api";
+import { editWorkerProfile, getWorkerProfile } from "@/utils/apis/worker/api";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -18,14 +15,27 @@ import {
 } from "@/utils/apis/worker/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
+import { Form, FormItem, FormLabel } from "@/components/ui/form";
 import CustomFormField from "@/components/custom-formfield";
-import Alert from "@/components/alert";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Loader2 } from "lucide-react";
 
 const EditProfile = () => {
   const { toast } = useToast();
-  const [selectedSkills, setSelectedSkills] = useState([]);
   const [worker, setWorker] = useState<Worker>();
+
+  const options = [
+    { label: "Service AC", skill_id: 1, skill_name: "Service AC" },
+    { label: "Cleaning", skill_id: 2, skill_name: "Cleaning" },
+    { label: "Plumber", skill_id: 3, skill_name: "Plumber" },
+    { label: "Decoration", skill_id: 4, skill_name: "Decoration" },
+    { label: "CCTV", skill_id: 5, skill_name: "CCTV" },
+  ];
 
   useEffect(() => {
     fetchData();
@@ -47,7 +57,9 @@ const EditProfile = () => {
   const handleEditProfile = async (data: WorkerUpdateType) => {
     data.image = data.image[0].name;
     try {
-      const result = await editWorkerProfile(data);
+      const result = await editWorkerProfile(data, worker?.user_id as unknown as string);
+      console.log(JSON.stringify(result, null, 2));
+      console.log(JSON.stringify(data, null, 2));
       toast({
         description: result.message,
       });
@@ -63,73 +75,33 @@ const EditProfile = () => {
   const form = useForm<WorkerUpdateType>({
     resolver: zodResolver(workerProfileUpdateSchema),
     defaultValues: {
-      user_id: 1,
-      username: "",
-      name: "",
-      email: "",
-      // password: "",
-      address: "",
-      phone: "",
-      skills: [],
-      image: "",
+      user_id: worker?.user_id,
+      image: worker?.image ?? "",
+      username: worker?.username ?? "",
+      name: worker?.name ?? "",
+      email: worker?.email ?? "",
+      address: worker?.address ?? "",
+      phone: worker?.phone ?? "",
+      skills: worker?.skills ?? [],
+    },
+    values: {
+      user_id: worker?.user_id!,
+      username: worker?.username!,
+      name: worker?.name!,
+      email: worker?.name!,
+      address: worker?.name!,
+      phone: worker?.phone!,
+      skills: worker?.skills!,
+      image: worker?.image!,
     },
   });
-
-  const options = [
-    {
-      label: "Plumber",
-      value: {
-        skill_id: 1,
-        skill_name: "Service AC",
-      },
-    },
-    {
-      label: "Cleaning",
-      value: {
-        skill_id: 2,
-        skill_name: "Cleaning",
-      },
-    },
-    {
-      label: "Plumber",
-      value: {
-        skill_id: 3,
-        skill_name: "Plumber",
-      },
-    },
-    {
-      label: "Decoration",
-      value: {
-        skill_id: 4,
-        skill_name: "Decoration",
-      },
-    },
-    {
-      label: "CCTV",
-      value: {
-        skill_id: 5,
-        skill_name: "CCTV",
-      },
-    },
-  ];
-
-  const handleDeleteProfile = async (id: string) => {
-    try {
-      const result = await deleteProfile(id);
-      toast({
-        description: result?.message,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const fileRef = form.register("image", { required: true });
 
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
-        <div className="bg-tukangku w-full h-32 absolute lg:bottom-[50.5rem] md:bottom-[48rem] bottom-[50rem]"></div>
+        <div className="bg-tukangku w-full lg:h-32 md:h-32 h-28 absolute lg:bottom-[50rem] md:bottom-[47.5rem] bottom-[47rem]"></div>
         <div className="z-10 relative">
           <img
             src="/src/assets/worker/default-avatar.jpg"
@@ -150,8 +122,8 @@ const EditProfile = () => {
               >
                 {() => (
                   <Input
-                    type="file"
                     {...fileRef}
+                    type="file"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                   />
@@ -165,13 +137,27 @@ const EditProfile = () => {
                 label="Username"
               >
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Username" />
+                  <Input
+                    type="text"
+                    placeholder="Username"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
               <CustomFormField control={form.control} name="name" label="Nama">
-                {(field) => <Input type="text" {...field} placeholder="Nama" />}
+                {(field) => (
+                  <Input
+                    type="text"
+                    placeholder="Nama"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
+                )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
@@ -180,14 +166,50 @@ const EditProfile = () => {
                 name="skills"
                 label="Skills"
               >
-                {() => (
-                  <MultiSelect
-                    value={selectedSkills}
-                    options={options}
-                    onChange={setSelectedSkills}
-                    labelledBy={""}
-                    disableSearch
-                  />
+                {(field) => (
+                  <DropdownMenu>
+                    <br />
+                    <DropdownMenuTrigger>
+                      <div className="border p-3 rounded-sm lg:w-[35rem] md:w-[33rem] w-[15rem]">
+                        <p className="text-start text-muted-foreground text-sm">
+                          Pilih keahlian
+                        </p>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="px-2 pb-2 relative lg:right-[13.5rem] md:right-[13.5rem] right-[3.5rem]">
+                      <FormItem>
+                        {options.map((skill) => (
+                          <FormItem
+                            key={skill.skill_id}
+                            className="flex items-center"
+                          >
+                            <Checkbox
+                              checked={field.value?.includes(skill.skill_name)}
+                              disabled={form.formState.isSubmitting}
+                              aria-disabled={form.formState.isSubmitting}
+                              className="relative top-1 my-1"
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      skill.skill_name,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value: any) =>
+                                          value !== skill.skill_name
+                                      )
+                                    );
+                              }}
+                            />
+                            <FormLabel className="font-normal relative left-2">
+                              {skill.label}
+                            </FormLabel>
+                          </FormItem>
+                        ))}
+                      </FormItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 )}
               </CustomFormField>
             </div>
@@ -198,21 +220,17 @@ const EditProfile = () => {
                 label="Email"
               >
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Email" />
+                  <Input
+                    type="text"
+                    placeholder="Email"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
             </div>
-            <div className="flex flex-col gap-3">
-              {/* <CustomFormField
-                control={form.control}
-                name="password"
-                label="Password"
-              >
-                {(field) => (
-                  <Input type="text" {...field} placeholder="Password" />
-                )}
-              </CustomFormField> */}
-            </div>
+
             <div className="flex flex-col gap-3">
               <CustomFormField
                 control={form.control}
@@ -220,7 +238,13 @@ const EditProfile = () => {
                 label="No HP"
               >
                 {(field) => (
-                  <Input type="text" {...field} placeholder="No HP" />
+                  <Input
+                    type="text"
+                    placeholder="No HP"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
             </div>
@@ -231,30 +255,39 @@ const EditProfile = () => {
                 label="Alamat"
               >
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Alamat" />
+                  <Input
+                    type="text"
+                    placeholder="Alamat"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
             </div>
             <div className="lg:flex md:flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Link to="/profile/worker">
-                  <Button className="w-20" type="button">
+                  <Button className="" type="button">
                     Batal
                   </Button>
                 </Link>
-                <Button className="w-20" type="submit">
-                  Simpan
+                <Button
+                  type="submit"
+                  className=""
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading
+                    </>
+                  ) : (
+                    "Simpan"
+                  )}
                 </Button>
               </div>
-              <Alert
-                title="Apakah anda yakin ?"
-                description="Tindakan ini tidak dapat dibatalkan dan semua data yang terkait dengan akun ini akan dihapus secara permanen."
-                onAction={() => handleDeleteProfile(`${worker?.user_id}`)}
-              >
-                <Button variant={"destructive"} type="button" className="lg:mt-0 md:mt-0 mt-4">
-                  Hapus akun
-                </Button>
-              </Alert>
             </div>
           </form>
         </Form>

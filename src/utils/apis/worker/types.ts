@@ -1,32 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 
-const MAX_FILE_SIZE = 500000000;
+const MAX_FILE_SIZE = 5000000000000000000000;
 const ACCEPTED_IMAGE_TYPE = ["image/jpeg", "image/jpg", "image/png"];
 
 export const workerProfileUpdateSchema = z.object({
   user_id: z.number(),
-  username: z.string().min(1, { message: "Fullname is required" }),
-  name: z.string().min(1, { message: "Fullname is required" }),
+  username: z.string().min(1, { message: "Username dibutuhkan" }),
+  name: z.string().min(1, { message: "Nama lengkap dibutuhkan" }),
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email("Not valid email"),
-  // password: z
-  //   .string()
-  //   .min(6, { message: "Password must be at least 6 characters" }),
-  skills: z.any().array(),
-  phone: z.string().min(1, { message: "Phone number is required" }),
-  address: z.string().min(1, { message: "Address is required" }),
+    .min(1, { message: "Email dibutuhkan" })
+    .email("Bukan email yang valid"),
+  skills: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "Pekerja harus memilih minimal salah satu skill yang dikuasai",
+  }),
+  phone: z.string().min(1, { message: "No HP dibutuhkan" }),
+  address: z.string().min(1, { message: "Alamat dibutuhkan" }),
   image: z
     .any()
     .refine(
       (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      "Max image size is 5MB"
+      "Ukuran gambar maksimal 5MB"
     )
     .refine(
       (files) => ACCEPTED_IMAGE_TYPE.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, and .png formats are supported"
-    ),
+      "hanya bisa memasukan gambar dengan format Only .jpg, .jpeg, and .png"
+    )
+    .optional(),
 });
 
 export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
@@ -37,16 +38,20 @@ export interface Worker {
   username: string;
   name: string;
   email: string;
-  // passowrd: string;
   phone: string;
   address: string;
-  skills: Skills[];
+  skills: string[];
   image: string;
 }
 
-export interface Skills {
-  skill_id: number;
-  skill_name: string;
+export interface UpdateWorker {
+  user_id: number;
+  username: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  skills: string[];
 }
 
 export interface JobWorker {

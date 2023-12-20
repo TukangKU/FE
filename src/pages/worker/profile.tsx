@@ -58,7 +58,7 @@ const Profile = () => {
           </div>
           <div className="flex flex-col gap-3">
             <Label className="lg:text-lg md:text-base text-sm">Skill</Label>
-            <Input className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60" />
+            <Input className="border border-slate-300 lg:w-[35rem] md:w-[33rem] w-60" value={worker?.skills}/>
           </div>
           <div className="flex flex-col gap-3">
             <Label className="lg:text-lg md:text-base text-sm">Email</Label>
@@ -82,7 +82,7 @@ const Profile = () => {
             />
           </div>
           <Link to="/profile/worker/edit">
-            <Button className="w-20">Edit</Button>
+            <Button className="">Edit</Button>
           </Link>
         </div>
       </div>
