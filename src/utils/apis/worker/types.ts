@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 
 // const MAX_FILE_SIZE = 500000000;
@@ -32,16 +33,20 @@ export interface Worker {
   username: string;
   name: string;
   email: string;
-  // passowrd: string;
   phone: string;
   address: string;
-  skills: Skills[];
+  skills: string[];
   image: string;
 }
 
-export interface Skills {
-  skill_id: number;
-  skill_name: string;
+export interface UpdateWorker {
+  user_id: number;
+  username: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  skills: string[];
 }
 
 export interface JobWorker {
