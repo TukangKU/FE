@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import { Response, Worker } from ".";
+import { Response } from ".";
+import { UpdateWorker } from "./types";
 
 export const getWorkerProfile = async () => {
   try {
@@ -13,10 +14,10 @@ export const getWorkerProfile = async () => {
   }
 };
 
-export const editWorkerProfile = async (body: Worker) => {
+export const editWorkerProfile = async (body: UpdateWorker, id: string) => {
   try {
     const response = await axios.put(
-      "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/worker/1",
+      `https://tukangku.online/worker/${id}`,
       body
     );
     return response.data as Response;
@@ -31,7 +32,7 @@ export const deleteProfile = async (id: string) => {
       `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/workers/${id}`
     );
     return response.data as Response;
-  } catch (error:any) {
+  } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
