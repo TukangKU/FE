@@ -117,16 +117,16 @@ const Navbar = () => {
                     <DropdownMenuLabel>Hi, {worker.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/worker")}>
+                      onClick={() => navigate("/profile/worker/edit")}>
                       Profile
                     </DropdownMenuItem>
                   </>
                 ) : (
                   <>
-                    <DropdownMenuLabel>Hi, {client.nama}</DropdownMenuLabel>
+                    <DropdownMenuLabel>Hai, {client.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/client")}>
+                      onClick={() => navigate("/profile/client/edit")}>
                       Profile
                     </DropdownMenuItem>
                   </>
