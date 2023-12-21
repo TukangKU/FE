@@ -44,7 +44,7 @@ const EditProfile = () => {
   const fetchData = async () => {
     try {
       const result = await getWorkerProfile();
-      setWorker(result.data);
+      setWorker(result.payload);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -57,7 +57,7 @@ const EditProfile = () => {
   const handleEditProfile = async (data: WorkerUpdateType) => {
     data.image = data.image[0].name;
     try {
-      const result = await editWorkerProfile(data, worker?.user_id as unknown as string);
+      const result = await editWorkerProfile(data);
       console.log(JSON.stringify(result, null, 2));
       console.log(JSON.stringify(data, null, 2));
       toast({

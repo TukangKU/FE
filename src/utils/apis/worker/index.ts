@@ -1,3 +1,3 @@
-import { Response, Worker, Skills } from "./types";
+import {Worker} from "./types";
 
-export type { Response, Worker, Skills };
+export type { Worker};

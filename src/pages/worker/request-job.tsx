@@ -1,7 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "@/components/layout";
-import React from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { getJobWorker } from "@/utils/apis/worker/api";
+import { JobWorker } from "@/utils/apis/worker/types";
+import { useEffect, useState } from "react";
 
 const RequestJob = () => {
+  const [jobs, setJobs] = useState<JobWorker[]>([]);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await getJobWorker();
+      setJobs(result.payload);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="lg:flex md:flex lg:justify-between md:justify-between mx-auto bg-slate-100 p-4 lg:w-[50rem] md:w-[40rem] justify-between rounded-lg hover:bg-slate-200 items-center">

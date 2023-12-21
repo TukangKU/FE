@@ -21,7 +21,7 @@ const Profile = () => {
   const fetchData = async () => {
     try {
       const result = await getWorkerProfile();
-      setWorker(result.data);
+      setWorker(result.payload);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

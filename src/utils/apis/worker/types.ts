@@ -30,8 +30,18 @@ export const workerProfileUpdateSchema = z.object({
     .optional(),
 });
 
-export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
+export const updateJobSchema = z.object({
+  role: z.string(),
+  description: z
+    .string()
+    .min(1, { message: "Masukan deskripsi jika dibutuhkan" }),
+  price: z.string().min(1, { message: "Masukan tawaran harga" }),
+  status: z.string(),
+});
 
+export type UpdateJobSchema = z.infer<typeof updateJobSchema>;
+
+export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
 
 export interface Worker {
   user_id: number;
@@ -55,9 +65,25 @@ export interface UpdateWorker {
 }
 
 export interface JobWorker {
-  workername: string;
+  job_id: number;
+  foto: string;
+  worker_name: string;
+  client_name: string;
   start_date: string;
   end_date: string;
-  price: number;
   deskripsi: string;
+  address: string;
+  status: string;
+}
+
+export interface UpdateJob {
+  role: string;
+  description: string;
+  price: string;
+  status: string;
+}
+
+export interface Request {
+  sort?: string;
+  query?: string;
 }

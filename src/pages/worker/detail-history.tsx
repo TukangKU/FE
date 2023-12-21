@@ -1,7 +1,30 @@
 import Layout from "@/components/layout";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { getDetailHistory } from "@/utils/apis/worker/api";
+import { JobWorker } from "@/utils/apis/worker/types";
+import { useEffect, useState } from "react";
 
 const DetailHistory = () => {
+  const [job, setJob] = useState<JobWorker>();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await getDetailHistory();
+      setJob(result.payload);
+    } catch (error:any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="flex justify-center flex-col items-center relative py-4">
@@ -17,7 +40,7 @@ const DetailHistory = () => {
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Nama pemesan :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Sri wulandari
+              {job?.client_name}
             </p>
           </div>
           <div className="grid grid-cols-2">
