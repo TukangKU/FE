@@ -28,18 +28,10 @@ export const workerProfileUpdateSchema = z.object({
 
 export const updateJobSchema = z.object({
   role: z.string(),
-  description: z
+  deskripsi: z
     .string()
     .min(1, { message: "Masukan deskripsi jika dibutuhkan" }),
-  price: z.string().min(1, { message: "Masukan tawaran harga" }),
-  status: z.string(),
-});
-export const updateJobSchema = z.object({
-  role: z.string(),
-  description: z
-    .string()
-    .min(1, { message: "Masukan deskripsi jika dibutuhkan" }),
-  price: z.string().min(1, { message: "Masukan tawaran harga" }),
+  price: z.coerce.number().gte(0, {message: "Masukan tawaran harga"}),
   status: z.string(),
 });
 export type UpdateJobSchema = z.infer<typeof updateJobSchema>;
@@ -68,20 +60,21 @@ export interface UpdateWorker {
 }
 
 export interface JobWorker {
-  job_id: number;
-  foto: string;
-  worker_name: string;
-  client_name: string;
-  start_date: string;
-  end_date: string;
-  deskripsi: string;
-  address: string;
-  status: string;
+  job_id: number
+  foto: string
+  worker_name: string
+  clent_name: string
+  start_date: string
+  end_date: string
+  price: number
+  deskripsi: string
+  address: string
+  status: string
 }
 
 export interface UpdateJob {
   role: string;
-  description: string;
+  deskripsi: string;
   price: string;
   status: string;
 }

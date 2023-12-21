@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { ProfileType, Response } from "@/utils/types/api";
-import { WorkerUpdateType } from "./types";
+import { UpdateJobSchema, WorkerUpdateType } from "./types";
 
 export const getWorkerProfile = async (id: string) => {
   try {
@@ -30,18 +30,31 @@ export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
 export const getDetailHistory = async () => {
   try {
     const response = await axiosWithConfig.get(
-      "https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/skills"
+      "https://tukangku.online/jobs/1"
+      
     );
     return response.data as Response;
-  } catch (error:any) {
+  } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const updateJob = async (body: UpdateJob) => {
+export const getJobWorker = async () => {
   try {
     const response = await axiosWithConfig.get(
-      "https://virtserver.swaggerhub.com/MHAFIDZHIDAYAT_1/tukang/1.0.0/job/accepted"
+      "https://tukangku.online/jobs"
+    );
+    return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const updateJob = async (body: UpdateJobSchema) => {
+  try {
+    const response = await axiosWithConfig.put(
+      "https://tukangku.online/jobs/1",
+      body
     );
     return response.data as Response;
   } catch (error: any) {

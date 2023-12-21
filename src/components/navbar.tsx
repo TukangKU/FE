@@ -40,11 +40,11 @@ const Navbar = () => {
     },
     {
       name: "Job Request",
-      pathname: "/job-request",
+      pathname: "/worker/job/request",
     },
     {
       name: "History",
-      pathname: "/history",
+      pathname: "/worker/history",
     },
   ];
 

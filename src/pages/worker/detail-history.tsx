@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Layout from "@/components/layout";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
@@ -40,13 +41,13 @@ const DetailHistory = () => {
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Nama pemesan :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              {job?.client_name}
+              {job?.clent_name}
             </p>
           </div>
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Mulai tanggal :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              12/10/2023
+              {job?.start_date}
             </p>
           </div>
           <div className="grid grid-cols-2">
@@ -54,13 +55,13 @@ const DetailHistory = () => {
               Selesai tanggal :
             </p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              12/11/2023
+              {job?.end_date}
             </p>
           </div>
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Alamat :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Jl. setia budi
+              {job?.address}
             </p>
           </div>
           <div className="grid grid-cols-2">
@@ -68,14 +69,14 @@ const DetailHistory = () => {
               Total pembayaran :
             </p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Rp. 150.000
+              Rp. {job?.price}
             </p>
           </div>
           <div className="rounded-lg flex flex-col gap-3">
             <p className="lg:text-base md:text-base text-sm">Deskripsi :</p>
             <Textarea
               className="lg:w-[35rem] md:w-[30rem] h-64 lg:text-base md:text-base text-sm"
-              value="Ditunggu ya mas"
+              value={job?.deskripsi}
               readOnly
             />
           </div>
