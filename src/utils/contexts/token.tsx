@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ReactNode,
   createContext,
@@ -8,15 +9,22 @@ import {
   useEffect,
 } from "react";
 
-// import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { ProfileType } from "@/utils/apis/client";
+import { getClientProfile } from "../apis/client/api";
+import { getWorkerProfile } from "../apis/worker/api";
+import { ProfileType } from "../types/api";
 
 interface Context {
   token: string;
-  user: Partial<ProfileType>;
+  id: string;
+  role: string;
+  client: Partial<ProfileType>;
+  worker: Partial<ProfileType>;
   changeToken: (token?: string) => void;
+  changeRole: (role?: string) => void;
+  changeId: (id?: string) => void;
 }
 
 interface Props {
@@ -25,21 +33,29 @@ interface Props {
 
 const contextValue = {
   token: "",
-  user: {},
+  id: "",
+  role: "",
+  client: {},
+  worker: {},
   changeToken: () => {},
+  changeRole: () => {},
+  changeId: () => {},
 };
 
 const TokenContext = createContext<Context>(contextValue);
 
 export function TokenProvider({ children }: Readonly<Props>) {
-//   const { toast } = useToast();
+  const { toast } = useToast();
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [user, setUser] = useState<Partial<ProfileType>>({});
+  const [role, setRole] = useState(localStorage.getItem("role") ?? "");
+  const [id, setId] = useState(localStorage.getItem("id") ?? "");
+  const [client, setClient] = useState<Partial<ProfileType>>({});
+  const [worker, setWorker] = useState<Partial<ProfileType>>({});
 
   useEffect(() => {
     setAxiosConfig(token);
-    // token !== "" && fetchProfile();
+    token !== "" && fetchProfile(id);
   }, [token]);
 
   axiosWithConfig.interceptors.response.use(
@@ -53,29 +69,68 @@ export function TokenProvider({ children }: Readonly<Props>) {
     }
   );
 
-//   const fetchProfile = useCallback(async () => {
-//     try {
-//       const result = await getProfile();
-//       setUser(result.payload);
-//     } catch (error: any) {
-//       toast({
-//         title: "Oops! Something went wrong.",
-//         description: error.message.toString(),
-//         variant: "destructive",
-//       });
-//     }
-//   }, [token]);
+  const fetchProfile = useCallback(
+    async (id: string) => {
+      try {
+        if (role === "client") {
+          const result = await getClientProfile(id);
+          setClient(result);
+        } else {
+          const result = await getWorkerProfile(id);
+          setWorker(result);
+        }
+      } catch (error: any) {
+        toast({
+          title: "Oops! Something went wrong.",
+          description: error.message.toString(),
+          variant: "destructive",
+        });
+      }
+    },
+    [token]
+  );
 
   const changeToken = useCallback(
     (token?: string) => {
       const newToken = token ?? "";
-      console.log("newToken", newToken)
       setToken(newToken);
       if (token) {
         localStorage.setItem("token", newToken);
       } else {
         localStorage.removeItem("token");
-        setUser({});
+        setClient({});
+        setWorker({});
+      }
+    },
+    [token]
+  );
+
+  const changeRole = useCallback(
+    (role?: string) => {
+      const newRole = role ?? "";
+      setRole(newRole);
+      if (role) {
+        localStorage.setItem("role", newRole);
+      } else {
+        localStorage.removeItem("role");
+        setClient({});
+        setWorker({});
+      }
+    },
+    [token]
+  );
+
+  const changeId = useCallback(
+    (id?: string) => {
+      const newId = id ?? "";
+      console.log("id", newId);
+      setId(newId);
+      if (id) {
+        localStorage.setItem("id", newId);
+      } else {
+        localStorage.removeItem("id");
+        setClient({});
+        setWorker({});
       }
     },
     [token]
@@ -84,10 +139,15 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const tokenContextValue = useMemo(
     () => ({
       token,
-      user,
+      id,
+      role,
+      client,
+      worker,
       changeToken,
+      changeRole,
+      changeId,
     }),
-    [token, user, changeToken]
+    [token, id, role, client, worker, changeToken, changeRole, changeId]
   );
 
   return (

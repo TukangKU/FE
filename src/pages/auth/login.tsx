@@ -13,7 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import CustomFormField from "@/components/custom-formfield";
 
 const Login = () => {
-  const { changeToken } = useToken();
+  const { changeToken, changeRole, changeId } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -29,6 +29,9 @@ const Login = () => {
     try {
       const result = await userLogin(data);
       changeToken(result.data.token);
+      changeRole(result.data.role)
+      changeId(result.data.id)
+      console.log("role", result.data.role)
       toast({
         description: "Selamat datang kembali di TukangKU",
       });

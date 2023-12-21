@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { editWorkerProfile, getWorkerProfile } from "@/utils/apis/worker/api";
-import { Link } from "react-router-dom";
+import {
+  editWorkerProfile,
+} from "@/utils/apis/worker/api";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
-  Worker,
   WorkerUpdateType,
   workerProfileUpdateSchema,
 } from "@/utils/apis/worker/types";
@@ -24,49 +26,34 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Loader2 } from "lucide-react";
+import { useToken } from "@/utils/contexts/token";
 
 const EditProfile = () => {
+  const { worker, id } = useToken();
+  const navigate = useNavigate();
   const { toast } = useToast();
-  const [worker, setWorker] = useState<Worker>();
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
-  const options = [
-    { label: "Service AC", skill_id: 1, skill_name: "Service AC" },
-    { label: "Cleaning", skill_id: 2, skill_name: "Cleaning" },
-    { label: "Plumber", skill_id: 3, skill_name: "Plumber" },
-    { label: "Decoration", skill_id: 4, skill_name: "Decoration" },
-    { label: "CCTV", skill_id: 5, skill_name: "CCTV" },
-  ];
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    form.setValue("username", worker.username!);
+    form.setValue("nama", worker.nama!);
+    form.setValue("email", worker.email!);
+    form.setValue("alamat", worker.alamat!);
+    form.setValue("nohp", worker.nohp!);
+  }, [worker]);
 
-  const fetchData = async () => {
+  async function onSubmit(data: WorkerUpdateType) {
     try {
-      const result = await getWorkerProfile();
-      setWorker(result.payload);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleEditProfile = async (data: WorkerUpdateType) => {
-    data.image = data.image[0].name;
-    try {
-      const result = await editWorkerProfile(data);
-      console.log(JSON.stringify(result, null, 2));
-      console.log(JSON.stringify(data, null, 2));
+      const result = await editWorkerProfile(id, data);
       toast({
         description: result.message,
       });
+      navigate("/profile/client");
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.toString(),
+        description: error.message.toString(),
         variant: "destructive",
       });
     }
@@ -112,14 +99,12 @@ const EditProfile = () => {
         <Form {...form}>
           <form
             className="flex flex-col gap-4 lg:w-[35rem] md:w-[33rem] w-60"
-            onSubmit={form.handleSubmit(handleEditProfile)}
-          >
+            onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-3">
               <CustomFormField
                 control={form.control}
-                name="image"
-                label="Foto profil"
-              >
+                name="foto"
+                label="Foto profil">
                 {() => (
                   <Input
                     {...fileRef}
@@ -134,8 +119,7 @@ const EditProfile = () => {
               <CustomFormField
                 control={form.control}
                 name="username"
-                label="Username"
-              >
+                label="Username">
                 {(field) => (
                   <Input
                     type="text"
@@ -217,8 +201,7 @@ const EditProfile = () => {
               <CustomFormField
                 control={form.control}
                 name="email"
-                label="Email"
-              >
+                label="Email">
                 {(field) => (
                   <Input
                     type="text"
@@ -251,9 +234,8 @@ const EditProfile = () => {
             <div className="flex flex-col gap-3">
               <CustomFormField
                 control={form.control}
-                name="address"
-                label="Alamat"
-              >
+                name="alamat"
+                label="Alamat">
                 {(field) => (
                   <Input
                     type="text"

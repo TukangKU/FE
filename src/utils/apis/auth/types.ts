@@ -3,30 +3,30 @@ import * as z from "zod";
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email("Not a valid email"),
-  password: z.string().min(1, { message: "Password is required" }),
+    .min(1, { message: "email wajib diisi" })
+    .email("Bukan email yang valid"),
+  password: z.string().min(1, { message: "Password wajib diisi" }),
 });
 
 export const registerSchema = z
   .object({
     role: z.enum(["client", "worker"], {
-      required_error: "You need to select a role.",
+      required_error: "Anda harus memilih peran",
     }),
-    username: z.string().min(1, { message: "Username is required" }),
+    username: z.string().min(1, { message: "Username wajib diisi" }),
     email: z
       .string()
-      .min(1, { message: "Email is required" })
-      .email("Not a valid email"),
+      .min(1, { message: "Email wajib diisi" })
+      .email("Bukan email yang valid"),
     password: z
       .string()
-      .min(6, { message: "Password must be at least 6 characters" }),
+      .min(6, { message: "Password minimal harus 6 karakter" }),
     repassword: z
       .string()
-      .min(6, { message: "Retype password must be at least 6 characters" }),
+      .min(6, { message: "Ketik ulang password minimal harus 6 karakter" }),
   })
   .refine((data) => data.password === data.repassword, {
-    message: "Passwords don't match",
+    message: "Password tidak cocok",
     path: ["repassword"],
   });
 
