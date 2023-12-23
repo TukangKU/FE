@@ -38,3 +38,37 @@ export interface JobOrder {
   price: number;
   deskripsi: string;
 }
+
+export interface WorkerDetails {
+  id: number;
+  cover_image: string;
+  name: string;
+  address: string;
+  total_projects: number;
+  skills: string[];
+}
+
+export interface WorkerAvailables {
+  id: number;
+  username: string;
+  nama: string; 
+  alamat: string;
+  email: string; 
+  foto: string;
+  skill: {
+    skill_id: number;
+    skill: string;
+  }[];
+}
+
+export interface ApiResponse {
+  data: Worker[];
+  message: string;
+  pagination: {
+    page: number;
+    pagesize: number;
+    skill: number;
+    totalPages: number;
+  };
+}
+
