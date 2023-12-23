@@ -1,95 +1,105 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Layout from "@/components/layout";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { getDetailJob } from "@/utils/apis/worker/api";
+import { JobWorker } from "@/utils/apis/worker/types";
+import { useEffect, useState } from "react";
+import { JobWorkerID } from "@/utils/mockdata/data";
+import UpdateJob from "@/components/update-job";
+import StatusJob from "@/components/status-job";
 
 const DetailJob = () => {
-  const [showNego, setShowNego] = useState(false);
+  const [job, setJob] = useState<JobWorker>();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await getDetailJob();
+      setJob(JobWorkerID);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Layout>
-      <div className="flex justify-center flex-col items-center relative py-4">
-        <div
-          className={` bg-tukangku w-full h-32 absolute ${
-            showNego
-              ? "lg:bottom-[48rem] md:bottom-[47rem] bottom-[44rem]"
-              : "lg:bottom-[43rem] md:bottom-[42rem] bottom-[42rem]"
-          }`}
-        ></div>
-        <div className="z-10 relative flex flex-col justify-center items-center">
-          <img
-            src="/src/assets/worker/default-avatar.jpg"
-            alt=""
-            className="lg:w-52 md:w-48 w-40 rounded-full"
-          />
-        </div>
-        <div className="flex flex-col gap-4 mt-10 border border-slate-500 p-4 rounded-lg">
-          <div className="grid grid-cols-2">
-            <p className="lg:text-base md:text-base text-sm">Nama pemesan :</p>
-            <p className="lg:text-base md:text-base text-sm lg:ms-0 md:ms-0 ms-10">
-              Sri wulandari
-            </p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p className="lg:text-base md:text-base text-sm">Mulai tanggal :</p>
-            <p className="lg:text-base md:text-base text-sm lg:ms-0 md:ms-0 ms-10">
-              12/10/2023
-            </p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p className="lg:text-base md:text-base text-sm">
-              Selesai tanggal :
-            </p>
-            <p className="lg:text-base md:text-base text-sm lg:ms-0 md:ms-0 ms-10">
-              12/10/2023
-            </p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p className="lg:text-base md:text-base text-sm">Alamat :</p>
-            <p className="lg:text-base md:text-base text-sm lg:ms-0 md:ms-0 ms-10">
-              Jl. Setia budi
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <p className="lg:text-base md:text-base text-sm">Deskripsi :</p>
-            <Textarea
-              className="lg:w-[35rem] md:w-[30rem] h-64 lg:text-base md:text-base text-sm"
-              value="Ditunggu ya mas"
-              readOnly
+      <div className="flex flex-col py-4 justify-center items-center relative">
+        <div className="w-full relative">
+          <div className="bg-tukangku w-full lg:h-32 md:h-28 h-[6.5rem]"></div>
+          <div className="flex z-10 justify-center items-center">
+            <img
+              src={job?.foto}
+              alt=""
+              className="l4g:w-52 md:w-48 w-4 aspect-square rounded-full object-cover absolute top-5"
             />
           </div>
-          <div className="lg:flex  md:flex items-center justify-between">
-            {showNego ? (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-3">
-                  <Label>Tawar harga : </Label>
-                  <Input className="lg:w-[35rem] md:w-[30rem] border border-slate-300" />
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button className="" onClick={() => setShowNego(false)}>
-                    Batal
-                  </Button>
-                  <Button className="">Tawar</Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-3">
-                  <Button className="">Tolak</Button>
-                  <Button className="">Terima</Button>
-                </div>
-                <div>
-                  <Button
-                    onClick={() => setShowNego(true)}
-                    className="bg-tukangku text-black hover:bg-yellow-300 lg:mt-0 md:mt-0 mt-4"
-                  >
-                    Tawar harga
-                  </Button>
-                </div>
-              </>
-            )}
+        </div>
+        <div className="border rounded-lg flex flex-col border-slate-500 mt-28 p-4 gap-4">
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">Nama pemesan :</p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              {job?.client_name}
+            </p>
           </div>
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">Kategori :</p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              {job?.category}
+            </p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">Mulai tanggal :</p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              {job?.start_date}
+            </p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">
+              Selesai tanggal :
+            </p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              {job?.end_date}
+            </p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">Alamat :</p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              {job?.alamat}
+            </p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p className="text-sm md:text-base lg:text-base">Harga :</p>
+            <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
+              Rp. {job?.harga}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm md:text-base lg:text-base">Deskripsi :</p>
+            <Textarea
+              className="h-64 text-sm md:text-base md:w-[30rem] lg:text-base lg:w-[35rem]"
+              readOnly
+              value={job?.deskripsi}
+            />
+          </div>
+          {job?.status === "pending" ? (
+            <UpdateJob />
+          ) : job?.status === "negotiation" ? (
+            <UpdateJob />
+          ) : (
+            <StatusJob data={job!}/>
+          )}
         </div>
       </div>
     </Layout>

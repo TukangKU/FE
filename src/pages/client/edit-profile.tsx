@@ -67,7 +67,7 @@ const EditProfile = () => {
           <img
             src={client.foto}
             alt={client.nama}
-            className="lg:w-52 md:w-48 w-44 aspect-square rounded-full object-cover"
+            className="l4g:w-52 md:w-48 w-4 aspect-square rounded-full object-cover"
           />
         </div>
         <Form {...form}>

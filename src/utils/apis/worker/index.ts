@@ -1,5 +1,5 @@
-import {  Worker, Skills } from "./types";
+import { Worker, JobWorker, UpdateJob} from "./types";
 import { getWorkerProfile } from "./api";
 
-export type {  Worker, Skills };
+export type { Worker, JobWorker, UpdateJob,  };
 export { getWorkerProfile };

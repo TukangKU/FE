@@ -28,8 +28,8 @@ const Navbar = () => {
       pathname: "/category",
     },
     {
-      name: "Notification",
-      pathname: "/client/notification",
+      name: "Job Request",
+      pathname: "/job/request",
     },
   ];
 
@@ -38,13 +38,10 @@ const Navbar = () => {
       name: "Home",
       pathname: "/",
     },
+    { name: "Category", pathname: "/category" },
     {
       name: "Job Request",
-      pathname: "/job-request",
-    },
-    {
-      name: "History",
-      pathname: "/history",
+      pathname: "/job/request",
     },
   ];
 
@@ -58,7 +55,8 @@ const Navbar = () => {
   return (
     <header
       className="w-full sticky top-0 bg-white/90 z-50"
-      aria-label="navbar">
+      aria-label="navbar"
+    >
       <nav className="flex container p-6 flex-row justify-between">
         <img
           src={Logo}
@@ -76,7 +74,8 @@ const Navbar = () => {
                           location.pathname === item.pathname
                             ? "text-tukangku"
                             : ""
-                        }`}>
+                        }`}
+                      >
                         {item.name}
                       </li>
                     </Link>
@@ -90,7 +89,8 @@ const Navbar = () => {
                           location.pathname === item.pathname
                             ? "text-tukangku"
                             : ""
-                        }`}>
+                        }`}
+                      >
                         {item.name}
                       </li>
                     </Link>
@@ -117,7 +117,8 @@ const Navbar = () => {
                     <DropdownMenuLabel>Hi, {worker.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/worker/edit")}>
+                      onClick={() => navigate("/profile/worker/edit")}
+                    >
                       Profile
                     </DropdownMenuItem>
                   </>
@@ -126,7 +127,8 @@ const Navbar = () => {
                     <DropdownMenuLabel>Hai, {client.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/client/edit")}>
+                      onClick={() => navigate("/profile/client/edit")}
+                    >
                       Profile
                     </DropdownMenuItem>
                   </>

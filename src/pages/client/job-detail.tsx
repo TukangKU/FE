@@ -21,9 +21,7 @@ const JobDetail = () => {
 
   return (
     <div>
-      <Head>
-         Job Detail
-      </Head>
+      <Head>Job Detail</Head>
 
       <div className="grid justify-center mx-auto p-4  ">
         <form className="flex ">
