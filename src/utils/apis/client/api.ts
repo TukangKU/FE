@@ -27,3 +27,16 @@ export const updateProfile = async (id:string, body: ClientUpdateType) => {
     throw Error(error.response.data.message);
   }
 };
+export const getDataByService = async (serviceId: number) => {
+  try {
+    const response = await axiosWithConfig.get(`https://tukangku.online/users/skill?skill=${serviceId}`);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Failed to fetch data');
+    }
+  } catch (error:any) {
+    throw new Error(error.response.data.message);
+  }
+};
