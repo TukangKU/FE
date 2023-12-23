@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Head from "@/components/head";
+import { Worker } from "@/utils/apis/client/types";
 import {
   Table,
   TableBody,
@@ -10,42 +11,25 @@ import {
   Paper,
 } from "@mui/material";
 import { Button } from "@/components/ui/button";
-
-interface Worker {
-  name: string;
-  email: string;
-  address: string;
-  skills: string[];
-  projectHistory: string[];
-  profileImage: string;
-}
-
-const workerData: Worker = {
-  name: "John Doe",
-  email: "john@example.com",
-  address: "123 Street, City",
-  skills: ["Skill A", "Skill B", "Skill C"],
-  projectHistory: ["Project 1", "Project 2", "Project 3"],
-  profileImage: "https://via.placeholder.com/300",
-};
+import { useLocation } from "react-router-dom";
 
 const DetailWorker = () => {
-  const { name, email, address, skills,  profileImage } =
-    workerData;
-    const [showTable, setShowTable] = useState(false);
-    const rows = [
-      { id: 1, name: "Project A", price: "$100" },
-      { id: 2, name: "Project B", price: "$150" },
-      { id: 3, name: "Project C", price: "$120" },
-      { id: 4, name: "Project D", price: "$120" },
-      { id: 5, name: "Project E", price: "$120" },
-    ];
-    const tableRef = useRef<HTMLDivElement>(null);
-    const scrollToShowTable = () => {
-      if (tableRef.current) {
-        tableRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    };
+  const location = useLocation();
+  const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
+  const [showTable, setShowTable] = useState(false);
+  const rows = [
+    { id: 1, name: "Project A", price: "$100" },
+    { id: 2, name: "Project B", price: "$150" },
+    { id: 3, name: "Project C", price: "$120" },
+    { id: 4, name: "Project D", price: "$120" },
+    { id: 5, name: "Project E", price: "$120" },
+  ];
+  const tableRef = useRef<HTMLDivElement>(null);
+  const scrollToShowTable = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div>
@@ -54,62 +38,61 @@ const DetailWorker = () => {
           Detail Worker
         </div>
       </Head>
-
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 p-8">
-        {/* Bagian Kiri: Gambar Worker */}
         <div className="grid justify-center items-end">
-          <img
-            src={profileImage}
-            alt={name}
-            className="w-300 h-full rounded-lg"
-          />
+          {WorkerDetail && (
+            <img
+              src={WorkerDetail.foto}
+              alt={WorkerDetail.username}
+              className="w-100 h-100 rounded-lg"
+            />
+          )}
         </div>
-
-        {/* Bagian Kanan: Data Worker */}
-        <div className="grid justify-center  ">
-          <h1 className="text-2xl font-bold mb-4 text-center">
-            Informasi Worker
-          </h1>
-          <div className="text-center">
-            <h2 className="text-lg ">{name}</h2>
-          </div>
-          <div className="mt-2 text-center">
-            <h2 className="text-lg ">{email}</h2>
-          </div>
-          <div className="mt-2 text-center">
-            <h2 className="text-lg ">{address}</h2>
-          </div>
-
-          <div className="mt-6 text-center">
-            <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
-            <div className="flex flex-wrap">
-              {skills.slice(0, 3).map((skill, index) => (
-                <span
-                  key={index}
-                  className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
+        <div className="grid justify-center">
+          {WorkerDetail && (
+            <>
+              <h1 className="text-2xl font-bold mb-4 text-center">
+                Informasi Worker
+              </h1>
+              <div className="text-center">
+                <h2 className="text-lg ">{WorkerDetail.username}</h2>
+              </div>
+              <div className="mt-2 text-center">
+                <h2 className="text-lg ">{WorkerDetail.email}</h2>
+              </div>
+              <div className="mt-2 text-center">
+                <h2 className="text-lg ">{WorkerDetail.alamat}</h2>
+              </div>
+              <div className="mt-6 text-center">
+                <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
+                <div className="flex flex-wrap">
+                  {WorkerDetail.skill.slice(0, 3).map((singleSkill, index) => (
+                    <span
+                      key={index}
+                      className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
+                    >
+                      {singleSkill.skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-4 text-center" ref={tableRef}>
+                <h2
+                  className="font-bold mb-4 cursor-pointer"
+                  onClick={() => {
+                    setShowTable(!showTable);
+                    scrollToShowTable();
+                  }}
                 >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-4 text-center" ref={tableRef}>
-            <h2
-              className="font-bold mb-4 cursor-pointer"
-              onClick={() => {
-                setShowTable(!showTable);
-                scrollToShowTable();
-              }} // Mengubah nilai state saat di-klik
-            >
-              Total Project {1}
-            </h2>
-            <div className="flex flex-cols-2 justify-center items-center gap-4">
-            <Button className="w-24">Cancel</Button>
-            <Button className="w-24">Take Worker</Button>
-          </div>
-          </div>
-         
+                  Total Project {1}
+                </h2>
+                <div className="flex flex-cols-2 justify-center items-center gap-4">
+                  <Button className="w-24">Cancel</Button>
+                  <Button className="w-24">Take Worker</Button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="flex justify-center items-center my-8">
@@ -118,8 +101,7 @@ const DetailWorker = () => {
             <Table>
               <TableHead>
                 <TableRow style={{ backgroundColor: "#f5f5f5" }}>
-                  {" "}
-                  <TableCell style={{ fontWeight: "bold" }}>No</TableCell>{" "}
+                  <TableCell style={{ fontWeight: "bold" }}>No</TableCell>
                   <TableCell style={{ fontWeight: "bold" }}>
                     Nama Project
                   </TableCell>
@@ -129,7 +111,6 @@ const DetailWorker = () => {
               <TableBody>
                 {rows.map((row) => (
                   <TableRow key={row.id} style={{ backgroundColor: "#ffffff" }}>
-                    {" "}
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.price}</TableCell>

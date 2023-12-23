@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { WorkerAvailables } from "@/utils/apis/client/types";
 
 
-const CardWorker: React.FC<{ data: WorkerAvailables; handleSeeDetail: () => void }> = ({ data, handleSeeDetail }) => {
+const CardWorker: React.FC<{ data: WorkerAvailables; onClick: () => void }> = ({ data, onClick }) => {
   return (
     <div className="border rounded-lg p-4 w-80">
       <img
@@ -33,7 +33,7 @@ const CardWorker: React.FC<{ data: WorkerAvailables; handleSeeDetail: () => void
           )}
         </div>
         <div className="flex justify-center items-center my-3 ">
-          <Button className="w-40 rounded-md" onClick={handleSeeDetail}>
+          <Button className="w-40 rounded-md" onClick={onClick}>
             See Detail
           </Button>
         </div>

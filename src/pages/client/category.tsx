@@ -10,7 +10,6 @@ const Category = () => {
   const handleServiceClick = async (serviceId: number) => {
     try {
       const serviceData = await getDataByService(serviceId);
-      console.log(`Data untuk service dengan id ${serviceId}:`, serviceData);
      navigate('/client/available-worker', { state: { serviceData } });
     } catch (error: any) {
       console.error(
