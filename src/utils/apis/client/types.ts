@@ -51,16 +51,27 @@ export interface WorkerDetails {
 export interface WorkerAvailables {
   id: number;
   username: string;
-  nama: string; 
+  nama: string;
   alamat: string;
-  email: string; 
+  email: string;
   foto: string;
   skill: {
     skill_id: number;
     skill: string;
   }[];
 }
-
+export interface Worker {
+  username: string;
+  nohp:string;
+  email: string;
+  alamat: string;
+  skill: {
+    skill_id: number;
+    skill: string;
+  }[];
+  projectHistory: string[];
+  foto: string;
+}
 export interface ApiResponse {
   data: Worker[];
   message: string;

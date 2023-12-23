@@ -8,7 +8,6 @@ export const getClientProfile = async (id: string) => {
     const response = await axiosWithConfig.get(
       `https://tukangku.online/client/${id}`
     );
-    console.log("response client", response.data);
     return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -27,16 +26,27 @@ export const updateProfile = async (id:string, body: ClientUpdateType) => {
     throw Error(error.response.data.message);
   }
 };
+
 export const getDataByService = async (serviceId: number) => {
   try {
-    const response = await axiosWithConfig.get(`https://tukangku.online/users/skill?skill=${serviceId}`);
+    const response = await axiosWithConfig.get(
+      `https://tukangku.online/users/skill?skill=${serviceId}`,
+    );
+    console.log("response", response.data);
+    return response.data;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
 
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw new Error('Failed to fetch data');
-    }
-  } catch (error:any) {
-    throw new Error(error.response.data.message);
+export const getWorkerByID = async (id: number) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `https://tukangku.online/takeworker?id=${id}`,
+    );
+    console.log("response", response.data);
+    return response.data;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
   }
 };
