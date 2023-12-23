@@ -17,9 +17,29 @@ export const getWorkerProfile = async (id: string) => {
 
 export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
   try {
+    console.log("body", body);
+    const formData = new FormData();
+    let key: keyof typeof body;
+    for (key in body) {
+      if (body[key]) {
+        if (Array.isArray(body[key])) {
+          for (const val of body[key]) {
+            formData.append(key, val.value);
+          }
+        } else {
+          formData.append(key, body[key]);
+        }
+      }
+    }
+
     const response = await axiosWithConfig.put(
       `https://tukangku.online/client/${id}`,
-      body
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error: any) {

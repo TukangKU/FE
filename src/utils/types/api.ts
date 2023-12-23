@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Response<T = any> = {
-    message: string;
-    payload: T;
-  };
+  message: string;
+  payload: T;
+};
 
 export type RoleType = "client" | "worker";
 
@@ -15,5 +15,5 @@ export interface ProfileType {
   alamat: string;
   foto: string;
   role?: RoleType;
-  skill?: null;
+  skill?: { skill_id: number; skill: string }[];
 }

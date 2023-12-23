@@ -14,7 +14,6 @@ import JobDetail from "@/pages/client/job-detail";
 import Negosiasi from "@/pages/client/negosiasi";
 import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
-import Notification from "@/pages/client/notification";
 import NotFound from "@/pages/404";
 // import ProtectedRoute from "./protected-route";
 
@@ -23,23 +22,22 @@ const App = () => {
     // {
     //   element: <ProtectedRoute />,
     //   children: [
-        { path: "/", element: <Home /> },
-        { path: "/login", element: <Login /> },
-        { path: "/register", element: <Register /> },
-        { path: "/profile/worker/edit", element: <EditProfile /> },
-        { path: "/worker/history", element: <History /> },
-        { path: "/worker/history/detail", element: <DetailHistory /> },
-        { path: "/worker/job/request", element: <RequestJob /> },
-        { path: "/worker/job/detail", element: <DetailJob /> },
-        { path: "/profile/client/edit", element: <EditProfileClient /> },
-        { path: "/client/available-worker", element: <AvailableWorker /> },
-        { path: "/client/detail-worker", element: <DetailWorker /> },
-        { path: "/client/job-detail", element: <JobDetail /> },
-        { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
-        { path: "/client/payment", element: <Payment /> },
-        { path: "/category", element: <Category /> },
-        { path: "/client/notification", element: <Notification /> },
-        { path: "*", element: <NotFound /> },
+    { path: "/", element: <Home /> },
+    { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
+    { path: "/profile/worker/edit", element: <EditProfile /> },
+    { path: "/worker/history", element: <History /> },
+    { path: "/worker/history/detail", element: <DetailHistory /> },
+    { path: "/worker/job/request", element: <RequestJob /> },
+    { path: "/worker/job/detail", element: <DetailJob /> },
+    { path: "/profile/client/edit", element: <EditProfileClient /> },
+    { path: "/client/available-worker", element: <AvailableWorker /> },
+    { path: "/client/detail-worker", element: <DetailWorker /> },
+    { path: "/client/job-detail", element: <JobDetail /> },
+    { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
+    { path: "/client/payment", element: <Payment /> },
+    { path: "/category", element: <Category /> },
+    { path: "*", element: <NotFound /> },
     //   ],
     // },
   ]);
