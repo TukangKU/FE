@@ -8,13 +8,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { getDetailJob } from "@/utils/apis/worker/api";
 import { JobWorker } from "@/utils/apis/worker/types";
 import { useEffect, useState } from "react";
-import { JobWorkerID } from "@/utils/mockdata/data";
 import UpdateJob from "@/components/update-job";
 import StatusJob from "@/components/status-job";
+import { useParams } from "react-router-dom";
 
 const DetailJob = () => {
   const [job, setJob] = useState<JobWorker>();
   const { toast } = useToast();
+  const params = useParams();
 
   useEffect(() => {
     fetchData();
@@ -22,8 +23,8 @@ const DetailJob = () => {
 
   const fetchData = async () => {
     try {
-      const result = await getDetailJob();
-      setJob(JobWorkerID);
+      const result = await getDetailJob(params.id as string);
+      setJob(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -37,12 +38,12 @@ const DetailJob = () => {
     <Layout>
       <div className="flex flex-col py-4 justify-center items-center relative">
         <div className="w-full relative">
-          <div className="bg-tukangku w-full lg:h-32 md:h-28 h-[6.5rem]"></div>
+          <div className="bg-tukangku h-[6.5rem] w-full md:h-28 lg:h-32"></div>
           <div className="flex z-10 justify-center items-center">
             <img
               src={job?.foto}
               alt=""
-              className="l4g:w-52 md:w-48 w-4 aspect-square rounded-full object-cover absolute top-5"
+              className="rounded-full object-cover top-5 w-4 aspect-square absolute l4g:w-52 md:w-48"
             />
           </div>
         </div>
@@ -93,12 +94,10 @@ const DetailJob = () => {
               value={job?.deskripsi}
             />
           </div>
-          {job?.status === "pending" ? (
-            <UpdateJob />
-          ) : job?.status === "negotiation" ? (
-            <UpdateJob />
+          {["pending", "negotiation"].includes(job?.status!) ? (
+            <StatusJob />
           ) : (
-            <StatusJob data={job!}/>
+            <UpdateJob />
           )}
         </div>
       </div>
