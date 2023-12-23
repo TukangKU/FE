@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   JobWorker,
@@ -9,29 +10,39 @@ import { useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 import { Form } from "./ui/form";
 import { Button } from "./ui/button";
-import { updateJob } from "@/utils/apis/worker/api";
+import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
 import { useToken } from "@/utils/contexts/token";
+import { useEffect, useState } from "react";
 
-interface Props {
-  data: JobWorker;
-}
-
-const StatusJob = (props: Props) => {
-  const { data } = props;
+const StatusJob = () => {
   const { toast } = useToast();
   const { role } = useToken();
+  const [job, setJob] = useState<JobWorker>();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await getDetailJob();
+      setJob(result);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
 
   const finishJob = useForm<UpdateJobSchema>({
     resolver: zodResolver(updateJobSchema),
     defaultValues: {
-      note_negosiasi: "",
-      price: 0,
-      status: "",
-    },
-    values: {
-      note_negosiasi: data?.note_negosiasi,
-      price: data?.harga,
-      status: "",
+      role: role,
+      note_negosiasi: job?.note_negosiasi,
+      price: job?.harga,
+      status: "finished",
     },
   });
 
@@ -68,9 +79,9 @@ const StatusJob = (props: Props) => {
       ) : (
         <div className="bg-tukangku py-2 rounded-lg">
           <p className="text-center lg:text-4xl md:text-3xl text-2xl font-bold">
-            {data?.status === "accepted"
+            {job?.status === "accepted"
               ? "DITERIMA"
-              : data?.status === "rejected"
+              : job?.status === "rejected"
               ? "DITOLAK"
               : "SELESAI"}
           </p>

@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { ProfileType, Response } from "@/utils/types/api";
-import {
-  RequestParams,
-  UpdateJobSchema,
-  UpdateNegotiationSchema,
-  WorkerUpdateType,
-} from "./types";
+import { RequestParams, UpdateJobSchema, WorkerUpdateType } from "./types";
 
 export const getWorkerProfile = async (id: string) => {
   try {
@@ -57,10 +52,11 @@ export const getJobWorker = async (params?: RequestParams) => {
   }
 };
 
-export const getDetailJob = async () => {
+// TODO: change hardcode param
+export const getDetailJob = async (id: string) => {
   try {
     const response = await axiosWithConfig.get(
-      "https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/1"
+      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`
     );
     return response.data.data;
   } catch (error: any) {
@@ -68,22 +64,11 @@ export const getDetailJob = async () => {
   }
 };
 
-export const updateNegotiation = async (body: UpdateNegotiationSchema) => {
+// TODO: change hardcode param
+export const updateJob = async (body: UpdateJobSchema, id: string) => {
   try {
     const response = await axiosWithConfig.put(
-      "https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/1",
-      body
-    );
-    return response.data as Response;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
-export const updateJob = async (body: UpdateJobSchema) => {
-  try {
-    const response = await axiosWithConfig.put(
-      "https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/1",
+      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`,
       body
     );
     return response.data as Response;

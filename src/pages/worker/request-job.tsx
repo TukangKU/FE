@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "@/components/layout";
-import { Button } from "@/components/ui/button";
+import PaginationButton from "@/components/pagination";
 import {
   Select,
   SelectContent,
@@ -15,7 +16,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { getJobWorker } from "@/utils/apis/worker/api";
 import { JobWorker } from "@/utils/apis/worker/types";
 import { Pagination } from "@/utils/types/api";
-import { Value } from "@radix-ui/react-select";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -36,7 +36,7 @@ const RequestJob = () => {
     }
     try {
       const result = await getJobWorker({ ...query });
-      const { rest } = result;
+      const { ...rest } = result;
       setJobs(result);
       setMeta(rest);
       console.log("result", result);
@@ -111,14 +111,12 @@ const RequestJob = () => {
           </div>
         </Link>
       ))}
-      <div className="flex justify-center items-center gap-5">
-        <Button value={1} onChange={(value) => handlePrevNextPage(value)}>
-          Prev
-        </Button>
-        <Button value={2} onChange={(value) => handleChangeSort(value)}>
-          Next
-        </Button>
-      </div>
+      <PaginationButton
+        meta={meta}
+        onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+        onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+        onClickPage={(page) => handlePrevNextPage(page)}
+      />
     </Layout>
   );
 };
