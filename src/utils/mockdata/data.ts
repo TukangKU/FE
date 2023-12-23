@@ -53,3 +53,18 @@ export const NotificationData = [
     description: "Your request is in the negotiation stage",
   },
 ];
+
+export const JobWorkerID = {
+  job_id: 1,
+  category: "Service AC",
+  worker_name: "bedul",
+  client_name: "Peter Jordanson",
+  foto: "/src/assets/worker/default-avatar.jpg",
+  start_date: "2023-12-15",
+  end_date: "2023-12-16",
+  alamat: "Jl. Setiabudi",
+  harga: 0,
+  deskripsi: "Mau pasang AC 2 mas",
+  note_negosiasi: "",
+  status: "pending",
+};
