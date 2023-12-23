@@ -1,11 +1,10 @@
-import CardWorker, { WorkerAvailables } from '@/components/card-worker';
+import CardWorker from '@/components/card-worker';
 import Head from '@/components/head';
 import { useLocation } from 'react-router-dom';
-
+import { WorkerAvailables } from '@/utils/apis/client/types';
 const AvailableData = () => {
   const handleSeeDetail = () => {
-    // Fungsi untuk menangani tindakan lihat detail, sesuaikan dengan kebutuhan Anda
-    // ...
+   
   };
 
   const location = useLocation();

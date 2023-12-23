@@ -1,18 +1,7 @@
 import React from "react";
 import { Button } from "./ui/button";
+import { WorkerAvailables } from "@/utils/apis/client/types";
 
-export interface WorkerAvailables {
-  id: number;
-  username: string;
-  nama: string;
-  alamat: string;
-  email: string;
-  foto: string;
-  skill: {
-    skill_id: number;
-    skill: string;
-  }[];
-}
 
 const CardWorker: React.FC<{ data: WorkerAvailables; handleSeeDetail: () => void }> = ({ data, handleSeeDetail }) => {
   return (
@@ -30,7 +19,7 @@ const CardWorker: React.FC<{ data: WorkerAvailables; handleSeeDetail: () => void
           {data.alamat}
         </p>
         <div className="text-muted-foreground text-sm text-center mt-2">
-        {data.skill && Array.isArray(data.skill) && data.skill.length > 0 ? ( // Memeriksa apakah data.skill ada dan memiliki isi sebelum digunakan
+        {data.skill && Array.isArray(data.skill) && data.skill.length > 0 ? ( 
             data.skill.map((singleSkill, index) => (
               <span
                 key={index}
