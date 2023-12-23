@@ -22,7 +22,6 @@ export const userRegister = async (body: RegisterType) => {
       `https://tukangku.online/register`,
       body
     );
-    console.log("response", response.data);
     return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);

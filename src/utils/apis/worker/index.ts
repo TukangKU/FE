@@ -1,5 +1,5 @@
-import {  Worker, Skills } from "./types";
+import { Worker } from "./types";
 import { getWorkerProfile } from "./api";
 
-export type {  Worker, Skills };
+export type { Worker };
 export { getWorkerProfile };

@@ -8,7 +8,6 @@ export const getWorkerProfile = async (id: string) => {
     const response = await axiosWithConfig.get(
       `https://tukangku.online/worker/${id}`
     );
-    console.log("response worker", response.data.data);
     return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);

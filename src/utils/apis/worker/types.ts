@@ -12,11 +12,8 @@ export const workerProfileUpdateSchema = z.object({
     .min(1, { message: "Email wajib diisi" })
     .email("Bukan email yang valid"),
   skill: z
-    .object({
-      skill_id: z.number(),
-      skill: z.string(),
-    })
-    .array(),
+    .array(z.object({ value: z.number(), label: z.string() }))
+    .min(1, { message: "Skill wajib diisi" }),
   nohp: z.string().min(1, { message: "Nomer HP wajib diisi" }),
   alamat: z.string().min(1, { message: "alamat wajib diisi" }),
   foto: z

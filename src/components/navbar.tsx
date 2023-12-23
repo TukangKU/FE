@@ -47,11 +47,13 @@ const Navbar = () => {
       className="w-full sticky top-0 bg-white/90 z-50 drop-shadow-lg"
       aria-label="navbar">
       <nav className="flex container p-6 flex-row justify-between">
+        <Link to={'/'}>
         <img
           src={Logo}
           alt="Logo TukangKu"
           className="w-16 lg:w-24 cursor-pointer"
         />
+        </Link>
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
             {dataNav.map((item) => {

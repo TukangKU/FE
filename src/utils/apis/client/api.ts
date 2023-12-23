@@ -45,7 +45,7 @@ export const postJobDetail = async (body: ClientPostJobType) => {
     const response = await axiosWithConfig.post(
       `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs`, body
     );
-    console.log("response", response.data);
+
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
