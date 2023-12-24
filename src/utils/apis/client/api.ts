@@ -20,7 +20,6 @@ export const updateProfile = async (id:string, body: ClientUpdateType) => {
       `https://tukangku.online/client/${id}`,
       body
     );
-    console.log("response", response.data);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -32,7 +31,6 @@ export const getDataByService = async (serviceId: number) => {
     const response = await axiosWithConfig.get(
       `https://tukangku.online/users/skill?skill=${serviceId}`,
     );
-    console.log("response", response.data);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -44,7 +42,6 @@ export const getWorkerByID = async (id: number) => {
     const response = await axiosWithConfig.get(
       `https://tukangku.online/takeworker?id=${id}`,
     );
-    console.log("response", response.data);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
