@@ -2,10 +2,12 @@ import React from "react";
 import { Button } from "./ui/button";
 import { WorkerAvailables } from "@/utils/apis/client/types";
 
-
-const CardWorker: React.FC<{ data: WorkerAvailables; onClick: () => void }> = ({ data, onClick }) => {
+const CardWorker: React.FC<{ data: WorkerAvailables; onClick: () => void }> = ({
+  data,
+  onClick,
+}) => {
   return (
-    <div className="border rounded-lg p-4 w-80">
+    <div className="bg-white border rounded-lg p-4 w-80">
       <img
         className="w-200 h-300 object-cover mx-auto rounded-lg"
         src={data.foto}
@@ -19,7 +21,7 @@ const CardWorker: React.FC<{ data: WorkerAvailables; onClick: () => void }> = ({
           {data.alamat}
         </p>
         <div className="text-muted-foreground text-sm text-center mt-2">
-        {data.skill && Array.isArray(data.skill) && data.skill.length > 0 ? ( 
+          {data.skill && Array.isArray(data.skill) && data.skill.length > 0 ? (
             data.skill.map((singleSkill, index) => (
               <span
                 key={index}
