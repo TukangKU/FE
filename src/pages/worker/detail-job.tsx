@@ -11,11 +11,13 @@ import { useEffect, useState } from "react";
 import UpdateJob from "@/components/update-job";
 import StatusJob from "@/components/status-job";
 import { useParams } from "react-router-dom";
+import { useToken } from "@/utils/contexts/token";
 
 const DetailJob = () => {
   const [job, setJob] = useState<JobWorker>();
   const { toast } = useToast();
   const params = useParams();
+  const { role } = useToken();
 
   useEffect(() => {
     fetchData();
@@ -94,11 +96,37 @@ const DetailJob = () => {
               value={job?.deskripsi}
             />
           </div>
-          {["pending", "negotiation"].includes(job?.status!) ? (
-            <StatusJob />
-          ) : (
-            <UpdateJob />
+          {role === "client" && (
+            <>
+              {job?.status === "pending" ? (
+                <StatusJob />
+              ) : job?.status === "negotiation" ? (
+                <UpdateJob />
+              ) : (
+                <StatusJob />
+              )}
+            </>
           )}
+          {role === "worker" && (
+            <>
+              {job?.status === "pending" ? (
+                <UpdateJob />
+              ) : job?.status === "negotiation" ? (
+                <StatusJob />
+              ) : (
+                <StatusJob />
+              )}
+            </>
+          )}
+          {/* {role === "worker" && (
+            <>
+              {["pending", "negotiation"].includes(job?.status!) ? (
+                <UpdateJob />
+              ) : (
+                <StatusJob />
+              )}
+            </>
+          )} */}
         </div>
       </div>
     </Layout>

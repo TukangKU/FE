@@ -42,8 +42,8 @@ export const getJobWorker = async (params?: RequestParams) => {
     }
 
     const url = query
-      ? `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs?${query}`
-      : `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs`;
+      ? `https://tukangku.online/jobs?${query}`
+      : `https://tukangku.online/jobs`;
 
     const response = await axiosWithConfig.get(url);
     return response.data.data;
@@ -52,11 +52,10 @@ export const getJobWorker = async (params?: RequestParams) => {
   }
 };
 
-// TODO: change hardcode param
 export const getDetailJob = async (id: string) => {
   try {
     const response = await axiosWithConfig.get(
-      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`
+      `https://tukangku.online/jobs/${id}`
     );
     return response.data.data;
   } catch (error: any) {
@@ -64,11 +63,10 @@ export const getDetailJob = async (id: string) => {
   }
 };
 
-// TODO: change hardcode param
 export const updateJob = async (body: UpdateJobSchema, id: string) => {
   try {
     const response = await axiosWithConfig.put(
-      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`,
+      `https://tukangku.online/jobs/${id}`,
       body
     );
     return response.data as Response;
