@@ -73,3 +73,13 @@ export interface Worker {
   foto: string;
 }
 
+export interface OrderInfoProps {
+  orderId: string;
+  customerName: string;
+  workCategory: string;
+  orderDuration: string;
+  workerName: string;
+  pricing: string;
+  address: string;
+ 
+}
