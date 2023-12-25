@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Layout from "@/components/layout";
+import StatusJob from "@/components/status-job";
 import { Textarea } from "@/components/ui/textarea";
 
 const DetailHistory = () => {
@@ -17,13 +19,11 @@ const DetailHistory = () => {
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Nama pemesan :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Sri wulandari
             </p>
           </div>
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Mulai tanggal :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              12/10/2023
             </p>
           </div>
           <div className="grid grid-cols-2">
@@ -31,13 +31,11 @@ const DetailHistory = () => {
               Selesai tanggal :
             </p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              12/11/2023
             </p>
           </div>
           <div className="grid grid-cols-2">
             <p className="lg:text-base md:text-base text-sm">Alamat :</p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Jl. setia budi
             </p>
           </div>
           <div className="grid grid-cols-2">
@@ -45,22 +43,16 @@ const DetailHistory = () => {
               Total pembayaran :
             </p>
             <p className="lg:ms-0 md:ms-0 ms-10 lg:text-base md:text-base text-sm">
-              Rp. 150.000
             </p>
           </div>
           <div className="rounded-lg flex flex-col gap-3">
             <p className="lg:text-base md:text-base text-sm">Deskripsi :</p>
             <Textarea
               className="lg:w-[35rem] md:w-[30rem] h-64 lg:text-base md:text-base text-sm"
-              value="Ditunggu ya mas"
               readOnly
             />
           </div>
-          <div className="bg-tukangku py-2 rounded-lg">
-            <p className="text-center lg:text-4xl md:text-3xl text-2xl font-bold">
-              SELESAI
-            </p>
-          </div>
+          <StatusJob/>
         </div>
       </div>
     </Layout>

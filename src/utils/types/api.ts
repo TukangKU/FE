@@ -17,3 +17,10 @@ export interface ProfileType {
   role?: RoleType;
   skill?: { skill_id: number; skill: string }[];
 }
+
+
+export type Pagination = {
+  page: number;
+  pagesize: number;
+  totalpages: number;
+};

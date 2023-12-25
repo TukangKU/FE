@@ -77,8 +77,8 @@ export const skillOptions: readonly SkillOption[] = [
 export const JobDetailData = {
   foto: "/src/assets/worker/user (3).png",
   worker_id: 2,
-  skill_id: 1,
-  category: "Service AC",
+  skill_id: 3,
+  category: "Plumber",
   worker_name: "Bedul",
   alamat: "Jl. Orang Ganteng No.1001",
 };
@@ -123,3 +123,18 @@ export const TestimoniData = [
       "“Overall sudah baik, pengerjaan sangat bagus, teliti, dan sopan”",
   },
 ];
+
+export const JobWorkerID = {
+  job_id: 1,
+  category: "Service AC",
+  worker_name: "bedul",
+  client_name: "Peter Jordanson",
+  foto: "/src/assets/worker/default-avatar.jpg",
+  start_date: "2023-12-15",
+  end_date: "2023-12-16",
+  alamat: "Jl. Setiabudi",
+  harga: 0,
+  deskripsi: "Mau pasang AC 2 mas",
+  note_negosiasi: "",
+  status: "pending",
+};

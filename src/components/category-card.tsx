@@ -2,12 +2,13 @@ interface CardProps {
   image: string;
   title: string;
   detail: string;
+  onClick?: () => void;
 }
 
 export const CategoryCard = (props: CardProps) => {
-  const { image, title, detail } = props;
+  const { image, title, detail, onClick } = props;
   return (
-    <div className="scale-90 hover:scale-100 ease-in duration-500 rounded-xl shadow-lg bg-white container w-full md:w-[45%] lg:w-[25%] p-6 cursor-pointer">
+    <div className="scale-90 hover:scale-100 ease-in duration-500 rounded-xl shadow-lg bg-white container w-full md:w-[45%] lg:w-[25%] p-6 cursor-pointer" onClick={onClick}>
       <div className=" grid grid-cols-1 lg:gap-3 xl:gap-5">
         <div className="relative h-[100px] xl:h-[150px]">
           <div className="absolute bg-white lg:w-28 xl:w-40 aspect-square rounded-full flex justify-center items-center">

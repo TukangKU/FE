@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { RoleType } from "@/utils/types/api";
 import * as z from "zod";
 
 const MAX_FILE_SIZE = 5000000;
@@ -27,6 +28,43 @@ export const workerProfileUpdateSchema = z.object({
     .or(z.literal("")),
 });
 
+const baseSchema = z.object({
+  role: z.string(),
+});
+
+export const updateJobSchema = z.discriminatedUnion("status", [
+  z
+    .object({
+      status: z.literal("rejected"),
+      note_negosiasi: z.string().optional(),
+      price: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
+  z
+    .object({
+      status: z.literal("negotiation"),
+      note_negosiasi: z
+        .string()
+        .min(1, { message: "Note negosiasi dibutuhkan" }),
+      price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+    })
+    .merge(baseSchema),
+  z.object({
+    status: z.literal("accepted"),
+    note_negosiasi: z.string().min(1, { message: "Note negosiasi dibutuhkan" }),
+    price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+  }),
+  z
+    .object({
+      status: z.literal("finished"),
+      note_negosiasi: z.string().optional(),
+      price: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
+]);
+
+export type UpdateJobSchema = z.infer<typeof updateJobSchema>;
+
 export type WorkerUpdateType = z.infer<typeof workerProfileUpdateSchema>;
 
 export interface Worker {
@@ -51,9 +89,45 @@ export interface UpdateWorker {
 }
 
 export interface JobWorker {
-  workername: string;
+  job_id: number;
+  category: string;
+  worker_name: string;
+  client_name: string;
+  foto: string;
   start_date: string;
   end_date: string;
-  price: number;
+  alamat: string;
+  harga: number;
   deskripsi: string;
+  note_negosiasi: string;
+  status: string;
+}
+
+export interface UpdateJob {
+  deskripsi: string;
+  price: string;
+  status: string;
+}
+
+export interface RequestParams {
+  path?: string;
+  query?: string;
+  sort?: "all" | "pending" | "negotiaton" | "accepted" | "rejected";
+  filter?: string;
+  limit?: string | number;
+  page?: string | number;
+}
+
+export interface NewWorker {
+  alamat: string;
+  email: string;
+  foto: string;
+  id: number;
+  job: { category: string; job_id: number; price: number }[];
+  nama: string;
+  nohp: number;
+  role: RoleType;
+  address: string;
+  skill: string[];
+  username: string;
 }

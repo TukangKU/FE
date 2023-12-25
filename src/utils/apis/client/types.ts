@@ -35,17 +35,62 @@ export interface JobOrder {
 
 export const clientPostJobSchema = z.object({
   skill_id: z.number({
-    required_error: "Age is required",
-    invalid_type_error: "Age must be a number",
+    required_error: "Id skill dibutuhkan",
+    invalid_type_error: "Id skill harus berupa angka",
   }),
   worker_id: z.number({
-    required_error: "Age is required",
-    invalid_type_error: "Age must be a number",
+    required_error: "Id worker dibutuhkan",
+    invalid_type_error: "Id worker harus berupa angka",
   }),
-  start_date: z.string().min(1, { message: "Start Date is required" }),
-  end_date: z.string().min(1, { message: "End Date is required" }),
-  alamat: z.string().min(1, { message: "Addres is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
+  start_date: z.string().min(1, { message: "Tanggal mulai harus diisi" }),
+  end_date: z.string().min(1, { message: "Tanggal berakhir harus diisi" }),
+  alamat: z.string().min(1, { message: "Alamat harus diisi" }),
+  description: z.string().min(1, { message: "Deskripsi harus diisi" }),
 });
 
 export type ClientPostJobType = z.infer<typeof clientPostJobSchema>;
+
+export interface WorkerDetails {
+  id: number;
+  cover_image: string;
+  name: string;
+  address: string;
+  total_projects: number;
+  skills: string[];
+}
+
+export interface WorkerAvailables {
+  id: number;
+  username: string;
+  nama: string;
+  alamat: string;
+  email: string;
+  foto: string;
+  skill: {
+    skill_id: number;
+    skill: string;
+  }[];
+}
+export interface Worker {
+  username: string;
+  nohp:string;
+  email: string;
+  alamat: string;
+  skill: {
+    skill_id: number;
+    skill: string;
+  }[];
+  projectHistory: string[];
+  foto: string;
+}
+export interface ApiResponse {
+  data: Worker[];
+  message: string;
+  pagination: {
+    page: number;
+    pagesize: number;
+    skill: number;
+    totalPages: number;
+  };
+}
+

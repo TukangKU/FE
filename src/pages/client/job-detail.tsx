@@ -14,32 +14,45 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { JobDetailData } from "@/utils/mockdata/data";
+import { Service } from "@/utils/mockdata/data";
 import { useToast } from "@/components/ui/use-toast";
 import { postJobDetail } from "@/utils/apis/client/api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToken } from "@/utils/contexts/token";
+import { NewWorker } from "@/utils/apis/worker/types";
 
 const JobDetail = () => {
+  const { client } = useToken();
   const { toast } = useToast();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dataWorker: NewWorker | undefined = location.state?.WorkerDetail;
+
+  const serviceId = location.state.serviceId;
+
+  const category = Service[serviceId - 1].name;
 
   const form = useForm<ClientPostJobType>({
     resolver: zodResolver(clientPostJobSchema),
     defaultValues: {
-      skill_id: JobDetailData.skill_id,
-      worker_id: JobDetailData.worker_id,
+      skill_id: serviceId,
+      worker_id: dataWorker?.id,
       start_date: "",
       end_date: "",
-      alamat: JobDetailData.alamat,
+      alamat: client.alamat,
       description: "",
     },
   });
 
+  console.log("alamat client", client.alamat);
+
   async function onSubmit(data: ClientPostJobType) {
     try {
       const result = await postJobDetail(data);
-      console.log("result", result);
       toast({
         description: result.message,
       });
+      navigate("/job/request");
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -54,8 +67,8 @@ const JobDetail = () => {
       <Head>Job Detail</Head>
       <div className="flex flex-col justify-center items-center py-20">
         <img
-          src={JobDetailData.foto}
-          alt={JobDetailData.worker_name}
+          src={dataWorker?.foto}
+          alt={dataWorker?.nama}
           className="lg:w-52 md:w-48 w-44 aspect-square rounded-full object-cover"
         />
         <Form {...form}>
@@ -63,15 +76,15 @@ const JobDetail = () => {
             <div className="grid justify-center mx-auto p-4">
               <div className="border p-4 rounded-md  my-5">
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">Category:</span>
-                  <div>{JobDetailData.category}</div>
+                  <span className="font-semibold ">Kategori:</span>
+                  <div>{category}</div>
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">Name:</span>
-                  <div>{JobDetailData.worker_name}</div>
+                  <span className="font-semibold ">Nama:</span>
+                  <div>{dataWorker?.nama}</div>
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">Start Date:</span>
+                  <span className="font-semibold ">Tanggal Mulai:</span>
                   <CustomFormField control={form.control} name="start_date">
                     {(field) => (
                       <Input
@@ -85,7 +98,7 @@ const JobDetail = () => {
                 </div>
 
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold">End Date:</span>
+                  <span className="font-semibold">Tanggal Berakhir:</span>
                   <CustomFormField control={form.control} name="end_date">
                     {(field) => (
                       <Input
@@ -98,7 +111,7 @@ const JobDetail = () => {
                   </CustomFormField>
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold">Address:</span>
+                  <span className="font-semibold">Alamat Pengerjaan:</span>
                   <CustomFormField control={form.control} name="alamat">
                     {(field) => (
                       <Input
@@ -113,7 +126,7 @@ const JobDetail = () => {
 
                 <div className="grid grid-cols-1 justify-center items-center mb-2  ">
                   <span className="text-xl font-semibold text-center mb-4 flex gap-1">
-                    Description
+                    Dekripsi
                     <HoverCard>
                       <HoverCardTrigger>
                         <HelpCircle size={23} />

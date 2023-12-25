@@ -29,11 +29,9 @@ const Navbar = () => {
     },
     {
       name: "Job Request",
-      pathname: "/worker/job/request",
+      pathname: "/job/request",
     },
   ];
-
-  
 
   function handleLogout() {
     changeToken();
@@ -47,12 +45,12 @@ const Navbar = () => {
       className="w-full sticky top-0 bg-white/90 z-50 drop-shadow-lg"
       aria-label="navbar">
       <nav className="flex container p-6 flex-row justify-between">
-        <Link to={'/'}>
-        <img
-          src={Logo}
-          alt="Logo TukangKu"
-          className="w-16 lg:w-24 cursor-pointer"
-        />
+        <Link to={"/"}>
+          <img
+            src={Logo}
+            alt="Logo TukangKu"
+            className="w-16 lg:w-24 cursor-pointer"
+          />
         </Link>
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
@@ -103,6 +101,17 @@ const Navbar = () => {
                     </DropdownMenuItem>
                   </>
                 )}
+                <div className="md:hidden">
+                  <DropdownMenuItem onClick={() => navigate("/")}>
+                    Home
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/category")}>
+                    Category
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/job/request")}>
+                    Job Request
+                  </DropdownMenuItem>
+                </div>
                 <DropdownMenuItem onClick={() => handleLogout()}>
                   Logout
                 </DropdownMenuItem>

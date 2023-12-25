@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import EditProfile from "@/pages/worker/edit-profile";
-import History from "@/pages/worker/history";
-import DetailHistory from "@/pages/worker/detail-history";
 import RequestJob from "@/pages/worker/request-job";
 import DetailJob from "@/pages/worker/detail-job";
 import Home from "@/pages/App";
@@ -22,22 +20,20 @@ const App = () => {
     // {
     //   element: <ProtectedRoute />,
     //   children: [
-    { path: "/", element: <Home /> },
-    { path: "/login", element: <Login /> },
-    { path: "/register", element: <Register /> },
-    { path: "/profile/worker/edit", element: <EditProfile /> },
-    { path: "/worker/history", element: <History /> },
-    { path: "/worker/history/detail", element: <DetailHistory /> },
-    { path: "/worker/job/request", element: <RequestJob /> },
-    { path: "/worker/job/detail", element: <DetailJob /> },
-    { path: "/profile/client/edit", element: <EditProfileClient /> },
-    { path: "/client/available-worker", element: <AvailableWorker /> },
-    { path: "/client/detail-worker", element: <DetailWorker /> },
-    { path: "/client/job-detail", element: <JobDetail /> },
-    { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
-    { path: "/client/payment", element: <Payment /> },
-    { path: "/category", element: <Category /> },
-    { path: "*", element: <NotFound /> },
+        { path: "/", element: <Home /> },
+        { path: "/login", element: <Login /> },
+        { path: "/register", element: <Register /> },
+        { path: "/profile/worker/edit", element: <EditProfile /> },
+        { path: "/job/request", element: <RequestJob /> },
+        { path: "/job/detail/:id", element: <DetailJob /> },
+        { path: "/profile/client/edit", element: <EditProfileClient /> },
+        { path: "/client/available-worker", element: <AvailableWorker /> },
+        { path: "/client/detail-worker", element: <DetailWorker /> },
+        { path: "/client/job-detail", element: <JobDetail /> },
+        { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
+        { path: "/client/payment", element: <Payment /> },
+        { path: "/category", element: <Category /> },
+        { path: "*", element: <NotFound /> },
     //   ],
     // },
   ]);
