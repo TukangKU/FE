@@ -11,11 +11,13 @@ import { useEffect, useState } from "react";
 import UpdateJob from "@/components/update-job";
 import StatusJob from "@/components/status-job";
 import { useParams } from "react-router-dom";
+import { useToken } from "@/utils/contexts/token";
 
 const DetailJob = () => {
   const [job, setJob] = useState<JobWorker>();
   const { toast } = useToast();
   const params = useParams();
+  const { role } = useToken();
 
   useEffect(() => {
     fetchData();
@@ -43,7 +45,7 @@ const DetailJob = () => {
             <img
               src={job?.foto}
               alt=""
-              className="rounded-full object-cover top-5 w-4 aspect-square absolute l4g:w-52 md:w-48"
+              className="rounded-full object-cover top-5 aspect-square absolute lg:w-48 md:w-44 w-40"
             />
           </div>
         </div>
@@ -83,21 +85,39 @@ const DetailJob = () => {
           <div className="grid grid-cols-2">
             <p className="text-sm md:text-base lg:text-base">Harga :</p>
             <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
-              Rp. {job?.harga}
+              {job?.harga.toLocaleString("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              })}
             </p>
           </div>
           <div>
-            <p className="text-sm md:text-base lg:text-base">Deskripsi :</p>
+            <p className="text-sm md:text-base lg:text-base mb-2">
+              Deskripsi pesanan :
+            </p>
             <Textarea
-              className="h-64 text-sm md:text-base md:w-[30rem] lg:text-base lg:w-[35rem]"
+              className="h-64 text-sm md:text-base md:w-[30rem] lg:text-base lg:w-[35rem] cursor-default"
               readOnly
               value={job?.deskripsi}
             />
           </div>
-          {["pending", "negotiation"].includes(job?.status!) ? (
-            <StatusJob />
-          ) : (
-            <UpdateJob />
+          {role === "client" && (
+            <>
+              {job?.status === "negotiation_to_client" ? (
+                <UpdateJob />
+              ) : (
+                <StatusJob />
+              )}
+            </>
+          )}
+          {role === "worker" && (
+            <>
+              {["pending", "negotiation_to_worker"].includes(job?.status!) ? (
+                <UpdateJob />
+              ) : (
+                <StatusJob />
+              )}
+            </>
           )}
         </div>
       </div>

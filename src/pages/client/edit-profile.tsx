@@ -3,7 +3,7 @@
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
@@ -18,9 +18,9 @@ import {
 import { updateProfile } from "@/utils/apis/client/api";
 
 const EditProfile = () => {
-  const { client, id } = useToken();
+  const { client, id, reFetch } = useToken();
   const { toast } = useToast();
-  // const navigate = useNavigate();
+  const [value, setValue] = useState("");
 
   const form = useForm<ClientUpdateType>({
     resolver: zodResolver(clientProfileUpdateSchema),
@@ -43,13 +43,14 @@ const EditProfile = () => {
 
   async function onSubmit(data: ClientUpdateType) {
     try {
-      console.log("data", data);
       const result = await updateProfile(id, data);
-      console.log("result", result);
       toast({
         description: result.message,
       });
-      // navigate("/profile/client");
+
+      if (result.message === "posting updated successfully") {
+        reFetch();
+      }
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -82,9 +83,19 @@ const EditProfile = () => {
                 {(field) => (
                   <Input
                     type="file"
+                    accept="image/*"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
+                    value={value}
+                    onChange={(e) => {
+                      setValue(e.target.value);
+                      if (e.target.files !== null) {
+                        field.onChange(e.target.files[0]);
+                      } else {
+                        field.onChange("");
+                      }
+                    }}
                   />
                 )}
               </CustomFormField>
@@ -95,13 +106,27 @@ const EditProfile = () => {
                 name="username"
                 label="Username">
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Username" />
+                  <Input
+                    type="text"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                    placeholder="Username"
+                  />
                 )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
               <CustomFormField control={form.control} name="nama" label="Nama">
-                {(field) => <Input type="text" {...field} placeholder="Nama" />}
+                {(field) => (
+                  <Input
+                    type="text"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                    placeholder="Nama"
+                  />
+                )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
@@ -110,14 +135,29 @@ const EditProfile = () => {
                 name="email"
                 label="Email">
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Email" />
+                  <Input
+                    type="text"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                    placeholder="Email"
+                  />
                 )}
               </CustomFormField>
             </div>
             <div className="flex flex-col gap-3">
-              <CustomFormField control={form.control} name="nohp" label="No HP">
+              <CustomFormField
+                control={form.control}
+                name="nohp"
+                label="No. HP">
                 {(field) => (
-                  <Input type="text" {...field} placeholder="No HP" />
+                  <Input
+                    type="text"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                    placeholder="No. HP"
+                  />
                 )}
               </CustomFormField>
             </div>
@@ -127,7 +167,13 @@ const EditProfile = () => {
                 name="alamat"
                 label="Alamat">
                 {(field) => (
-                  <Input type="text" {...field} placeholder="Alamat" />
+                  <Input
+                    type="text"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                    placeholder="Alamat"
+                  />
                 )}
               </CustomFormField>
             </div>

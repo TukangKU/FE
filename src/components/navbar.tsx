@@ -18,7 +18,7 @@ const Navbar = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const dataNavClient = [
+  const dataNav = [
     {
       name: "Home",
       pathname: "/",
@@ -27,18 +27,6 @@ const Navbar = () => {
       name: "Category",
       pathname: "/category",
     },
-    {
-      name: "Job Request",
-      pathname: "/job/request",
-    },
-  ];
-
-  const dataNavWorker = [
-    {
-      name: "Home",
-      pathname: "/",
-    },
-    { name: "Category", pathname: "/category" },
     {
       name: "Job Request",
       pathname: "/job/request",
@@ -54,48 +42,30 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full sticky top-0 bg-white/90 z-50"
-      aria-label="navbar"
-    >
+      className="w-full sticky top-0 bg-white/90 z-50 drop-shadow-lg"
+      aria-label="navbar">
       <nav className="flex container p-6 flex-row justify-between">
-        <img
-          src={Logo}
-          alt="Logo TukangKu"
-          className="w-16 lg:w-24 cursor-pointer"
-        />
+        <Link to={"/"}>
+          <img
+            src={Logo}
+            alt="Logo TukangKu"
+            className="w-16 lg:w-24 cursor-pointer"
+          />
+        </Link>
         <div className="hidden md:block">
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
-            {role === "worker"
-              ? dataNavWorker.map((item) => {
-                  return (
-                    <Link to={item.pathname}>
-                      <li
-                        className={` ${
-                          location.pathname === item.pathname
-                            ? "text-tukangku"
-                            : ""
-                        }`}
-                      >
-                        {item.name}
-                      </li>
-                    </Link>
-                  );
-                })
-              : dataNavClient.map((item) => {
-                  return (
-                    <Link to={item.pathname}>
-                      <li
-                        className={` ${
-                          location.pathname === item.pathname
-                            ? "text-tukangku"
-                            : ""
-                        }`}
-                      >
-                        {item.name}
-                      </li>
-                    </Link>
-                  );
-                })}
+            {dataNav.map((item) => {
+              return (
+                <Link to={item.pathname}>
+                  <li
+                    className={` ${
+                      location.pathname === item.pathname ? "text-tukangku" : ""
+                    }`}>
+                    {item.name}
+                  </li>
+                </Link>
+              );
+            })}
           </ul>
         </div>
         <DropdownMenu>
@@ -117,8 +87,7 @@ const Navbar = () => {
                     <DropdownMenuLabel>Hi, {worker.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/worker/edit")}
-                    >
+                      onClick={() => navigate("/profile/worker/edit")}>
                       Profile
                     </DropdownMenuItem>
                   </>
@@ -127,12 +96,22 @@ const Navbar = () => {
                     <DropdownMenuLabel>Hai, {client.nama}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => navigate("/profile/client/edit")}
-                    >
+                      onClick={() => navigate("/profile/client/edit")}>
                       Profile
                     </DropdownMenuItem>
                   </>
                 )}
+                <div className="md:hidden">
+                  <DropdownMenuItem onClick={() => navigate("/")}>
+                    Home
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/category")}>
+                    Category
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/job/request")}>
+                    Job Request
+                  </DropdownMenuItem>
+                </div>
                 <DropdownMenuItem onClick={() => handleLogout()}>
                   Logout
                 </DropdownMenuItem>

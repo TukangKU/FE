@@ -16,9 +16,29 @@ export const getWorkerProfile = async (id: string) => {
 
 export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
   try {
+    console.log("body", body);
+    const formData = new FormData();
+    let key: keyof typeof body;
+    for (key in body) {
+      if (body[key]) {
+        if (Array.isArray(body[key])) {
+          for (const val of body[key]) {
+            formData.append(key, val.value);
+          }
+        } else {
+          formData.append(key, body[key]);
+        }
+      }
+    }
+
     const response = await axiosWithConfig.put(
       `https://tukangku.online/client/${id}`,
-      body
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error: any) {
@@ -42,21 +62,21 @@ export const getJobWorker = async (params?: RequestParams) => {
     }
 
     const url = query
-      ? `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs?${query}`
-      : `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs`;
+      ? `https://tukangku.online/jobs?${query}`
+      : `https://tukangku.online/jobs`;
 
     const response = await axiosWithConfig.get(url);
-    return response.data.data;
+    console.log("response", response.data)
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-// TODO: change hardcode param
 export const getDetailJob = async (id: string) => {
   try {
     const response = await axiosWithConfig.get(
-      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`
+      `https://tukangku.online/jobs/${id}`
     );
     return response.data.data;
   } catch (error: any) {
@@ -64,11 +84,10 @@ export const getDetailJob = async (id: string) => {
   }
 };
 
-// TODO: change hardcode param
 export const updateJob = async (body: UpdateJobSchema, id: string) => {
   try {
     const response = await axiosWithConfig.put(
-      `https://virtserver.swaggerhub.com/be-tukangku/tukangku/1.0.0/jobs/${id}`,
+      `https://tukangku.online/jobs/${id}`,
       body
     );
     return response.data as Response;

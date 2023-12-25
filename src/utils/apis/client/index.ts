@@ -1,5 +1,16 @@
-import { ProfileClientType, Client } from "./types";
-import { getClientProfile } from "./api";
+import {
+  ClientUpdateType,
+  clientProfileUpdateSchema,
+  clientPostJobSchema,
+  ClientPostJobType,
+} from "./types";
+import { getClientProfile, updateProfile, postJobDetail } from "./api";
 
-export type { ProfileClientType, Client };
-export { getClientProfile };
+export {
+  getClientProfile,
+  updateProfile,
+  clientProfileUpdateSchema,
+  clientPostJobSchema,
+  postJobDetail,
+};
+export type { ClientUpdateType, ClientPostJobType };

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { RoleType } from "@/utils/types/api";
 import * as z from "zod";
 
-// const MAX_FILE_SIZE = 500000000;
-// const ACCEPTED_IMAGE_TYPE = ["image/jpeg", "image/jpg", "image/png"];
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 export const workerProfileUpdateSchema = z.object({
   username: z.string().min(1, { message: "Username wajib diisi" }),
@@ -11,18 +12,20 @@ export const workerProfileUpdateSchema = z.object({
     .string()
     .min(1, { message: "Email wajib diisi" })
     .email("Bukan email yang valid"),
-  skills: z.any(),
+  skill: z
+    .array(z.object({ value: z.number(), label: z.string() }))
+    .min(1, { message: "Skill wajib diisi" }),
   nohp: z.string().min(1, { message: "Nomer HP wajib diisi" }),
   alamat: z.string().min(1, { message: "alamat wajib diisi" }),
-  foto: z.any(),
-  // .refine(
-  //   (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-  //   "Ukuran gambar maksimal adalah 5MB"
-  // )
-  // .refine(
-  //   (files) => ACCEPTED_IMAGE_TYPE.includes(files?.[0]?.type),
-  //   "Hanya format .jpg, .jpeg, and .png yang didukung"
-  // ),
+  foto: z
+    .any()
+    .refine((files) => files?.size <= MAX_FILE_SIZE, `Max image size is 5MB`)
+    .refine(
+      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.type),
+      "Only .jpg, .jpeg, and .png formats are supported."
+    )
+    .optional()
+    .or(z.literal("")),
 });
 
 const baseSchema = z.object({
@@ -34,28 +37,48 @@ export const updateJobSchema = z.discriminatedUnion("status", [
     .object({
       status: z.literal("rejected"),
       note_negosiasi: z.string().optional(),
-      price: z.coerce.number().optional(),
+      harga: z.coerce.number().optional(),
     })
     .merge(baseSchema),
   z
     .object({
-      status: z.literal("negotiation"),
+      status: z.literal("negotiation_to_client"),
       note_negosiasi: z
         .string()
         .min(1, { message: "Note negosiasi dibutuhkan" }),
-      price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
-  z.object({
-    status: z.literal("accepted"),
-    note_negosiasi: z.string().min(1, { message: "Note negosiasi dibutuhkan" }),
-    price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
-  }),
+    z
+    .object({
+      status: z.literal("negotiation_to_worker"),
+      note_negosiasi: z
+        .string()
+        .min(1, { message: "Note negosiasi dibutuhkan" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+    })
+    .merge(baseSchema),
+  z
+    .object({
+      status: z.literal("accepted"),
+      note_negosiasi: z.string().optional(),
+      harga: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
   z
     .object({
       status: z.literal("finished"),
       note_negosiasi: z.string().optional(),
-      price: z.coerce.number().optional(),
+      harga: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
+  z
+    .object({
+      status: z.literal("pending"),
+      note_negosiasi: z
+        .string()
+        .min(1, { message: "Note negosiasi dibutuhkan" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
 ]);
@@ -113,4 +136,18 @@ export interface RequestParams {
   filter?: string;
   limit?: string | number;
   page?: string | number;
+}
+
+export interface NewWorker {
+  alamat: string;
+  email: string;
+  foto: string;
+  id: number;
+  job: { category: string; job_id: number; price: number }[];
+  nama: string;
+  nohp: number;
+  role: RoleType;
+  address: string;
+  skill: string[];
+  username: string;
 }
