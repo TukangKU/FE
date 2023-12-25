@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import Head from "@/components/head";
+import Footer from "@/components/footer";
 import { Worker } from "@/utils/apis/client/types";
 import {
   Table,
@@ -16,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const DetailWorker = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
 
   const serviceId = location.state.serviceId;
@@ -38,21 +40,24 @@ const DetailWorker = () => {
       tableRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen">
       <Head>
         <div className="flex justify-center item center text-gray-600 ">
           Detail Worker
         </div>
       </Head>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 p-8">
-        <div className="grid justify-center items-end">
+        <div className="grid justify-center items-center">
           {WorkerDetail && (
             <img
               src={WorkerDetail.foto}
               alt={WorkerDetail.username}
-              className="w-100 h-100 rounded-lg"
+              className="sm:w-32 sm:h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 object-cover rounded-lg"
             />
           )}
         </div>
@@ -69,11 +74,14 @@ const DetailWorker = () => {
                 <h2 className="text-lg ">{WorkerDetail.email}</h2>
               </div>
               <div className="mt-2 text-center">
+                <h2 className="text-lg ">{WorkerDetail.nohp}</h2>
+              </div>
+              <div className="mt-2 text-center">
                 <h2 className="text-lg ">{WorkerDetail.alamat}</h2>
               </div>
               <div className="mt-6 text-center">
                 <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap justify-center items-center text-muted-foreground">
                   {WorkerDetail.skill.slice(0, 3).map((singleSkill, index) => (
                     <span
                       key={index}
@@ -139,6 +147,7 @@ const DetailWorker = () => {
           </TableContainer>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -14,7 +14,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { useToken } from "@/utils/contexts/token";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateJob = () => {
   const { role } = useToken();
@@ -22,6 +22,7 @@ const UpdateJob = () => {
   const [job, setJob] = useState<JobWorker>();
   const { toast } = useToast();
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -48,6 +49,7 @@ const UpdateJob = () => {
       });
       form.reset({}, { keepValues: true });
       setShowNego(false);
+      navigate("/job/request");
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -61,24 +63,34 @@ const UpdateJob = () => {
     resolver: zodResolver(updateJobSchema),
     defaultValues: {
       role: role,
-      note_negosiasi: job?.note_negosiasi,
-      price: job?.harga,
+      note_negosiasi: "",
+      harga: 0,
     },
   });
 
-  const showForm = useMemo(() => {
-    if (role === "client") {
-      if (job?.status !== "pending") return false;
+  // const showForm = useMemo(() => {
+  //   if (role === "client") {
+  //     if (job?.status !== "pending") return false;
 
+  //     return true;
+  //   }
+
+  //   return true;
+  // }, [role, job?.status]);
+
+  const showForm = () => {
+    if (job?.status === "pending") {
       return true;
+    } else if (job?.status === "negotiation") {
+      return true;
+    } else {
+      return false;
     }
-
-    return true;
-  }, [role, job?.status]);
+  };
 
   return (
     <div>
-      {showForm && (
+      {showForm() && (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleUpdateJob)}
@@ -89,7 +101,7 @@ const UpdateJob = () => {
                 <div className="flex flex-col gap-3">
                   <CustomFormField
                     control={form.control}
-                    name="price"
+                    name="harga"
                     label="Tawar harga"
                   >
                     {(field) => (
@@ -117,14 +129,26 @@ const UpdateJob = () => {
                 </div>
                 <div className="flex mt-4 gap-3 items-center">
                   <Button onClick={() => setShowNego(false)}>Batal</Button>
-                  <Button
-                    {...form.register("status")}
-                    type="submit"
-                    name="pending"
-                    onClick={() => form.setValue("status", "negotiation")}
-                  >
-                    Tawar
-                  </Button>
+                  {role === "client" && (
+                    <Button
+                      {...form.register("status")}
+                      type="submit"
+                      name="pending"
+                      onClick={() => form.setValue("status", "pending")}
+                    >
+                      Tawar
+                    </Button>
+                  )}
+                  {role === "worker" && (
+                    <Button
+                      {...form.register("status")}
+                      type="submit"
+                      name="pending"
+                      onClick={() => form.setValue("status", "negotiation")}
+                    >
+                      Tawar
+                    </Button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -135,7 +159,7 @@ const UpdateJob = () => {
                   name="rejected"
                   onClick={() => {
                     form.setValue("status", "rejected");
-                    form.setValue("price", 0);
+                    form.setValue("harga", 0);
                     form.setValue("note_negosiasi", "");
                   }}
                   disabled={form.formState.isSubmitting}
@@ -155,11 +179,9 @@ const UpdateJob = () => {
                   type="submit"
                   name="accepted"
                   onClick={() => form.setValue("status", "accepted")}
-                  disabled={
-                    form.formState.isSubmitting || job?.status === "pending"
-                  }
+                  disabled={form.formState.isSubmitting || job?.harga === 0}
                   aria-disabled={
-                    form.formState.isSubmitting || job?.status === "pending"
+                    form.formState.isSubmitting || job?.harga === 0
                   }
                 >
                   {form.formState.isSubmitting ? (
