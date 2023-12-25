@@ -3,6 +3,12 @@ import Plumber from "@/assets/plumber.svg";
 import Cleaning from "@/assets/cleaning.svg";
 import Paint from "@/assets/paint.svg";
 import Cctv from "@/assets/cctv.svg";
+import Step_1 from "@/assets/langkah1.svg";
+import Step_2 from "@/assets/langkah2.svg";
+import Step_3 from "@/assets/langkah3.svg";
+import Man from "@/assets/man.svg";
+import ConfidetWoman from "@/assets/confident-woman.svg";
+import SmilingGirl from "@/assets/smiling-girl.svg";
 
 export const Service = [
   {
@@ -51,6 +57,70 @@ export const NotificationData = [
   },
   {
     description: "Your request is in the negotiation stage",
+  },
+];
+
+export interface SkillOption {
+  readonly value: number;
+  readonly label: string;
+  readonly isFixed?: boolean;
+}
+
+export const skillOptions: readonly SkillOption[] = [
+  { value: 1, label: "Service AC", isFixed: true },
+  { value: 2, label: "Cleaning" },
+  { value: 3, label: "Plumber" },
+  { value: 4, label: "Decoration" },
+  { value: 5, label: "CCTV" },
+];
+
+export const JobDetailData = {
+  foto: "/src/assets/worker/user (3).png",
+  worker_id: 2,
+  skill_id: 3,
+  category: "Plumber",
+  worker_name: "Bedul",
+  alamat: "Jl. Orang Ganteng No.1001",
+};
+
+export const StepCardData = [
+  {
+    image: Step_1,
+    title: "Lakukan Pemesanan Online",
+    description:
+      "Pilih kategori layanan yang sesuai dengan masalah Anda, kemudian cari pekerja dan nikmati pengalaman pemesanan yang lancar dengan sistem pemesanan online yang mudah lewat tukangKu.",
+  },
+  {
+    image: Step_2,
+    title: "Masukkan Informasi Pemesanan Anda",
+    description:
+      "Masukkan tanggal atau lama pemesanan yang diinginkan. Isi deskripsi pekerjaan apa saja yang akan dilakukan pekerja, kemudian klik request dan tunggu jawaban dari pekerja. Apabila pekerja menerima deskripsi pekerjaan tersebut Anda bisa melakukan penawaran harga dengan pekerja.",
+  },
+  {
+    image: Step_3,
+    title: "Lakukan Pembayaran",
+    description:
+      "Pilih metode pembayaran yang diinginkan dan lakukan pembayaran. Kemudian Pekerja akan datang ke rumah Anda sesuai dengan waktu yang diberikan.",
+  },
+];
+
+export const TestimoniData = [
+  {
+    image: SmilingGirl,
+    title: "Ibu Christine",
+    description: "“Baik Pengerjaannya. Overall OK!”",
+  },
+  {
+    image: ConfidetWoman,
+    title: "Ibu Lussiana",
+    description:
+      "“Lebih baik lagi & berharap dapat selalu dikerjakan oleh staff favorit”",
+  },
+  {
+    image: Man,
+    title: "Bapak Tommy",
+    description:
+      "“Overall sudah baik, pengerjaan sangat bagus, teliti, dan sopan”",
   },
 ];
 

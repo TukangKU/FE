@@ -25,6 +25,7 @@ interface Context {
   changeToken: (token?: string) => void;
   changeRole: (role?: string) => void;
   changeId: (id?: string) => void;
+  reFetch: () => void;
 }
 
 interface Props {
@@ -40,6 +41,7 @@ const contextValue = {
   changeToken: () => {},
   changeRole: () => {},
   changeId: () => {},
+  reFetch: () => {},
 };
 
 const TokenContext = createContext<Context>(contextValue);
@@ -89,6 +91,10 @@ export function TokenProvider({ children }: Readonly<Props>) {
     },
     [token]
   );
+
+  const reFetch = useCallback(() => {
+    fetchProfile(id);
+  }, []);
 
   const changeToken = useCallback(
     (token?: string) => {
@@ -146,8 +152,19 @@ export function TokenProvider({ children }: Readonly<Props>) {
       changeToken,
       changeRole,
       changeId,
+      reFetch,
     }),
-    [token, id, role, client, worker, changeToken, changeRole, changeId]
+    [
+      token,
+      id,
+      role,
+      client,
+      worker,
+      changeToken,
+      changeRole,
+      changeId,
+      reFetch,
+    ]
   );
 
   return (

@@ -12,7 +12,6 @@ import JobDetail from "@/pages/client/job-detail";
 import Negosiasi from "@/pages/client/negosiasi";
 import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
-import Notification from "@/pages/client/notification";
 import NotFound from "@/pages/404";
 // import ProtectedRoute from "./protected-route";
 
@@ -34,7 +33,6 @@ const App = () => {
         { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
         { path: "/client/payment", element: <Payment /> },
         { path: "/category", element: <Category /> },
-        { path: "/client/notification", element: <Notification /> },
         { path: "*", element: <NotFound /> },
     //   ],
     // },

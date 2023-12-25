@@ -15,9 +15,16 @@ import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const DetailWorker = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const navigate = useNavigate();
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
+
+  const serviceId = location.state.serviceId;
+
+  const handleDataWorker = () => {
+    navigate("/client/job-detail", { state: { WorkerDetail, serviceId } });
+  };
 
   const [showTable, setShowTable] = useState(false);
   const rows = [
@@ -78,8 +85,7 @@ const DetailWorker = () => {
                   {WorkerDetail.skill.slice(0, 3).map((singleSkill, index) => (
                     <span
                       key={index}
-                      className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
-                    >
+                      className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2">
                       {singleSkill.skill}
                     </span>
                   ))}
@@ -91,15 +97,24 @@ const DetailWorker = () => {
                   onClick={() => {
                     setShowTable(!showTable);
                     scrollToShowTable();
-                  }}
-                >
+                  }}>
                   Total Project {1}
                 </h2>
                 <div className="flex flex-cols-2 justify-center items-center gap-4">
-                  <Button className="w-24" onClick={goBack}>
+                  <Button
+                    className="w-24"
+                    onClick={() => {
+                      navigate("/client/available-worker");
+                    }}>
                     Cancel
                   </Button>
-                  <Button className="w-24">Take Worker</Button>
+                  <Button
+                    className="w-24"
+                    onClick={() => {
+                      handleDataWorker();
+                    }}>
+                    Take Worker
+                  </Button>
                 </div>
               </div>
             </>

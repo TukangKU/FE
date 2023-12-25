@@ -15,8 +15,9 @@ export interface ProfileType {
   alamat: string;
   foto: string;
   role?: RoleType;
-  skill?: null;
+  skill?: { skill_id: number; skill: string }[];
 }
+
 
 export type Pagination = {
   page: number;

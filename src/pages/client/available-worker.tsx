@@ -10,8 +10,11 @@ const AvailableData = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  
   const serviceData: WorkerAvailables[] | undefined =
     location.state?.serviceData?.data;
+
+  const serviceId = location.state.serviceId;
 
   const handleSeeWorkerDetail = async (id: number) => {
     try {
@@ -19,7 +22,8 @@ const AvailableData = () => {
       toast({
         description: WorkerDetail.message,
       });
-      navigate("/client/detail-worker", { state: { WorkerDetail } });
+      console.log(`response data by ID = ${id}`, WorkerDetail);
+      navigate("/client/detail-worker", { state: { WorkerDetail, serviceId } });
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
