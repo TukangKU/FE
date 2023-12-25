@@ -2,13 +2,13 @@ export const generatePagesToDisplay = (
     currentPage: number,
     totalPages: number
   ) => {
-    const maxPagesToShow = 5;
+    const maxPagesToShow = 10;
     let pagesToDisplay: (number | string)[] = [currentPage];
   
     if (totalPages <= maxPagesToShow) {
       pagesToDisplay = [...Array(totalPages).keys()].map((page) => page + 1);
     } else if (currentPage <= 3) {
-      pagesToDisplay = [1, 2, 3, 4, "...", totalPages];
+      pagesToDisplay = [currentPage];
     } else if (currentPage >= totalPages - 2) {
       pagesToDisplay = [
         1,

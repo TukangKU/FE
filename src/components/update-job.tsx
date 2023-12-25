@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JobWorker } from "@/utils/apis/worker";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "./ui/use-toast";
 import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
 import { UpdateJobSchema, updateJobSchema } from "@/utils/apis/worker/types";
@@ -68,20 +68,12 @@ const UpdateJob = () => {
     },
   });
 
-  // const showForm = useMemo(() => {
-  //   if (role === "client") {
-  //     if (job?.status !== "pending") return false;
-
-  //     return true;
-  //   }
-
-  //   return true;
-  // }, [role, job?.status]);
-
   const showForm = () => {
     if (job?.status === "pending") {
       return true;
-    } else if (job?.status === "negotiation") {
+    } else if (job?.status === "negotiation_to_client") {
+      return true;
+    } else if (job?.status === "negotiation_to_worker") {
       return true;
     } else {
       return false;
@@ -133,8 +125,10 @@ const UpdateJob = () => {
                     <Button
                       {...form.register("status")}
                       type="submit"
-                      name="pending"
-                      onClick={() => form.setValue("status", "pending")}
+                      name="negotiation_to_worker"
+                      onClick={() =>
+                        form.setValue("status", "negotiation_to_worker")
+                      }
                     >
                       Tawar
                     </Button>
@@ -143,8 +137,10 @@ const UpdateJob = () => {
                     <Button
                       {...form.register("status")}
                       type="submit"
-                      name="pending"
-                      onClick={() => form.setValue("status", "negotiation")}
+                      name="negotiation_to_client"
+                      onClick={() =>
+                        form.setValue("status", "negotiation_to_client")
+                      }
                     >
                       Tawar
                     </Button>
@@ -179,9 +175,11 @@ const UpdateJob = () => {
                   type="submit"
                   name="accepted"
                   onClick={() => form.setValue("status", "accepted")}
-                  disabled={form.formState.isSubmitting || job?.harga === 0}
+                  disabled={
+                    form.formState.isSubmitting || job?.status === "pending"
+                  }
                   aria-disabled={
-                    form.formState.isSubmitting || job?.harga === 0
+                    form.formState.isSubmitting || job?.status === "pending"
                   }
                 >
                   {form.formState.isSubmitting ? (
@@ -193,15 +191,13 @@ const UpdateJob = () => {
                     "Terima"
                   )}
                 </Button>
-                {(role === "worker" || job?.status === "negotiation") && (
-                  <Button
-                    type="button"
-                    onClick={() => setShowNego(true)}
-                    className="bg-tukangku mt-4 text-black md:mt-0 lg:mt-0 hover:bg-yellow-300"
-                  >
-                    Tawar harga
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  onClick={() => setShowNego(true)}
+                  className="bg-tukangku mt-4 text-black md:mt-0 lg:mt-0 hover:bg-yellow-300"
+                >
+                  Tawar harga
+                </Button>
               </div>
             )}
           </form>

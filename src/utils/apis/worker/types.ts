@@ -42,7 +42,16 @@ export const updateJobSchema = z.discriminatedUnion("status", [
     .merge(baseSchema),
   z
     .object({
-      status: z.literal("negotiation"),
+      status: z.literal("negotiation_to_client"),
+      note_negosiasi: z
+        .string()
+        .min(1, { message: "Note negosiasi dibutuhkan" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+    })
+    .merge(baseSchema),
+    z
+    .object({
+      status: z.literal("negotiation_to_worker"),
       note_negosiasi: z
         .string()
         .min(1, { message: "Note negosiasi dibutuhkan" }),

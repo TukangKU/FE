@@ -45,7 +45,6 @@ const StatusJob = () => {
       role: role,
       note_negosiasi: job?.note_negosiasi,
       harga: job?.harga,
-      status: "finished",
     },
   });
 
@@ -76,39 +75,59 @@ const StatusJob = () => {
                   type="submit"
                   {...finishJob.register("status")}
                   onClick={() => finishJob.setValue("status", "finished")}
-                  className="w-full lg:text-4xl md:text-3xl text-2xl font-bold h-16"
+                  className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-blue-500 hover:bg-blue-600"
                 >
                   SELESAIKAN PENGERJAAN
                 </Button>
               </form>
             </Form>
           ) : (
-            <div className="bg-tukangku py-2 rounded-lg">
-              <p className="text-center lg:text-4xl md:text-3xl text-2xl font-bold">
+            <div
+              className={`${job?.status === "pending" && "bg-tukangku"} ${
+                job?.status === "accepted" && "bg-green-600"
+              } ${job?.status === "rejected" && "bg-red-600"} ${
+                job?.status === "finished" && "bg-blue-600"
+              } ${job?.status === "negotiation_to_client" && "bg-slate-500"} ${
+                job?.status === "negotiation_to_worker" && "bg-slate-500"
+              } py-2 rounded-lg`}
+            >
+              <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
                 {job?.status === "rejected"
                   ? "DITOLAK"
-                  : job?.status === "negotiation"
+                  : job?.status === "negotiation_to_client"
                   ? "NEGOSIASI"
                   : job?.status === "accepted"
                   ? "DITERIMA"
                   : job?.status === "pending"
                   ? "PENDING"
+                  : job?.status === "negotiation_to_worker"
+                  ? "NEGOSIASI"
                   : "SELESAI"}
               </p>
             </div>
           )}
         </>
       ) : (
-        <div className="bg-tukangku py-2 rounded-lg">
-          <p className="text-center lg:text-4xl md:text-3xl text-2xl font-bold">
+        <div
+          className={` ${job?.status === "pending" && "bg-tukangku"} ${
+            job?.status === "accepted" && "bg-green-600"
+          } ${job?.status === "rejected" && "bg-red-600"} ${
+            job?.status === "finished" && "bg-blue-600"
+          } ${job?.status === "negotiation_to_client" && "bg-slate-500"} ${
+            job?.status === "negotiation_to_worker" && "bg-slate-500"
+          } py-2 rounded-lg`}
+        >
+          <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
             {job?.status === "rejected"
               ? "DITOLAK"
-              : job?.status === "negotiation"
+              : job?.status === "negotiation_to_worker"
               ? "NEGOSIASI"
               : job?.status === "accepted"
               ? "DITERIMA"
               : job?.status === "pending"
               ? "PENDING"
+              : job?.status === "negotiation_to_worker"
+              ? "NEGOSIASI"
               : "SELESAI"}
           </p>
         </div>
