@@ -76,9 +76,9 @@ const RequestJob = () => {
             <SelectGroup>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="negotiation">Negosiasi</SelectItem>
-              <SelectItem value="accepted">Accepted</SelectItem>
-              <SelectItem value="rejected">Rejected</SelectItem>
-              <SelectItem value="Finished">Finished</SelectItem>
+              <SelectItem value="accepted">Diterima</SelectItem>
+              <SelectItem value="rejected">Ditolak</SelectItem>
+              <SelectItem value="Finished">Selesai</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -165,12 +165,14 @@ const RequestJob = () => {
           )}
         </>
       )}
-      <PaginationButton
-        meta={meta}
-        onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
-        onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
-        onClickPage={(page) => handlePrevNextPage(page)}
-      />
+      {jobs !== null && (
+        <PaginationButton
+          meta={meta}
+          onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+          onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+          onClickPage={(page) => handlePrevNextPage(page)}
+        />
+      )}
     </Layout>
   );
 };

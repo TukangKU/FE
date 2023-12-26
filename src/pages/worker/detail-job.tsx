@@ -38,7 +38,7 @@ const DetailJob = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col py-4 justify-center items-center relative">
+      <div className="flex flex-col justify-center items-center relative">
         <div className="w-full relative">
           <div className="bg-tukangku h-[6.5rem] w-full md:h-28 lg:h-32"></div>
           <div className="flex z-10 justify-center items-center">
@@ -51,9 +51,13 @@ const DetailJob = () => {
         </div>
         <div className="border rounded-lg flex flex-col border-slate-500 mt-28 p-4 gap-4">
           <div className="grid grid-cols-2">
-            <p className="text-sm md:text-base lg:text-base">Nama pemesan :</p>
+            <p className="text-sm md:text-base lg:text-base">
+              {role === "worker" ? "Nama pelanggan :" : "Nama pekerja :"}
+            </p>
             <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
-              {job?.client_name}
+              {role === "worker"
+                ? `${job?.client_name}`
+                : `${job?.worker_name}`}
             </p>
           </div>
           <div className="grid grid-cols-2">
@@ -77,7 +81,9 @@ const DetailJob = () => {
             </p>
           </div>
           <div className="grid grid-cols-2">
-            <p className="text-sm md:text-base lg:text-base">Alamat :</p>
+            <p className="text-sm md:text-base lg:text-base">
+              Alamat pengerjaan :
+            </p>
             <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
               {job?.alamat}
             </p>
@@ -93,7 +99,7 @@ const DetailJob = () => {
           </div>
           <div>
             <p className="text-sm md:text-base lg:text-base mb-2">
-              Deskripsi pesanan :
+              Deskripsi pekerjaan :
             </p>
             <Textarea
               className="h-64 text-sm md:text-base md:w-[30rem] lg:text-base lg:w-[35rem] cursor-default"
