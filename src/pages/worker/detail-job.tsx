@@ -55,7 +55,7 @@ const DetailJob = () => {
               />
             </div>
           </div>
-          <div className="border rounded-lg flex flex-col border-slate-500 mt-28 p-4 gap-4">
+          <div className="border rounded-lg flex flex-col border-slate-500 mt-28 p-4 gap-4 cursor-default">
             <div className="grid grid-cols-2">
               <p className="text-sm md:text-base lg:text-base">
                 {role === "worker" ? "Nama pelanggan :" : "Nama pekerja :"}
@@ -90,7 +90,7 @@ const DetailJob = () => {
             </div>
             <div className="grid grid-cols-2">
               <p className="text-sm md:text-base lg:text-base">
-                Alamat pengerjaan :
+                Alamat :
               </p>
               <p className="text-sm ms-10 md:text-base md:ms-0 lg:text-base lg:ms-0">
                 {job?.alamat}

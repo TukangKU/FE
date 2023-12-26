@@ -69,7 +69,7 @@ const RequestJob = () => {
 
   return (
     <Layout>
-      <div className="ps-32 me-auto mt-10 mb-5">
+      <div className="lg:ps-32 md:ps-20 ps-5 me-auto mt-10 mb-5">
         <Select onValueChange={(value) => handleChangeSort(value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by" />
@@ -77,7 +77,7 @@ const RequestJob = () => {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="negotiation">Negosiasi</SelectItem>
+              <SelectItem value="negotiation_to_client&negotiation_to_worker">Negosiasi</SelectItem>
               <SelectItem value="accepted">Diterima</SelectItem>
               <SelectItem value="rejected">Ditolak</SelectItem>
               <SelectItem value="Finished">Selesai</SelectItem>
@@ -96,7 +96,7 @@ const RequestJob = () => {
           ) : (
             <>
               {jobs === null ? (
-                <div className="border rounded-lg w-fit mx-auto p-4 my-4">
+                <div className="border rounded-lg w-fit mx-auto p-4 my-4 cursor-default">
                   <p className="font-bold">Tidak ada pesanan</p>
                 </div>
               ) : (
@@ -104,7 +104,7 @@ const RequestJob = () => {
                   {jobs.map((job) => (
                     <Link to={`/job/detail/${job.job_id}`}>
                       <div
-                        className="lg:flex md:flex lg:justify-between md:justify-between mx-auto mb-4 p-4 lg:w-[50rem] md:w-[40rem] justify-between rounded-lg hover:bg-slate-100 items-center border-slate-500 border"
+                        className="lg:flex md:flex lg:justify-between md:justify-between w-fit  mx-auto mb-4 p-4 lg:w-[50rem] md:w-[40rem] rounded-lg hover:bg-slate-100 items-center border-slate-500 border"
                         key={job.job_id}
                       >
                         <div className="lg:flex md:flex items-center gap-3">
@@ -139,7 +139,7 @@ const RequestJob = () => {
                               "bg-slate-500"
                             } rounded-lg px-4 py-3`}
                           >
-                            <p className="text-white font-bold">
+                            <p className="text-white font-bold lg:text-start md:text-start text-center">
                               {[
                                 "negotiation_to_client",
                                 "negotiation_to_worker",
@@ -161,7 +161,7 @@ const RequestJob = () => {
                           <img
                             src="/src/assets/worker/right-arrow (2).png"
                             alt=""
-                            className="w-9 mx-auto"
+                            className="w-9 mx-auto lg:block md:block hidden"
                           />
                         </div>
                       </div>

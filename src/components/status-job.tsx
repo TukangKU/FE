@@ -78,7 +78,7 @@ const StatusJob = () => {
     }
   };
   return (
-    <div>
+    <div className="cursor-default">
       {role === "worker" ? (
         <>
           {job?.status === "accepted" ? (

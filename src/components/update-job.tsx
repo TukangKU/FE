@@ -72,7 +72,7 @@ const UpdateJob = () => {
           onSubmit={form.handleSubmit(handleUpdateJob)}
           className="mt-4 items-center justify-between md:flex lg:flex"
         >
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center mb-3">
             <Button
               {...form.register("status")}
               type="submit"

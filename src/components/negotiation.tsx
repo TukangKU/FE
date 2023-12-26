@@ -76,7 +76,7 @@ const Negotiation = (props: Props) => {
       <AlertDialogContent>
         {status !== "pending" && (
           <>
-            <div>
+            <div className="cursor-default">
               <p className="text-sm md:text-base lg:text-base mb-2">
                 Pesan dari :{" "}
                 <span className="font-semibold">
@@ -117,7 +117,7 @@ const Negotiation = (props: Props) => {
               <CustomFormField
                 control={form.control}
                 name="note_negosiasi"
-                label="Negosiasi"
+                label="Pesan negosiasi"
               >
                 {(field) => (
                   <Input
