@@ -103,7 +103,7 @@ const DetailWorker = () => {
                   <Button
                     className="w-24"
                     onClick={() => {
-                      navigate("/client/available-worker");
+                      goBack();
                     }}>
                     Cancel
                   </Button>
