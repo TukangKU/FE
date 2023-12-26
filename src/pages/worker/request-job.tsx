@@ -43,6 +43,7 @@ const RequestJob = () => {
       const result = await getJobWorker({ ...query });
       const { ...rest } = result.pagination;
       setJobs(result.data);
+      console.log("Data api", result.data);
       setMeta(rest);
       setError(false);
       setLoading(false);
