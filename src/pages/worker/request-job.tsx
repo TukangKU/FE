@@ -42,6 +42,7 @@ const RequestJob = () => {
       const { ...rest } = result.pagination;
       console.log("result", result.pagination.pagesize);
       setJobs(result.data);
+      console.log("Data api", result.data);
       setMeta(rest);
       console.log("rest", rest);
       setError(false);

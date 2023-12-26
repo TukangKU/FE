@@ -17,7 +17,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const DetailWorker = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const navigate = useNavigate();
   
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
 
@@ -104,9 +103,7 @@ const DetailWorker = () => {
                 <div className="flex flex-cols-2 justify-center items-center gap-4">
                   <Button
                     className="w-24"
-                    onClick={() => {
-                      navigate("/client/available-worker");
-                    }}>
+                    onClick={goBack}>
                     Cancel
                   </Button>
                   <Button
