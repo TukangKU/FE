@@ -66,7 +66,6 @@ export const getJobWorker = async (params?: RequestParams) => {
       : `https://tukangku.online/jobs`;
 
     const response = await axiosWithConfig.get(url);
-    console.log("response", response.data)
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
