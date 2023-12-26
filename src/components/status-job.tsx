@@ -63,7 +63,20 @@ const StatusJob = () => {
       });
     }
   };
-
+  const handleAcceptJob = async () => {
+    if (role === "client" && job?.status === "accepted") {
+      try {
+        const result = await getDetailJob(params.id as string);
+        navigate("/client/payment", { state: { jobData: result } });
+      } catch (error: any) {
+        toast({
+          title: "Oops! Something went wrong.",
+          description: error.toString(),
+          variant: "destructive",
+        });
+      }
+    }
+  };
   return (
     <div>
       {role === "worker" ? (
@@ -117,19 +130,27 @@ const StatusJob = () => {
             job?.status === "negotiation_to_worker" && "bg-slate-500"
           } py-2 rounded-lg`}
         >
-          <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
-            {job?.status === "rejected"
-              ? "DITOLAK"
-              : job?.status === "negotiation_to_worker"
-              ? "NEGOSIASI"
-              : job?.status === "accepted"
-              ? "DITERIMA"
-              : job?.status === "pending"
-              ? "PENDING"
-              : job?.status === "negotiation_to_worker"
-              ? "NEGOSIASI"
-              : "SELESAI"}
-          </p>
+          {!(role === "client" && job?.status === "accepted") && (
+            <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
+              {job?.status === "rejected"
+                ? "DITOLAK"
+                : job?.status === "negotiation_to_worker"
+                ? "NEGOSIASI"
+                : job?.status === "pending"
+                ? "PENDING"
+                : job?.status === "negotiation_to_worker"
+                ? "NEGOSIASI"
+                : "SELESAI"}
+            </p>
+          )}
+          {role === "client" && job?.status === "accepted" && (
+            <Button
+              onClick={handleAcceptJob}
+              className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-600"
+            >
+              TERIMA
+            </Button>
+          )}
         </div>
       )}
     </div>

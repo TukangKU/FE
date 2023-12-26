@@ -102,9 +102,7 @@ const DetailWorker = () => {
                 <div className="flex flex-cols-2 justify-center items-center gap-4">
                   <Button
                     className="w-24"
-                    onClick={() => {
-                      navigate("/client/available-worker");
-                    }}>
+                    onClick={goBack}>
                     Cancel
                   </Button>
                   <Button
