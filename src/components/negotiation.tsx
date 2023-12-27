@@ -103,7 +103,7 @@ const Negotiation = (props: Props) => {
               <CustomFormField
                 control={form.control}
                 name="harga"
-                label="Tawar harga"
+                label="Tawar harga :"
               >
                 {(field) => (
                   <Input
@@ -117,14 +117,10 @@ const Negotiation = (props: Props) => {
               <CustomFormField
                 control={form.control}
                 name="note_negosiasi"
-                label="Pesan negosiasi"
+                label="Pesan negosiasi :"
               >
                 {(field) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder="Masukan note negosiasi"
-                  />
+                  <Textarea {...field} placeholder="Masukan pesan negosiasi"/>
                 )}
               </CustomFormField>
             </div>
@@ -138,6 +134,7 @@ const Negotiation = (props: Props) => {
                   onClick={() =>
                     form.setValue("status", "negotiation_to_worker")
                   }
+                  className="bg-tukangku text-black hover:bg-yellow-300"
                 >
                   Tawar
                 </Button>
@@ -150,6 +147,7 @@ const Negotiation = (props: Props) => {
                   onClick={() =>
                     form.setValue("status", "negotiation_to_client")
                   }
+                  className="bg-tukangku text-black hover:bg-yellow-300"
                 >
                   Tawar
                 </Button>
