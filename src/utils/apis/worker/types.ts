@@ -45,25 +45,25 @@ export const updateJobSchema = z.discriminatedUnion("status", [
       status: z.literal("negotiation_to_client"),
       note_negosiasi: z
         .string()
-        .min(1, { message: "Note negosiasi dibutuhkan" }),
+        .min(1, { message: "Pesan negosiasi dibutuhkan" }),
       harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
-    z
+  z
     .object({
       status: z.literal("negotiation_to_worker"),
       note_negosiasi: z
         .string()
-        .min(1, { message: "Note negosiasi dibutuhkan" }),
+        .min(1, { message: "Pesan negosiasi dibutuhkan" }),
       harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
-    z
+  z
     .object({
       status: z.literal("negotiation"),
       note_negosiasi: z
         .string()
-        .min(1, { message: "Note negosiasi dibutuhkan" }),
+        .min(1, { message: "Pesan negosiasi dibutuhkan" }),
       harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
@@ -86,7 +86,7 @@ export const updateJobSchema = z.discriminatedUnion("status", [
       status: z.literal("pending"),
       note_negosiasi: z
         .string()
-        .min(1, { message: "Note negosiasi dibutuhkan" }),
+        .min(1, { message: "Pesan negosiasi dibutuhkan" }),
       harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
@@ -159,4 +159,14 @@ export interface NewWorker {
   address: string;
   skill: string[];
   username: string;
+}
+
+export interface TransactionInfo {
+  transaction_id: number;
+  no_invoice: string;
+  job_id: string;
+  job_price: number;
+  status: string;
+  token: string;
+  url: string;
 }

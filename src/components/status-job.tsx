@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   JobWorker,
+  TransactionInfo,
   UpdateJobSchema,
   updateJobSchema,
 } from "@/utils/apis/worker/types";
@@ -10,7 +12,11 @@ import { useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 import { Form } from "./ui/form";
 import { Button } from "./ui/button";
-import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
+import {
+  getDetailJob,
+  getTransaction,
+  updateJob,
+} from "@/utils/apis/worker/api";
 import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,15 +27,30 @@ const StatusJob = () => {
   const [job, setJob] = useState<JobWorker>();
   const params = useParams();
   const navigate = useNavigate();
+  const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
 
   useEffect(() => {
     fetchData();
+    getStatusPayment();
   }, []);
 
   const fetchData = async () => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getStatusPayment = async () => {
+    try {
+      const result = await getTransaction(params.id as string);
+      setStatusPayment(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -63,8 +84,12 @@ const StatusJob = () => {
       });
     }
   };
+
   const handleAcceptJob = async () => {
-    if (role === "client" && job?.status === "accepted") {
+    if (
+      (role === "client" && job?.status === "accepted") ||
+      job?.status === "finished"
+    ) {
       try {
         const result = await getDetailJob(params.id as string);
         navigate("/client/payment", { state: { jobData: result } });
@@ -77,6 +102,9 @@ const StatusJob = () => {
       }
     }
   };
+
+  console.log(statusPayment?.status);
+
   return (
     <div className="cursor-default">
       {role === "worker" ? (
@@ -125,31 +153,36 @@ const StatusJob = () => {
           className={` ${job?.status === "pending" && "bg-tukangku"} ${
             job?.status === "accepted" && "bg-green-600"
           } ${job?.status === "rejected" && "bg-red-600"} ${
-            job?.status === "finished" && "bg-blue-600"
-          } ${job?.status === "negotiation_to_client" && "bg-slate-500"} ${
-            job?.status === "negotiation_to_worker" && "bg-slate-500"
-          } py-2 rounded-lg`}
+            job?.status === "negotiation_to_client" && "bg-slate-500"
+          } ${job?.status === "negotiation_to_worker" && "bg-slate-500"}
+           ${
+             job?.status === "finished" || statusPayment?.status === "success"
+           } py-2 rounded-lg`}
         >
-          {!(role === "client" && job?.status === "accepted") && (
-            <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
-              {job?.status === "rejected"
-                ? "DITOLAK"
-                : job?.status === "negotiation_to_worker"
-                ? "NEGOSIASI"
-                : job?.status === "pending"
-                ? "PENDING"
-                : job?.status === "negotiation_to_worker"
-                ? "NEGOSIASI"
-                : "SELESAI"}
-            </p>
-          )}
-          {role === "client" && job?.status === "accepted" && (
-            <Button
-              onClick={handleAcceptJob}
-              className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-600"
-            >
-              TERIMA
-            </Button>
+          {role === "client" && (
+            <>
+              {statusPayment?.status === "pending" &&
+              job?.status === "finished" ? (
+                <Button
+                  onClick={handleAcceptJob}
+                  className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500"
+                >
+                  BAYAR
+                </Button>
+              ) : (
+                <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
+                  {statusPayment?.status === "success"
+                    ? "SELESAI"
+                    : job?.status === "accepted"
+                    ? "DITERIMA"
+                    : job?.status === "rejected"
+                    ? "DITOLAK"
+                    : job?.status === "pending"
+                    ? "PENDING"
+                    : "SELESAI"}
+                </p>
+              )}
+            </>
           )}
         </div>
       )}
