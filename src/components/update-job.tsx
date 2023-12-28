@@ -2,9 +2,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JobWorker } from "@/utils/apis/worker";
-import { useState, useEffect } from "react";
 import { useToast } from "./ui/use-toast";
-import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
+import { updateJob } from "@/utils/apis/worker/api";
 import { UpdateJobSchema, updateJobSchema } from "@/utils/apis/worker/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,29 +14,16 @@ import { useToken } from "@/utils/contexts/token";
 import { useNavigate, useParams } from "react-router-dom";
 import Negotiation from "./negotiation";
 
-const UpdateJob = () => {
+interface Props {
+  data: JobWorker;
+}
+
+const UpdateJob = (props: Props) => {
+  const { data } = props;
   const { role } = useToken();
-  const [job, setJob] = useState<JobWorker>();
   const { toast } = useToast();
   const params = useParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const result = await getDetailJob(params.id as string);
-      setJob(result);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleUpdateJob = async (data: UpdateJobSchema) => {
     try {
@@ -100,10 +86,10 @@ const UpdateJob = () => {
               name="accepted"
               onClick={() => form.setValue("status", "accepted")}
               disabled={
-                form.formState.isSubmitting || job?.status === "pending"
+                form.formState.isSubmitting || data.status === "pending"
               }
               aria-disabled={
-                form.formState.isSubmitting || job?.status === "pending"
+                form.formState.isSubmitting || data.status === "pending"
               }
             >
               {form.formState.isSubmitting ? (
@@ -117,12 +103,12 @@ const UpdateJob = () => {
             </Button>
           </div>
           <Negotiation
-            id={job?.job_id!}
-            note={job?.note_negosiasi!}
-            worker={job?.worker_name!}
-            client={job?.client_name!}
-            price={job?.harga!}
-            status={job?.status!}
+            id={data.job_id}
+            note={data.note_negosiasi}
+            worker={data.worker_name}
+            client={data.client_name}
+            price={data.harga}
+            status={data.status}
           />
         </form>
       </Form>

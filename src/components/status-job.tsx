@@ -20,8 +20,14 @@ import {
 import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
-const StatusJob = () => {
+interface Props {
+  data: string;
+}
+
+const StatusJob = (props: Props) => {
+  const { data } = props;
   const { toast } = useToast();
   const { role } = useToken();
   const [job, setJob] = useState<JobWorker>();
@@ -87,7 +93,7 @@ const StatusJob = () => {
 
   const handleAcceptJob = async () => {
     if (
-      (role === "client" && job?.status === "accepted") ||
+      (role === "client" && data === "accepted") ||
       job?.status === "finished"
     ) {
       try {
@@ -117,31 +123,40 @@ const StatusJob = () => {
                   {...finishJob.register("status")}
                   onClick={() => finishJob.setValue("status", "finished")}
                   className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-blue-500 hover:bg-blue-600"
+                  disabled={finishJob.formState.isSubmitting}
+                  aria-disabled={finishJob.formState.isSubmitting}
                 >
-                  SELESAIKAN PENGERJAAN
+                  {finishJob.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
+                      Loading
+                    </>
+                  ) : (
+                    "SELESAIKAN PENGERJAAN"
+                  )}
                 </Button>
               </form>
             </Form>
           ) : (
             <div
-              className={`${job?.status === "pending" && "bg-tukangku"} ${
-                job?.status === "accepted" && "bg-green-600"
-              } ${job?.status === "rejected" && "bg-red-600"} ${
-                job?.status === "finished" && "bg-blue-600"
-              } ${job?.status === "negotiation_to_client" && "bg-slate-500"} ${
-                job?.status === "negotiation_to_worker" && "bg-slate-500"
+              className={`${data === "pending" && "bg-tukangku"} ${
+                data === "accepted" && "bg-green-600"
+              } ${data === "rejected" && "bg-red-600"} ${
+                data === "finished" && "bg-blue-600"
+              } ${data === "negotiation_to_client" && "bg-slate-500"} ${
+                data === "negotiation_to_worker" && "bg-slate-500"
               } py-2 rounded-lg`}
             >
               <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
-                {job?.status === "rejected"
+                {data === "rejected"
                   ? "DITOLAK"
-                  : job?.status === "negotiation_to_client"
+                  : data === "negotiation_to_client"
                   ? "NEGOSIASI"
-                  : job?.status === "accepted"
+                  : data === "accepted"
                   ? "DITERIMA"
-                  : job?.status === "pending"
+                  : data === "pending"
                   ? "PENDING"
-                  : job?.status === "negotiation_to_worker"
+                  : data === "negotiation_to_worker"
                   ? "NEGOSIASI"
                   : "SELESAI"}
               </p>
@@ -150,19 +165,18 @@ const StatusJob = () => {
         </>
       ) : (
         <div
-          className={` ${job?.status === "pending" && "bg-tukangku"} ${
-            job?.status === "accepted" && "bg-green-600"
-          } ${job?.status === "rejected" && "bg-red-600"} ${
-            job?.status === "negotiation_to_client" && "bg-slate-500"
-          } ${job?.status === "negotiation_to_worker" && "bg-slate-500"}
+          className={` ${data === "pending" && "bg-tukangku"} ${
+            data === "accepted" && "bg-green-600"
+          } ${data === "rejected" && "bg-red-600"} ${
+            data === "negotiation_to_client" && "bg-slate-500"
+          } ${data === "negotiation_to_worker" && "bg-slate-500"}
            ${
-             job?.status === "finished" || statusPayment?.status === "success"
+             data === "finished" || statusPayment?.status === "success"
            } py-2 rounded-lg`}
         >
           {role === "client" && (
             <>
-              {statusPayment?.status === "pending" &&
-              job?.status === "finished" ? (
+              {statusPayment?.status === "pending" && data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
                   className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500"
@@ -173,19 +187,51 @@ const StatusJob = () => {
                 <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
                   {statusPayment?.status === "success"
                     ? "SELESAI"
-                    : job?.status === "accepted"
+                    : data === "accepted"
                     ? "DITERIMA"
-                    : job?.status === "rejected"
+                    : data === "rejected"
                     ? "DITOLAK"
-                    : job?.status === "pending"
+                    : data === "pending"
                     ? "PENDING"
-                    : "SELESAI"}
+                    : data === "finished"
+                    ? "SELESAI"
+                    : "NEGOSIASI"}
                 </p>
               )}
             </>
           )}
         </div>
       )}
+      <p className="text-sm italic text-muted-foreground">
+        {["pending", "negotiation_to_worker", "negotiation_to_client"].includes(
+          data
+        ) && (
+          <>
+            {role === "worker"
+              ? "* Menunggu respone atau tawaran harga dari pelanggan."
+              : " * Menunggu respone atau tawaran harga dari pekerja."}
+          </>
+        )}
+        {data === "accepted" && (
+          <>
+            {role === "worker"
+              ? "* Pekerjaan diterima, segera selesaikan pekerjaan."
+              : "* Pekerjaan diterima, tunggu pekerja menyelesaikan pekerjaan."}
+          </>
+        )}
+        {role === "worker" && (
+          <>
+            {data === "finished" &&
+              "* Pekerjaan telah diselesaikan, silahkan tunggu pembayaran dari pelanggan."}
+          </>
+        )}
+        {role === "client" && (
+          <>
+            {data === "finished" &&
+              "* Pekerjaan telah diselesaikan, segera lakukan pembayaran."}
+          </>
+        )}
+      </p>
     </div>
   );
 };

@@ -18,6 +18,7 @@ import {
 import { updateJob } from "@/utils/apis/worker/api";
 import { Textarea } from "./ui/textarea";
 import { Separator } from "./ui/separator";
+import { Loader2 } from "lucide-react";
 
 interface Props {
   id: string | number;
@@ -120,7 +121,7 @@ const Negotiation = (props: Props) => {
                 label="Pesan negosiasi :"
               >
                 {(field) => (
-                  <Textarea {...field} placeholder="Masukan pesan negosiasi"/>
+                  <Textarea {...field} placeholder="Masukan pesan negosiasi" />
                 )}
               </CustomFormField>
             </div>
@@ -135,8 +136,17 @@ const Negotiation = (props: Props) => {
                     form.setValue("status", "negotiation_to_worker")
                   }
                   className="bg-tukangku text-black hover:bg-yellow-300"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
                 >
-                  Tawar
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
+                      Loading
+                    </>
+                  ) : (
+                    "Tawar"
+                  )}
                 </Button>
               )}
               {role === "worker" && (
@@ -148,8 +158,17 @@ const Negotiation = (props: Props) => {
                     form.setValue("status", "negotiation_to_client")
                   }
                   className="bg-tukangku text-black hover:bg-yellow-300"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
                 >
-                  Tawar
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
+                      Loading
+                    </>
+                  ) : (
+                    "Tawar"
+                  )}
                 </Button>
               )}
             </div>
