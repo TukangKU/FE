@@ -40,7 +40,7 @@ const JobDetail = () => {
       start_date: "",
       end_date: "",
       alamat: client.alamat,
-      description: "",
+      deskripsi: "",
     },
   });
 
@@ -150,7 +150,7 @@ const JobDetail = () => {
                       </HoverCardContent>
                     </HoverCard>
                   </span>
-                  <CustomFormField control={form.control} name="description">
+                  <CustomFormField control={form.control} name="deskripsi">
                     {(field) => (
                       <Textarea
                         disabled={form.formState.isSubmitting}

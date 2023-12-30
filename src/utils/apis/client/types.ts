@@ -45,7 +45,7 @@ export const clientPostJobSchema = z.object({
   start_date: z.string().min(1, { message: "Tanggal mulai harus diisi" }),
   end_date: z.string().min(1, { message: "Tanggal berakhir harus diisi" }),
   alamat: z.string().min(1, { message: "Alamat harus diisi" }),
-  description: z.string().min(1, { message: "Deskripsi harus diisi" }),
+  deskripsi: z.string().min(1, { message: "Deskripsi harus diisi" }),
 });
 
 export type ClientPostJobType = z.infer<typeof clientPostJobSchema>;
@@ -84,3 +84,13 @@ export interface Worker {
   foto: string;
 }
 
+export interface OrderInfoProps {
+  orderId: string;
+  customerName: string;
+  workCategory: string;
+  orderDuration: string;
+  workerName: string;
+  pricing: string;
+  address: string;
+ 
+}

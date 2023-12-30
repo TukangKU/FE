@@ -46,6 +46,17 @@ export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
   }
 };
 
+export const getTransaction = async (id: string) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `https://tukangku.online/transaction/${id}`
+    );
+    return response.data.data;
+  } catch (error:any) {
+    throw Error(error.response.data.message);
+  }
+};
+
 export const getJobWorker = async (params?: RequestParams) => {
   try {
     let query = "";
@@ -66,7 +77,7 @@ export const getJobWorker = async (params?: RequestParams) => {
       : `https://tukangku.online/jobs`;
 
     const response = await axiosWithConfig.get(url);
-    return response.data.data;
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

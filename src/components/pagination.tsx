@@ -16,7 +16,7 @@ const PaginationButton = (props: Props) => {
   const { meta, onClickNext, onClickPage, onClickPrevious } = props;
 
   const pagesToDisplay = useMemo(
-    () => generatePagesToDisplay(meta?.page!, meta?.totalpages!),
+    () => generatePagesToDisplay(meta?.page!, meta?.totalPages!),
     [meta]
   );
 
@@ -31,23 +31,23 @@ const PaginationButton = (props: Props) => {
         <ChevronLeft className="h-4 w-4" />
       </Button>
       {meta &&
-        pagesToDisplay.map((page, index) => {
+        pagesToDisplay.map((Page, index) => {
           return (
             <Button
               variant="outline"
               size="icon"
-              key={`${page}-${index}`}
-              disabled={meta?.page === page}
-              onClick={() => onClickPage(page)}
+              key={`${Page}-${index}`}
+              disabled={meta?.page === Page}
+              onClick={() => onClickPage(Page)}
             >
-              {page}
+              {Page}
             </Button>
           );
         })}
       <Button
         variant="outline"
         size="icon"
-        disabled={meta?.page === meta?.totalpages}
+        disabled={meta?.page === meta?.totalPages}
         onClick={onClickNext}
       >
         <ChevronRight className="h-4 w-4" />

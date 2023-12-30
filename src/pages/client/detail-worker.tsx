@@ -16,7 +16,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const DetailWorker = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
 
   const serviceId = location.state.serviceId;
