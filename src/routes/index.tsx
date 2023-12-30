@@ -29,7 +29,7 @@ const App = () => {
     { path: "/job/detail/:id", element: <DetailJob /> },
     { path: "/profile/client/edit", element: <EditProfileClient /> },
     { path: "/client/available-worker", element: <AvailableWorker /> },
-    { path: "/client/detail-worker/:id", element: <DetailWorker /> },
+    { path: "/client/detail-worker", element: <DetailWorker /> },
     { path: "/client/job-detail", element: <JobDetail /> },
     { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
     { path: "/client/payment", element: <Payment /> },
