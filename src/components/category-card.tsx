@@ -1,3 +1,5 @@
+import Checklist from "@/assets/checklist.svg";
+
 interface CardProps {
   image: string;
   title: string;
@@ -5,10 +7,16 @@ interface CardProps {
   onClick?: () => void;
 }
 
+interface Props {
+  title: string;
+}
+
 export const CategoryCard = (props: CardProps) => {
   const { image, title, detail, onClick } = props;
   return (
-    <div className="scale-90 hover:scale-100 ease-in duration-500 rounded-xl shadow-lg bg-white container w-full md:w-[45%] lg:w-[25%] p-6 cursor-pointer" onClick={onClick}>
+    <div
+      className="scale-90 border hover:scale-100 ease-in duration-500 rounded-xl shadow-lg bg-white hover:text-white hover:bg-tukangku container w-full md:w-[250px] lg:w-[340px] p-6 cursor-pointer"
+      onClick={onClick}>
       <div className=" grid grid-cols-1 lg:gap-3 xl:gap-5">
         <div className="relative h-[100px] xl:h-[150px]">
           <div className="absolute bg-white lg:w-28 xl:w-40 aspect-square rounded-full flex justify-center items-center">
@@ -57,6 +65,16 @@ export const BenefitCard = (props: CardProps) => {
       <img src={image} alt={title} className="w-44 lg:w-80" />
       <h1 className="font-semibold text-lg lg:text-xl">{title}</h1>
       <p className="text-sm lg:text-lg">{detail}</p>
+    </div>
+  );
+};
+
+export const SkillCard = (props: Props) => {
+  const { title } = props;
+  return (
+    <div className="rounded-lg w-full flex flex-row gap-5 justify-between border border-slate-300 p-3">
+      <h1 className="mt-2">{title}</h1>
+      <img src={Checklist} alt="Checklist" className="w-10" />
     </div>
   );
 };

@@ -9,8 +9,8 @@ import { Separator } from "./ui/separator";
 const Footer = () => {
   return (
     <footer className="w-full md:min-h-[20vh] bg-white">
-      <div className="container p-3 hidden md:block">
-        <img src={Logo} alt="Logo TukangKU" className="w-24" />
+      <div className="container pt-3 hidden md:block">
+        <img src={Logo} alt="Logo TukangKU" className="w-14" />
       </div>
       <div className="hidden md:block">
         <div className="container flex flex-row gap-5 justify-between p-5 ">
