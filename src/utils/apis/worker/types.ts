@@ -37,7 +37,7 @@ export const updateJobSchema = z.discriminatedUnion("status", [
     .object({
       status: z.literal("rejected"),
       note_negosiasi: z.string().optional(),
-      price: z.coerce.number().optional(),
+      harga: z.coerce.number().optional(),
     })
     .merge(baseSchema),
   z
@@ -46,19 +46,30 @@ export const updateJobSchema = z.discriminatedUnion("status", [
       note_negosiasi: z
         .string()
         .min(1, { message: "Note negosiasi dibutuhkan" }),
-      price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
-  z.object({
-    status: z.literal("accepted"),
-    note_negosiasi: z.string().min(1, { message: "Note negosiasi dibutuhkan" }),
-    price: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
-  }),
+  z
+    .object({
+      status: z.literal("accepted"),
+      note_negosiasi: z.string().optional(),
+      harga: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
   z
     .object({
       status: z.literal("finished"),
       note_negosiasi: z.string().optional(),
-      price: z.coerce.number().optional(),
+      harga: z.coerce.number().optional(),
+    })
+    .merge(baseSchema),
+  z
+    .object({
+      status: z.literal("pending"),
+      note_negosiasi: z
+        .string()
+        .min(1, { message: "Note negosiasi dibutuhkan" }),
+      harga: z.coerce.number().gte(1, { message: "Masukan tawaran harga" }),
     })
     .merge(baseSchema),
 ]);

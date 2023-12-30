@@ -83,14 +83,4 @@ export interface Worker {
   projectHistory: string[];
   foto: string;
 }
-export interface ApiResponse {
-  data: Worker[];
-  message: string;
-  pagination: {
-    page: number;
-    pagesize: number;
-    skill: number;
-    totalPages: number;
-  };
-}
 
