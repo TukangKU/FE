@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full sticky top-0 bg-white/90 z-50 drop-shadow-lg"
+      className="w-full sticky top-0 bg-white z-50 drop-shadow-lg"
       aria-label="navbar">
       <nav className="flex container p-6 flex-row justify-between">
         <Link to={"/"}>
@@ -56,7 +56,7 @@ const Navbar = () => {
           <ul className="flex  flex-row justify-between gap-5 p-5 font-medium cursor-pointer tracking-wide">
             {dataNav.map((item) => {
               return (
-                <Link to={item.pathname}>
+                <Link to={item.pathname} key={item.name}>
                   <li
                     className={` ${
                       location.pathname === item.pathname ? "text-tukangku" : ""
@@ -82,25 +82,13 @@ const Navbar = () => {
           <DropdownMenuContent align="end" forceMount>
             {token ? (
               <>
-                {role === "worker" ? (
-                  <>
-                    <DropdownMenuLabel>Hi, {worker.nama}</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => navigate("/profile/worker/edit")}>
-                      Profile
-                    </DropdownMenuItem>
-                  </>
-                ) : (
-                  <>
-                    <DropdownMenuLabel>Hai, {client.nama}</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => navigate("/profile/client/edit")}>
-                      Profile
-                    </DropdownMenuItem>
-                  </>
-                )}
+                <DropdownMenuLabel>
+                  Hai, {role === "worker" ? worker.nama : client.nama}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  Profile
+                </DropdownMenuItem>
                 <div className="md:hidden">
                   <DropdownMenuItem onClick={() => navigate("/")}>
                     Home

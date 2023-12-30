@@ -20,6 +20,7 @@ module.exports = {
         "auth-image": "url('/src/assets/authImage.svg')",
         "landing-page": "url('/src/assets/construction-workers-surveying.svg')",
         "landing-page-2": "url('/src/assets/landing-page-2.svg')",
+        profile: "url('/src/assets/background-profile.svg')",
       },
       fontFamily: {
         poppins: "Poppins, sans-serif",

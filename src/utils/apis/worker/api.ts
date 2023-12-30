@@ -32,7 +32,7 @@ export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
     }
 
     const response = await axiosWithConfig.put(
-      `https://tukangku.online/client/${id}`,
+      `https://tukangku.online/worker/${id}`,
       formData,
       {
         headers: {
