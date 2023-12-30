@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const DetailWorker = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
 
