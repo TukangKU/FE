@@ -27,6 +27,9 @@ module.exports = {
       },
       colors: {
         tukangku: "#FFBF00",
+        backgroundColor: "#F5F7F8",
+        text1: "#495E57",
+        text2: "#45474B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

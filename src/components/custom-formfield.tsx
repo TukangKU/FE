@@ -41,7 +41,7 @@ const CustomFormField = <T extends FieldValues>(
       render={({ field }) => (
         <FormItem>
           {label && (
-            <FormLabel className="lg:text-lg md:text-base text-sm">
+            <FormLabel className="lg:text-base md:text-base text-sm">
               {label}
             </FormLabel>
           )}

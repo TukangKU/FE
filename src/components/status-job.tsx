@@ -30,10 +30,11 @@ const StatusJob = (props: Props) => {
   const { data } = props;
   const { toast } = useToast();
   const { role } = useToken();
+  const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
   const [job, setJob] = useState<JobWorker>();
+
   const params = useParams();
   const navigate = useNavigate();
-  const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
 
   useEffect(() => {
     fetchData();
@@ -109,8 +110,6 @@ const StatusJob = (props: Props) => {
     }
   };
 
-  console.log(statusPayment?.status);
-
   return (
     <div className="cursor-default">
       {role === "worker" ? (
@@ -176,7 +175,7 @@ const StatusJob = (props: Props) => {
         >
           {role === "client" && (
             <>
-              {statusPayment?.status === "pending" && data === "finished" ? (
+              {data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
                   className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500"
@@ -202,7 +201,7 @@ const StatusJob = (props: Props) => {
           )}
         </div>
       )}
-      <p className="text-sm italic text-muted-foreground">
+      <p className="italic text-muted-foreground mt-1 text-sm">
         {["pending", "negotiation_to_worker", "negotiation_to_client"].includes(
           data
         ) && (
