@@ -56,7 +56,7 @@ const UpdateJob = (props: Props) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleUpdateJob)}
-          className="mt-4 justify-between md:flex lg:flex"
+          className="justify-between md:flex lg:flex"
         >
           <div className="flex gap-3 items-center mb-3">
             <Button
@@ -65,11 +65,10 @@ const UpdateJob = (props: Props) => {
               name="rejected"
               onClick={() => {
                 form.setValue("status", "rejected");
-                form.setValue("harga", 0);
-                form.setValue("note_negosiasi", "");
               }}
               disabled={form.formState.isSubmitting}
               aria-disabled={form.formState.isSubmitting}
+              className="bg-red-600 hover:bg-red-500"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -91,6 +90,7 @@ const UpdateJob = (props: Props) => {
               aria-disabled={
                 form.formState.isSubmitting || data.status === "pending"
               }
+              className="bg-green-600 hover:bg-green-500"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -105,10 +105,11 @@ const UpdateJob = (props: Props) => {
           <Negotiation
             id={data.job_id}
             note={data.note_negosiasi}
-            worker={data.worker_name}
-            client={data.client_name}
+            workerName={data.worker_name}
+            clientName={data.client_name}
             price={data.harga}
             status={data.status}
+            foto={data.foto}
           />
         </form>
       </Form>
