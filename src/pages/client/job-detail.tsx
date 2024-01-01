@@ -64,7 +64,7 @@ const JobDetail = () => {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-backgroundColor">
       <Head>Job Detail</Head>
       <div className="flex flex-col justify-center items-center py-20">
         <img
@@ -75,7 +75,7 @@ const JobDetail = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid justify-center mx-auto p-4">
-              <div className="border p-4 rounded-md shadow-md my-5">
+              <div className="border p-4 rounded-md shadow-md my-5  bg-white">
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold ">Kategori:</span>
                   <div>{category}</div>

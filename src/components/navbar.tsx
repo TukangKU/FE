@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full sticky top-0 bg-white z-50 drop-shadow-lg"
+      className="w-full sticky top-0 bg-white/90 z-50 drop-shadow-lg"
       aria-label="navbar">
       <nav className="flex container p-6 flex-row justify-between">
         <Link to={"/"}>

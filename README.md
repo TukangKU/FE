@@ -50,7 +50,6 @@ TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai da
 - View the category
 - View profile
 - Edit profile
-- View Worker
 - View job request
 - View job detail
 - Make a negotiation

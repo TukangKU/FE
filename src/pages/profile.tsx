@@ -13,6 +13,7 @@ const Profile = () => {
 
   return (
     <Layout>
+      <div className="bg-backgroundColor">
       <div className="flex flex-col gap-5 container p-6">
         <div className="shadow-md relative h-[380px] md:h-[400px] w-full rounded-lg bg-white">
           <img
@@ -91,6 +92,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </Layout>
   );

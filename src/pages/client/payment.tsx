@@ -72,7 +72,7 @@ const Payment = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-backgroundColor">
       <Head>Payment</Head>
       <div className="flex justify-center items-center p-2">
         <div className="border border-gray-300 rounded-md p-4 w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto">

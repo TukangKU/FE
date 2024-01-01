@@ -36,6 +36,15 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
+    if (client.nama === "" && client.alamat === "" && client.nohp === "") {
+      toast({
+        title: "Data profile belum lengkap!",
+        description:
+          "Harap melengkapi data profile terlebih dahulu untuk melanjutkan",
+        variant: "destructive",
+      });
+    }
+
     form.setValue("username", client.username!);
     form.setValue("nama", client.nama!);
     form.setValue("email", client.email!);
@@ -65,149 +74,151 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-5 container p-10 lg:w-[1000px]">
-        <div className="flex flex-row justify-between">
-          <h1 className="font-bold text-3xl">Edit Profile</h1>
-          <img
-            src={client.foto}
-            alt={client.nama}
-            className="w-36 aspect-square rounded-full object-cover"
-          />
-        </div>
-        <Form {...form}>
-          <form
-            className="flex flex-col gap-5"
-            onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex flex-row gap-3 justify-between">
-              <div className="w-[49%]">
+      <div className="bg-backgroundColor">
+        <div className="flex flex-col gap-5 container p-10 lg:w-[1000px] border bg-white my-5 rounded-md">
+          <div className="flex flex-row justify-between">
+            <h1 className="font-bold text-3xl">Edit Profile</h1>
+            <img
+              src={client.foto}
+              alt={client.nama}
+              className="w-36 aspect-square rounded-full object-cover"
+            />
+          </div>
+          <Form {...form}>
+            <form
+              className="flex flex-col gap-5"
+              onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="flex flex-row gap-3 justify-between">
+                <div className="w-[49%]">
+                  <CustomFormField
+                    control={form.control}
+                    name="nama"
+                    label="Nama">
+                    {(field) => (
+                      <Input
+                        type="text"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        {...field}
+                        placeholder="Nama"
+                      />
+                    )}
+                  </CustomFormField>
+                </div>
+                <div className="w-[49%]">
+                  <CustomFormField
+                    control={form.control}
+                    name="username"
+                    label="Username">
+                    {(field) => (
+                      <Input
+                        type="text"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        {...field}
+                        placeholder="Username"
+                      />
+                    )}
+                  </CustomFormField>
+                </div>
+              </div>
+              <div className="w-full">
                 <CustomFormField
                   control={form.control}
-                  name="nama"
-                  label="Nama">
+                  name="email"
+                  label="Email">
                   {(field) => (
                     <Input
                       type="text"
                       disabled={form.formState.isSubmitting}
                       aria-disabled={form.formState.isSubmitting}
                       {...field}
-                      placeholder="Nama"
+                      placeholder="Email"
                     />
                   )}
                 </CustomFormField>
               </div>
-              <div className="w-[49%]">
+              <div className="w-full">
                 <CustomFormField
                   control={form.control}
-                  name="username"
-                  label="Username">
+                  name="alamat"
+                  label="Alamat">
                   {(field) => (
                     <Input
                       type="text"
                       disabled={form.formState.isSubmitting}
                       aria-disabled={form.formState.isSubmitting}
                       {...field}
-                      placeholder="Username"
+                      placeholder="Alamat"
                     />
                   )}
                 </CustomFormField>
               </div>
-            </div>
-            <div className="w-full">
-              <CustomFormField
-                control={form.control}
-                name="email"
-                label="Email">
-                {(field) => (
-                  <Input
-                    type="text"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    {...field}
-                    placeholder="Email"
-                  />
-                )}
-              </CustomFormField>
-            </div>
-            <div className="w-full">
-              <CustomFormField
-                control={form.control}
-                name="alamat"
-                label="Alamat">
-                {(field) => (
-                  <Input
-                    type="text"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    {...field}
-                    placeholder="Alamat"
-                  />
-                )}
-              </CustomFormField>
-            </div>
-            <div className="w-full">
-              <CustomFormField
-                control={form.control}
-                name="nohp"
-                label="No. HP">
-                {(field) => (
-                  <Input
-                    type="text"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    {...field}
-                    placeholder="No. HP"
-                  />
-                )}
-              </CustomFormField>
-            </div>
-            <div className="w-full">
-              <CustomFormField
-                control={form.control}
-                name="foto"
-                label="Foto Profile">
-                {(field) => (
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    disabled={form.formState.isSubmitting}
-                    aria-disabled={form.formState.isSubmitting}
-                    {...field}
-                    value={value}
-                    onChange={(e) => {
-                      setValue(e.target.value);
-                      if (e.target.files !== null) {
-                        field.onChange(e.target.files[0]);
-                      } else {
-                        field.onChange("");
-                      }
-                    }}
-                  />
-                )}
-              </CustomFormField>
-            </div>
-            <div className="flex flex-row gap-2">
-              <Link to="/profile">
-                <Button className="w-20" type="button">
-                  Batal
+              <div className="w-full">
+                <CustomFormField
+                  control={form.control}
+                  name="nohp"
+                  label="No. HP">
+                  {(field) => (
+                    <Input
+                      type="text"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      {...field}
+                      placeholder="No. HP"
+                    />
+                  )}
+                </CustomFormField>
+              </div>
+              <div className="w-full">
+                <CustomFormField
+                  control={form.control}
+                  name="foto"
+                  label="Foto Profile">
+                  {(field) => (
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      {...field}
+                      value={value}
+                      onChange={(e) => {
+                        setValue(e.target.value);
+                        if (e.target.files !== null) {
+                          field.onChange(e.target.files[0]);
+                        } else {
+                          field.onChange("");
+                        }
+                      }}
+                    />
+                  )}
+                </CustomFormField>
+              </div>
+              <div className="flex flex-row gap-2">
+                <Link to="/profile">
+                  <Button className="w-20" type="button">
+                    Batal
+                  </Button>
+                </Link>
+                <Button
+                  type="submit"
+                  className="bg-tukangku"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading
+                    </>
+                  ) : (
+                    "Simpan"
+                  )}
                 </Button>
-              </Link>
-              <Button
-                type="submit"
-                className="bg-tukangku"
-                disabled={form.formState.isSubmitting}
-                aria-disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Loading
-                  </>
-                ) : (
-                  "Simpan"
-                )}
-              </Button>
-            </div>
-          </form>
-        </Form>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
     </Layout>
   );
