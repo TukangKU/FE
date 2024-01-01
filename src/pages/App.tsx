@@ -15,6 +15,13 @@ import Network from "@/assets/network.svg";
 import { Service, TestimoniData } from "@/utils/mockdata/data";
 import { Link } from "react-router-dom";
 import { StepCardData } from "@/utils/mockdata/data";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 function App() {
   return (
@@ -168,20 +175,32 @@ function App() {
             Apa yang dikatakan Client kami
           </p>
         </div>
-        <div className="flex flex-col lg:flex-row gap-3">
-          {TestimoniData.map((item) => {
-            return (
-              <TestimoniCard
-                image={item.image}
-                title={item.title}
-                detail={item.description}></TestimoniCard>
-            );
-          })}
+        <div>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full">
+            <CarouselContent>
+              {TestimoniData.map((item, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <TestimoniCard
+                      image={item.image}
+                      title={item.title}
+                      detail={item.description}></TestimoniCard>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
       <div className="bg-landing-page-2 bg-cover h-[1000px] md:h-[700px] lg:h-[1000px]">
         <div className="flex flex-col md:gap-20 justify-center container p-6">
-          <div className="flex flex-col items-center gap-3 pt-5 md:pt-20">
+          <div className="flex flex-col text-center items-center gap-3 pt-5 md:pt-20">
             <h1 className="text-2xl lg:text-5xl xl:text-6xl font-medium">
               Benefit Menjadi Pekerja Kami
             </h1>

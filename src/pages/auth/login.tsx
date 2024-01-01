@@ -29,9 +29,8 @@ const Login = () => {
     try {
       const result = await userLogin(data);
       changeToken(result.data.token);
-      changeRole(result.data.role)
-      changeId(result.data.id)
-      console.log("role", result.data.role)
+      changeRole(result.data.role);
+      changeId(result.data.id);
       toast({
         description: "Selamat datang kembali di TukangKU",
       });

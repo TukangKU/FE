@@ -3,7 +3,7 @@ import { CategoryCard } from "@/components/category-card";
 import Layout from "@/components/layout";
 import { Service } from "@/utils/mockdata/data";
 import { getDataByService } from "@/utils/apis/client/api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 const Category = () => {
@@ -31,8 +31,10 @@ const Category = () => {
     <Layout>
       <div className="min-h-screen">
         <div className="flex flex-col justify-center items-center p-6">
-        <h1 className="font-bold text-xl md:text-2xl text-center">Pilih kategori dan dapatkan pekerja profesianal untuk membantu Anda!</h1>
-        <p>Jaminan 100% pekerja kami terpercaya</p>
+          <h1 className="font-bold text-xl md:text-2xl text-center">
+            Pilih kategori dan dapatkan pekerja profesianal untuk membantu Anda!
+          </h1>
+          <p>Jaminan 100% pekerja kami terpercaya</p>
         </div>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 container w-full gap-4">
           {Service.map((item, index) => (

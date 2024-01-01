@@ -76,7 +76,9 @@ const RequestJob = () => {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="negotiation_to_client&negotiation_to_worker">Negosiasi</SelectItem>
+              <SelectItem value="negotiation_to_client&negotiation_to_worker">
+                Negosiasi
+              </SelectItem>
               <SelectItem value="accepted">Diterima</SelectItem>
               <SelectItem value="rejected">Ditolak</SelectItem>
               <SelectItem value="Finished">Selesai</SelectItem>
@@ -104,8 +106,7 @@ const RequestJob = () => {
                     <Link to={`/job/detail/${job.job_id}`}>
                       <div
                         className="lg:flex md:flex lg:justify-between md:justify-between w-fit  mx-auto mb-4 p-4 lg:w-[50rem] md:w-[40rem] rounded-lg hover:bg-slate-100 items-center border-slate-500 border"
-                        key={job.job_id}
-                      >
+                        key={job.job_id}>
                         <div className="lg:flex md:flex items-center gap-3">
                           <img
                             src={job.foto}
@@ -136,8 +137,7 @@ const RequestJob = () => {
                             } ${
                               job.status === "negotiation_to_worker" &&
                               "bg-slate-500"
-                            } rounded-lg px-4 py-3`}
-                          >
+                            } rounded-lg px-4 py-3`}>
                             <p className="text-white font-bold lg:text-start md:text-start text-center">
                               {[
                                 "negotiation_to_client",

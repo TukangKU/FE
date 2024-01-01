@@ -16,7 +16,6 @@ export const getWorkerProfile = async (id: string) => {
 
 export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
   try {
-    console.log("body", body);
     const formData = new FormData();
     let key: keyof typeof body;
     for (key in body) {

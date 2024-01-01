@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const DetailWorker = () => {
   const location = useLocation();
   const WorkerDetail: Worker | undefined = location.state?.WorkerDetail?.data;
-
+  const navigate = useNavigate();
   const serviceId = location.state.serviceId;
 
   const handleDataWorker = () => {
@@ -43,7 +43,7 @@ const DetailWorker = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen">
       <Head>
         <div className="flex justify-center item center text-gray-600 ">
           Detail Worker

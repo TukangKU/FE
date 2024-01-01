@@ -50,7 +50,7 @@ export const StepCard = (props: CardProps) => {
 export const TestimoniCard = (props: CardProps) => {
   const { image, title, detail } = props;
   return (
-    <div className="rounded-xl container w-full md:w-[80%] lg:w-[35%] bg-tukangku text-white p-6 flex flex-col items-center justify-center text-center gap-5">
+    <div className="rounded-xl container w-full md:w-[350px] lg:w-[400px] h-[300px] bg-tukangku text-white p-6 flex flex-col items-center justify-center text-center gap-5">
       <img src={image} alt={title} className="w-28" />
       <h1 className="font-semibold text-xl">{title}</h1>
       <p className="text-lg">{detail}</p>
