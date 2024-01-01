@@ -14,6 +14,7 @@ import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
 import NotFound from "@/pages/404";
 import Profile from "@/pages/profile";
+import Negotiation from "@/components/negotiation";
 // import ProtectedRoute from "./protected-route";
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
     { path: "/profile/worker/edit", element: <EditProfile /> },
     { path: "/job/request", element: <RequestJob /> },
     { path: "/job/detail/:id", element: <DetailJob /> },
+    { path: "/job/negotiation/:id", element: <Negotiation /> },
     { path: "/profile/client/edit", element: <EditProfileClient /> },
     { path: "/client/available-worker", element: <AvailableWorker /> },
     { path: "/client/detail-worker", element: <DetailWorker /> },

@@ -11,8 +11,7 @@ import { Form } from "./ui/form";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { useToken } from "@/utils/contexts/token";
-import { useNavigate, useParams } from "react-router-dom";
-import Negotiation from "./negotiation";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface Props {
   data: JobWorker;
@@ -68,7 +67,7 @@ const UpdateJob = (props: Props) => {
               }}
               disabled={form.formState.isSubmitting}
               aria-disabled={form.formState.isSubmitting}
-              className="bg-red-600 hover:bg-red-500"
+              className="bg-red-600 hover:bg-red-500 lg:text-base md:text-base text-sm"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -90,7 +89,7 @@ const UpdateJob = (props: Props) => {
               aria-disabled={
                 form.formState.isSubmitting || data.status === "pending"
               }
-              className="bg-green-600 hover:bg-green-500"
+              className="bg-green-600 hover:bg-green-500 lg:text-base md:text-base text-sm"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -102,15 +101,10 @@ const UpdateJob = (props: Props) => {
               )}
             </Button>
           </div>
-          <Negotiation
-            id={data.job_id}
-            note={data.note_negosiasi}
-            workerName={data.worker_name}
-            clientName={data.client_name}
-            price={data.harga}
-            status={data.status}
-            foto={data.foto}
-          />
+          <Link to={`/job/negotiation/${data.job_id}`}>
+            <Button>Tawar harga</Button>
+          </Link>
+       
         </form>
       </Form>
     </div>

@@ -36,7 +36,7 @@ const JobsCard = (props: Props) => {
             className="lg:w-20 md:w-16 w-14 lg:mx-0 md:mx-0 mx-auto aspect-square object-cover rounded-full"
           />
           <div className="flex flex-col lg:gap-0 md:gap-0 gap-2 lg:mt-0 md:mt-0 mt-3 lg:items-start md:items-start items-center">
-            <p className="font-semibold lg:text-lg md:text-base text-sm text-slate-700">
+            <p className="font-semibold lg:text-lg md:text-base text-sm text-slate-700 lg:text-start md:text-start text-center">
               {role === "worker"
                 ? `${data.client_name}`
                 : `${data.worker_name}`}
@@ -47,7 +47,7 @@ const JobsCard = (props: Props) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-sm italic">
+          <p className="text-sm italic lg:text-start md:text-start text-center lg:mt-0 md:mt-0 mt-3">
             {startDate} - {endDate}
           </p>
           <div className="lg:mt-0 md:mt-0 mt-4 lg:ms-auto md:ms-auto lg:flex md:flex items-center gap-2">
