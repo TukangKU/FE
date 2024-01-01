@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CardWorker from "@/components/card-worker";
 import Head from "@/components/head";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,7 +11,7 @@ const AvailableData = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+
   const serviceData: WorkerAvailables[] | undefined =
     location.state?.serviceData?.data;
 
@@ -22,7 +23,6 @@ const AvailableData = () => {
       toast({
         description: WorkerDetail.message,
       });
-      console.log(`response data by ID = ${id}`, WorkerDetail);
       navigate("/client/detail-worker", { state: { WorkerDetail, serviceId } });
     } catch (error: any) {
       toast({
@@ -34,7 +34,7 @@ const AvailableData = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen">
       <Head>Available Worker</Head>
       <div className="grid grid-cols-1 gap-4 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
         {serviceData &&

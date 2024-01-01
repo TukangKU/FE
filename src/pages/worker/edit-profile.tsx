@@ -44,7 +44,6 @@ const EditProfile = () => {
     form.setValue("alamat", worker.alamat!);
     form.setValue("nohp", worker.nohp!);
     form.setValue("skill", newSkill);
-    console.log();
   }, [worker]);
 
   async function onSubmit(data: WorkerUpdateType) {
@@ -55,7 +54,7 @@ const EditProfile = () => {
       });
       if (result.message === "posting updated successfully") {
         reFetch();
-        navigate('/profile')
+        navigate("/profile");
       }
     } catch (error: any) {
       toast({
