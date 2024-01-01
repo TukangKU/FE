@@ -1,7 +1,6 @@
 # Welcome to TukangKU
 
-![Logo](/src//assets//tukangku.svg)
-<img src="/src//assets//tukangku.svg" width="1000" height="717">
+<img src="/src//assets//tukangku.svg" width="700" height="502">
 
 ## 🔍 About Us
 
