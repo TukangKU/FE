@@ -1,6 +1,7 @@
 # Welcome to TukangKU
 
 ![Logo](/src//assets//tukangku.svg)
+<img src="/src//assets//tukangku.svg" width="1000" height="717">
 
 ## 🔍 About Us
 
@@ -29,11 +30,11 @@ TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai da
 - Sign up
 - Login
 - Logout
+- View the main page
+- View the category
 
 🤴 As Client
 
-- View the main page
-- View the category
 - View profile
 - Edit profile
 - View Worker
@@ -46,11 +47,8 @@ TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai da
 
 👷 As Worker
 
-- View the main page
-- View the category
 - View profile
 - Edit profile
-- View Worker
 - View job request
 - View job detail
 - Make a negotiation
