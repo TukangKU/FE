@@ -86,7 +86,7 @@ const Negotiation = () => {
             </div>
             {job?.status !== "pending" && (
               <div className="shadow-md bg-backgroundColor p-3 cursor-default">
-                <div className="lg:flex md:flex flex-col gap-4">
+                <div className="lg:flex md:flex gap-4">
                   <div>
                     <img
                       src={job?.foto}
@@ -103,7 +103,7 @@ const Negotiation = () => {
                     <Textarea
                       value={job?.note_negosiasi}
                       readOnly
-                      className="lg:w-[36.5rem] md:w-[36.5rem] w-full cursor-default lg:text-base md:text-base text-sm "
+                      className="lg:w-[30rem] md:w-[30rem] w-full cursor-default lg:text-base md:text-base text-sm "
                     />
                     <div className="bg-tukangku p-3 shadow-md rounded-md flex justify-between">
                       <p className="lg:text-base md:text-base text-sm">
@@ -123,7 +123,7 @@ const Negotiation = () => {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleUpdateJob)}>
                 <div className="gap-3 shadow-md p-3 rounded-md bg-backgroundColor">
-                  <div className="lg:flex md:flex flex-col gap-4">
+                  <div className="lg:flex md:flex gap-4">
                     <div>
                       <img
                         src={worker.foto || client.foto}
@@ -143,7 +143,7 @@ const Negotiation = () => {
                           <Textarea
                             {...field}
                             placeholder="Masukan pesan negosiasi"
-                            className="lg:w-[36.5rem] md:w-[36.5rem] w-full lg:text-base md:text-base text-sm"
+                            className="lg:w-[30rem] md:w-[30rem] w-full lg:text-base md:text-base text-sm"
                           />
                         )}
                       </CustomFormField>
