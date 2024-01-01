@@ -101,16 +101,16 @@ const RequestJob = () => {
                 <p className="font-bold">Tidak ada pesanan</p>
               </div>
             ) : (
-              <>
+              <div className="lg:block md:block grid grid-cols-2 gap-4 lg:p-0 md:p-0 p-4">
                 {jobs.map((job, index) => (
                   <JobsCard key={index} data={job!} role={role!} />
                 ))}
-              </>
+              </div>
             )}
           </div>
         )}
         {jobs !== null && (
-          <div className="mt-10">
+          <div className="lg:mt-10 md:mt-10 mt-5 lg:p-0 md:p-0 px-4">
             <PaginationButton
               meta={meta}
               onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}

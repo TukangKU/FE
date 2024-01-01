@@ -13,6 +13,7 @@ import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
 import NotFound from "@/pages/404";
 import Profile from "@/pages/profile";
+import Negotiation from "@/components/negotiation";
 import ProtectedRoute from "./protected-route";
 
 const App = () => {
@@ -20,20 +21,21 @@ const App = () => {
     {
       element: <ProtectedRoute />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "/login", element: <Login /> },
-        { path: "/register", element: <Register /> },
-        { path: "/profile/worker/edit", element: <EditProfile /> },
-        { path: "/job/request", element: <RequestJob /> },
-        { path: "/job/detail/:id", element: <DetailJob /> },
-        { path: "/profile/client/edit", element: <EditProfileClient /> },
-        { path: "/client/available-worker", element: <AvailableWorker /> },
-        { path: "/client/detail-worker", element: <DetailWorker /> },
-        { path: "/client/job-detail", element: <JobDetail /> },
-        { path: "/client/payment", element: <Payment /> },
-        { path: "/category", element: <Category /> },
-        { path: "/profile", element: <Profile /> },
-        { path: "*", element: <NotFound /> },
+    { path: "/", element: <Home /> },
+    { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
+    { path: "/profile/worker/edit", element: <EditProfile /> },
+    { path: "/job/request", element: <RequestJob /> },
+    { path: "/job/detail/:id", element: <DetailJob /> },
+    { path: "/job/negotiation/:id", element: <Negotiation /> },
+    { path: "/profile/client/edit", element: <EditProfileClient /> },
+    { path: "/client/available-worker", element: <AvailableWorker /> },
+    { path: "/client/detail-worker", element: <DetailWorker /> },
+    { path: "/client/job-detail", element: <JobDetail /> },
+    { path: "/client/payment", element: <Payment /> },
+    { path: "/category", element: <Category /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "*", element: <NotFound /> },
       ],
     },
   ]);

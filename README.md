@@ -1,10 +1,10 @@
 # Welcome to TukangKU
 
-![Logo](/src//assets//tukangku.svg)
+<img src="/src//assets//tukangku.svg" width="500" height="358">
 
 ## 🔍 About Us
 
-TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai dari servis AC, pembersihan hingga pemasangan CCTV. Website ini bertujuan untuk memudahkan klien dalam memilih pekerja berkualitas dengan harga terbaik.
+TukangKU is an e-commerce website that provides various services ranging from AC services, cleaning, plumbing to CCTV installation. This website aims to make it easier for clients to choose quality workers at the best prices.
 
 ## 🚀 Deployment
 
@@ -29,11 +29,11 @@ TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai da
 - Sign up
 - Login
 - Logout
+- View the main page
+- View the category
 
 🤴 As Client
 
-- View the main page
-- View the category
 - View profile
 - Edit profile
 - View Worker
@@ -46,8 +46,6 @@ TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai da
 
 👷 As Worker
 
-- View the main page
-- View the category
 - View profile
 - Edit profile
 - View job request
