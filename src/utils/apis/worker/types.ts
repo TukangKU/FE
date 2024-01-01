@@ -123,6 +123,7 @@ export interface JobWorker {
   worker_name: string;
   client_name: string;
   foto: string;
+  nohp: string;
   start_date: string;
   end_date: string;
   alamat: string;
