@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import  { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 interface Props {

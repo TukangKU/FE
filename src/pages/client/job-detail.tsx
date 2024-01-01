@@ -7,7 +7,9 @@ import { HelpCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "@/components/custom-formfield";
+import CustomFormField, {
+  CustomFormDatePicker,
+} from "@/components/custom-formfield";
 import { ClientPostJobType, clientPostJobSchema } from "@/utils/apis/client";
 import {
   HoverCard,
@@ -20,6 +22,7 @@ import { postJobDetail } from "@/utils/apis/client/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToken } from "@/utils/contexts/token";
 import { NewWorker } from "@/utils/apis/worker/types";
+import Footer from "@/components/footer";
 
 const JobDetail = () => {
   const { client } = useToken();
@@ -37,14 +40,12 @@ const JobDetail = () => {
     defaultValues: {
       skill_id: serviceId,
       worker_id: dataWorker?.id,
-      start_date: "",
-      end_date: "",
+      start_date: new Date(),
+      end_date: new Date(),
       alamat: client.alamat,
       deskripsi: "",
     },
   });
-
-  console.log("alamat client", client.alamat);
 
   async function onSubmit(data: ClientPostJobType) {
     try {
@@ -63,7 +64,7 @@ const JobDetail = () => {
   }
 
   return (
-    <div>
+    <div className="bg-white">
       <Head>Job Detail</Head>
       <div className="flex flex-col justify-center items-center py-20">
         <img
@@ -74,7 +75,7 @@ const JobDetail = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid justify-center mx-auto p-4">
-              <div className="border p-4 rounded-md  my-5">
+              <div className="border p-4 rounded-md shadow-md my-5">
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold ">Kategori:</span>
                   <div>{category}</div>
@@ -84,31 +85,25 @@ const JobDetail = () => {
                   <div>{dataWorker?.nama}</div>
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
+                  <span className="font-semibold ">No. HP:</span>
+                  <div>{dataWorker?.nohp}</div>
+                </div>
+                <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold ">Tanggal Mulai:</span>
-                  <CustomFormField control={form.control} name="start_date">
-                    {(field) => (
-                      <Input
-                        type="date"
-                        disabled={form.formState.isSubmitting}
-                        aria-disabled={form.formState.isSubmitting}
-                        {...field}
-                      />
-                    )}
-                  </CustomFormField>
+                  <CustomFormDatePicker
+                    control={form.control}
+                    name="start_date"
+                    placeholder="Pilih Tanggal..."
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold">Tanggal Berakhir:</span>
-                  <CustomFormField control={form.control} name="end_date">
-                    {(field) => (
-                      <Input
-                        type="date"
-                        disabled={form.formState.isSubmitting}
-                        aria-disabled={form.formState.isSubmitting}
-                        {...field}
-                      />
-                    )}
-                  </CustomFormField>
+                  <CustomFormDatePicker
+                    control={form.control}
+                    name="end_date"
+                    placeholder="Pilih Tanggal..."
+                  />
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold">Alamat Pengerjaan:</span>
@@ -170,6 +165,7 @@ const JobDetail = () => {
           </form>
         </Form>
       </div>
+      <Footer />
     </div>
   );
 };

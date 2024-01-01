@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import Head from "@/components/head";
 import { Button } from "@/components/ui/button";
@@ -41,14 +42,12 @@ const Payment = () => {
       const formData = form.getValues();
       const snapToken = await PostPayment(formData.job_id, formData.job_price);
       (window as any).snap.pay(snapToken);
-      console.log(snapToken);
       localStorage.setItem(
         `paymentInfo_${formData.job_id}`,
         JSON.stringify({ token: snapToken })
       );
       setPaymentDone(true);
     } catch (error: any) {
-      console.error("Error processing payment:", error);
       toast({
         title: "Error",
         description: "Terjadi kesalahan dalam proses pembayaran.",
@@ -108,8 +107,7 @@ const Payment = () => {
             <div className="flex justify-center items-center my-2 p-2">
               <Button
                 onClick={handlePayment}
-                className="text-lg w-full md:w-2/4 xl:w-1/3"
-              >
+                className="text-lg w-full md:w-2/4 xl:w-1/3">
                 Pay
               </Button>
             </div>

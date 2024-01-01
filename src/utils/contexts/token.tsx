@@ -129,7 +129,6 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const changeId = useCallback(
     (id?: string) => {
       const newId = id ?? "";
-      console.log("id", newId);
       setId(newId);
       if (id) {
         localStorage.setItem("id", newId);
