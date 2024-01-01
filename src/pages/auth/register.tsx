@@ -32,7 +32,6 @@ const Register = () => {
       email: "",
       password: "",
       repassword: "",
-      
     },
   });
 

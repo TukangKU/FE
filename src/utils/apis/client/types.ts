@@ -11,7 +11,7 @@ export const clientProfileUpdateSchema = z.object({
     .min(1, { message: "Email wajib diisi" })
     .email("Bukan email yang valid"),
   nohp: z.string().min(1, { message: "Nomer HP wajib diisi" }),
-  alamat: z.string().min(1, { message: "alamat wajib diisi" }),
+  alamat: z.string().min(1, { message: "Alamat wajib diisi" }),
   foto: z
     .any()
     .refine((files) => files?.size <= MAX_FILE_SIZE, `Max image size is 5MB`)
@@ -42,8 +42,12 @@ export const clientPostJobSchema = z.object({
     required_error: "Id worker dibutuhkan",
     invalid_type_error: "Id worker harus berupa angka",
   }),
-  start_date: z.string().min(1, { message: "Tanggal mulai harus diisi" }),
-  end_date: z.string().min(1, { message: "Tanggal berakhir harus diisi" }),
+  start_date: z.any({
+    required_error: "Tanggal mulai harus diisi",
+  }),
+  end_date: z.any({
+    required_error: "Tanggal berakhir harus diisi",
+  }),
   alamat: z.string().min(1, { message: "Alamat harus diisi" }),
   deskripsi: z.string().min(1, { message: "Deskripsi harus diisi" }),
 });
@@ -73,7 +77,7 @@ export interface WorkerAvailables {
 }
 export interface Worker {
   username: string;
-  nohp:string;
+  nohp: string;
   email: string;
   alamat: string;
   skill: {
@@ -92,5 +96,4 @@ export interface OrderInfoProps {
   workerName: string;
   pricing: string;
   address: string;
- 
 }

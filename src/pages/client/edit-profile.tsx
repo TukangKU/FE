@@ -43,8 +43,6 @@ const EditProfile = () => {
     form.setValue("nohp", client.nohp!);
   }, [client]);
 
-  console.log("username", client.username);
-
   async function onSubmit(data: ClientUpdateType) {
     try {
       const result = await updateProfile(id, data);

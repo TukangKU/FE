@@ -9,7 +9,6 @@ import EditProfileClient from "@/pages/client/edit-profile";
 import AvailableWorker from "@/pages/client/available-worker";
 import DetailWorker from "@/pages/client/detail-worker";
 import JobDetail from "@/pages/client/job-detail";
-import Negosiasi from "@/pages/client/negosiasi";
 import Payment from "@/pages/client/payment";
 import Category from "@/pages/client/category";
 import NotFound from "@/pages/404";

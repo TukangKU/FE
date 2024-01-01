@@ -9,6 +9,9 @@ import Step_3 from "@/assets/langkah3.svg";
 import Man from "@/assets/man.svg";
 import ConfidetWoman from "@/assets/confident-woman.svg";
 import SmilingGirl from "@/assets/smiling-girl.svg";
+import Man2 from "@/assets/man2.svg"
+import Man3 from "@/assets/man3.svg"
+import Woman2 from "@/assets/woman2.svg"
 
 export const Service = [
   {
@@ -34,7 +37,7 @@ export const Service = [
   },
   {
     image: Paint,
-    name: "Paint",
+    name: "Decoration",
     description:
       "Melayani renovasi rumah, dari desain interior hingga eksterior, pengecatan tembok, renovasi dapur, pasang lantai atau keramik, pasang jendela dan pintu, dan pemasangan atau renovasi plafon",
     path: "",
@@ -108,7 +111,7 @@ export const TestimoniData = [
   {
     image: SmilingGirl,
     title: "Ibu Christine",
-    description: "“Baik Pengerjaannya. Overall OK!”",
+    description: "“Baik Pengerjaannya, ramah, dan cepat. Overall OK!”",
   },
   {
     image: ConfidetWoman,
@@ -121,6 +124,24 @@ export const TestimoniData = [
     title: "Bapak Tommy",
     description:
       "“Overall sudah baik, pengerjaan sangat bagus, teliti, dan sopan”",
+  },
+  {
+    image: Man2,
+    title: "Bapak Rizal",
+    description:
+      "“Pekerjanya ramah, bersih, cepet lagi, josss”",
+  },
+  {
+    image: Woman2,
+    title: "Ibu Sarah",
+    description:
+      "“Jasa cleaning servicenya top, langsung kinclong deh rumah”",
+  },
+  {
+    image: Man3,
+    title: "Bapak Budi",
+    description:
+      "“Pipa udah gak mampet lagi, servicenya good!”",
   },
 ];
 
