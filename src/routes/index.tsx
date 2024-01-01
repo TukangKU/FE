@@ -32,7 +32,6 @@ const App = () => {
     { path: "/client/available-worker", element: <AvailableWorker /> },
     { path: "/client/detail-worker", element: <DetailWorker /> },
     { path: "/client/job-detail", element: <JobDetail /> },
-    { path: "/client/job-detail/negosiasi", element: <Negosiasi /> },
     { path: "/client/payment", element: <Payment /> },
     { path: "/category", element: <Category /> },
     { path: "/profile", element: <Profile /> },
