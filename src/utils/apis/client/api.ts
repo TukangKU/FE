@@ -51,10 +51,10 @@ export const postJobDetail = async (body: ClientPostJobType) => {
   }
 };
 
-export const getDataByService = async (serviceId: number) => {
+export const getDataByService = async (serviceId: string) => {
   try {
     const response = await axiosWithConfig.get(
-      `https://tukangku.online/users/skill?skill=${serviceId}`
+      `https://tukangku.online/worker?skill=${serviceId}`
     );
     return response.data;
   } catch (error: any) {
@@ -62,7 +62,7 @@ export const getDataByService = async (serviceId: number) => {
   }
 };
 
-export const getWorkerByID = async (id: number) => {
+export const getWorkerByID = async (id: string) => {
   try {
     const response = await axiosWithConfig.get(
       `https://tukangku.online/worker/${id}`

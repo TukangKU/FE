@@ -2,30 +2,12 @@
 import { CategoryCard } from "@/components/category-card";
 import Layout from "@/components/layout";
 import { Service } from "@/utils/mockdata/data";
-import { getDataByService } from "@/utils/apis/client/api";
+import useWorkerStore from "@/utils/state";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 
 const Category = () => {
+  const { addCategory } = useWorkerStore();
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const handleServiceClick = async (serviceId: number) => {
-    try {
-      const serviceData = await getDataByService(serviceId);
-      toast({
-        description: serviceData.message,
-      });
-      navigate("/client/available-worker", {
-        state: { serviceData, serviceId },
-      });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.message.toString(),
-        variant: "destructive",
-      });
-    }
-  };
 
   return (
     <Layout>
@@ -43,7 +25,10 @@ const Category = () => {
               image={item.image}
               title={item.name}
               detail={item.description}
-              onClick={() => handleServiceClick(index + 1)}
+              onClick={() => {
+                addCategory(item),
+                  navigate(`/client/available-worker/${item.id}`);
+              }}
             />
           ))}
           <div className="hidden md:block md:w-[49%] lg:w-[32%]"></div>

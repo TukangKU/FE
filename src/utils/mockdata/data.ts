@@ -9,9 +9,9 @@ import Step_3 from "@/assets/langkah3.svg";
 import Man from "@/assets/man.svg";
 import ConfidetWoman from "@/assets/confident-woman.svg";
 import SmilingGirl from "@/assets/smiling-girl.svg";
-import Man2 from "@/assets/man2.svg"
-import Man3 from "@/assets/man3.svg"
-import Woman2 from "@/assets/woman2.svg"
+import Man2 from "@/assets/man2.svg";
+import Man3 from "@/assets/man3.svg";
+import Woman2 from "@/assets/woman2.svg";
 
 export const Service = [
   {
@@ -19,35 +19,35 @@ export const Service = [
     name: "Service AC",
     description:
       "Perbaikan masalah ac tidak dingin, ac berisik, ac berbau tidak sedap, ac bocor, perbaikan exhaust ac yang berkaitan dengan freon, saluran, sensor, termostat, drainase, modul elektronik, remote ac dan lain-lain",
-    path: "",
+    id: 1,
   },
   {
     image: Cleaning,
     name: "Cleaning",
     description:
       "Jasa Cleaning Service, General Cleaning, Jasa bersih-bersih Kost, Apartemen, Kantor dan Lembaga lainnya. Kami juga melayani Cuci Tandon, Deepcleaning dan juga Fogging Desinfektan",
-    path: "",
+    id: 2,
   },
   {
     image: Plumber,
     name: "Plumber",
     description:
       "Mengatasi berbagai masalah pipa, saluran air, dan instalasi sanitasi di rumah atau tempat usaha Anda seperti kebocoran pipa, saluran air yang tersumbat, kerusakan keran, atau instalasi toilet yang baru",
-    path: "",
+    id: 3,
   },
   {
     image: Paint,
     name: "Decoration",
     description:
       "Melayani renovasi rumah, dari desain interior hingga eksterior, pengecatan tembok, renovasi dapur, pasang lantai atau keramik, pasang jendela dan pintu, dan pemasangan atau renovasi plafon",
-    path: "",
+    id: 4,
   },
   {
     image: Cctv,
     name: "CCTV",
     description:
       "Melayani Pemasangan CCTV Area Jabodebek, Semua Kota di Pulau Jawa, Semua Kota Pulau Bali, Makassar Sekitarnya, Banjarmasin Sekitarnya, Padang Sekitarnya, Aceh Sekitarnya, Pekanbaru Sekitarnya, dan Palembang Sekitarnya",
-    path: "",
+    id: 5,
   },
 ];
 
@@ -128,20 +128,17 @@ export const TestimoniData = [
   {
     image: Man2,
     title: "Bapak Rizal",
-    description:
-      "“Pekerjanya ramah, bersih, cepet lagi, josss”",
+    description: "“Pekerjanya ramah, bersih, cepet lagi, josss”",
   },
   {
     image: Woman2,
     title: "Ibu Sarah",
-    description:
-      "“Jasa cleaning servicenya top, langsung kinclong deh rumah”",
+    description: "“Jasa cleaning servicenya top, langsung kinclong deh rumah”",
   },
   {
     image: Man3,
     title: "Bapak Budi",
-    description:
-      "“Pipa udah gak mampet lagi, servicenya good!”",
+    description: "“Pipa udah gak mampet lagi, servicenya good!”",
   },
 ];
 
