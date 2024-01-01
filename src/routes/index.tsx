@@ -15,13 +15,13 @@ import Category from "@/pages/client/category";
 import NotFound from "@/pages/404";
 import Profile from "@/pages/profile";
 import Negotiation from "@/components/negotiation";
-// import ProtectedRoute from "./protected-route";
+import ProtectedRoute from "./protected-route";
 
 const App = () => {
   const router = createBrowserRouter([
-    // {
-    //   element: <ProtectedRoute />,
-    //   children: [
+    {
+      element: <ProtectedRoute />,
+      children: [
     { path: "/", element: <Home /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
@@ -38,8 +38,8 @@ const App = () => {
     { path: "/category", element: <Category /> },
     { path: "/profile", element: <Profile /> },
     { path: "*", element: <NotFound /> },
-    //   ],
-    // },
+      ],
+    },
   ]);
   return <RouterProvider router={router} />;
 };
