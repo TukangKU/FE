@@ -18,9 +18,15 @@ export interface ProfileType {
   skill?: { skill_id: number; skill: string }[];
 }
 
-
 export type Pagination = {
   page: number;
   pagesize: number;
   totalPages: number;
 };
+
+export interface Category {
+  image: string;
+  name: string;
+  description: string;
+  id: number;
+}

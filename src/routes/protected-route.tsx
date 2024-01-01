@@ -9,19 +9,18 @@ const ProtectedRoute = () => {
   const authProtected = ["/login", "/register"];
   const protectedByToken = [
     "/profile",
+    "/client/detail-worker/:worker_id",
     "/profile/worker/edit",
     "/job/request",
     "/job/detail/:id",
     "/profile/client/edit",
-    "/client/available-worker",
-    "/client/detail-worker",
     "/client/job-detail",
     "/client/payment",
   ];
   const workerProtected = ["/profile/worker/edit"];
   const clientProtected = [
     "/profile/client/edit",
-    "/client/detail-worker",
+    "/client/detail-worker/:worker_id",
     "/client/job-detail",
     "/client/payment",
     "/client/available-worker",
@@ -54,7 +53,7 @@ const ProtectedRoute = () => {
     }
     if (takeWorkerProtected.includes(pathname)) {
       if (client.nama === "" && client.alamat === "" && client.nohp === "")
-        return <Navigate to="/profile/client/edit" />
+        return <Navigate to="/profile/client/edit" />;
     }
     if (jobRequestProtected.includes(pathname)) {
       if (

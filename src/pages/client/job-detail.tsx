@@ -16,30 +16,27 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Service } from "@/utils/mockdata/data";
 import { useToast } from "@/components/ui/use-toast";
 import { postJobDetail } from "@/utils/apis/client/api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToken } from "@/utils/contexts/token";
-import { NewWorker } from "@/utils/apis/worker/types";
 import Footer from "@/components/footer";
+import useWorkerStore from "@/utils/state";
 
 const JobDetail = () => {
   const { client } = useToken();
   const { toast } = useToast();
-  const location = useLocation();
+  const { cart, skill } = useWorkerStore();
   const navigate = useNavigate();
-  const dataWorker: NewWorker | undefined = location.state?.WorkerDetail;
 
-  const serviceId = location.state.serviceId;
-
-  const category = Service[serviceId - 1].name;
+  const worker_id = cart.map((item) => item.id);
+  const category_id = skill.map((item) => item.id);
 
   const form = useForm<ClientPostJobType>({
     resolver: zodResolver(clientPostJobSchema),
     defaultValues: {
-      skill_id: serviceId,
-      worker_id: dataWorker?.id,
+      skill_id: category_id[0],
+      worker_id: worker_id[0],
       start_date: new Date(),
       end_date: new Date(),
       alamat: client.alamat,
@@ -67,27 +64,33 @@ const JobDetail = () => {
     <div className="bg-backgroundColor">
       <Head>Job Detail</Head>
       <div className="flex flex-col justify-center items-center py-20">
-        <img
-          src={dataWorker?.foto}
-          alt={dataWorker?.nama}
-          className="lg:w-52 md:w-48 w-44 aspect-square rounded-full object-cover"
-        />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid justify-center mx-auto p-4">
-              <div className="border p-4 rounded-md shadow-md my-5  bg-white">
-                <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">Kategori:</span>
-                  <div>{category}</div>
-                </div>
-                <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">Nama:</span>
-                  <div>{dataWorker?.nama}</div>
-                </div>
-                <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
-                  <span className="font-semibold ">No. HP:</span>
-                  <div>{dataWorker?.nohp}</div>
-                </div>
+              <div className="border p-4 rounded-md shadow-md my-5 bg-white">
+                {cart.map((worker) => (
+                  <div>
+                    <div className="flex flex-col items-center justify-center my-5">
+                      <img
+                        src={worker?.foto}
+                        alt={worker?.nama}
+                        className="lg:w-52 md:w-48 w-44 aspect-square rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
+                      <span className="font-semibold ">Kategori:</span>
+                      {skill.map((item) => item.name)}
+                    </div>
+                    <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
+                      <span className="font-semibold ">Nama:</span>
+                      <div>{worker?.nama}</div>
+                    </div>
+                    <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
+                      <span className="font-semibold ">No. HP:</span>
+                      <div>{worker?.nohp}</div>
+                    </div>
+                  </div>
+                ))}
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                   <span className="font-semibold ">Tanggal Mulai:</span>
                   <CustomFormDatePicker

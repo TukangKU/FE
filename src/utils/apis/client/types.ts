@@ -56,36 +56,28 @@ export type ClientPostJobType = z.infer<typeof clientPostJobSchema>;
 
 export interface WorkerDetails {
   id: number;
-  cover_image: string;
-  name: string;
-  address: string;
-  total_projects: number;
-  skills: string[];
-}
-
-export interface WorkerAvailables {
-  id: number;
   username: string;
   nama: string;
   alamat: string;
   email: string;
+  nohp: number;
   foto: string;
   skill: {
     skill_id: number;
     skill: string;
   }[];
+  job: { job_id: number; price: number; category: string }[];
+  job_count: number;
 }
-export interface Worker {
-  username: string;
-  nohp: string;
-  email: string;
-  alamat: string;
-  skill: {
-    skill_id: number;
-    skill: string;
-  }[];
-  projectHistory: string[];
-  foto: string;
+
+export interface WorkerAvailables {
+  data: WorkerDetails[];
+  pagination: {
+    page: number;
+    pagesize: number;
+    skill: number;
+    totalPages: number;
+  };
 }
 
 export interface OrderInfoProps {
