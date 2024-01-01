@@ -70,7 +70,7 @@ const RequestJob = () => {
 
   return (
     <Layout>
-      <div className="pb-4 bg-backgroundColor">
+      <div className="pb-4 bg-backgroundColor min-h-screen">
         <div className="lg:ps-32 md:ps-20 ps-5 me-auto mt-10 mb-5 w-fit">
           <Select onValueChange={(value) => handleChangeSort(value)}>
             <SelectTrigger>
@@ -102,8 +102,8 @@ const RequestJob = () => {
               </div>
             ) : (
               <div className="lg:block md:block grid grid-cols-2 gap-4 lg:p-0 md:p-0 p-4">
-                {jobs.map((job) => (
-                  <JobsCard data={job!} role={role!} />
+                {jobs.map((job, index) => (
+                  <JobsCard key={index} data={job!} role={role!} />
                 ))}
               </div>
             )}

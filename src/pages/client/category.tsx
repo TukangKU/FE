@@ -29,7 +29,7 @@ const Category = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen">
+      <div className="bg-backgroundColor min-h-screen">
         <div className="flex flex-col justify-center items-center p-6">
           <h1 className="font-bold text-xl md:text-2xl text-center">
             Pilih kategori dan dapatkan pekerja profesianal untuk membantu Anda!
@@ -39,6 +39,7 @@ const Category = () => {
         <div className="grid md:grid-cols-3 lg:grid-cols-4 container w-full gap-4">
           {Service.map((item, index) => (
             <CategoryCard
+              key={index}
               image={item.image}
               title={item.name}
               detail={item.description}

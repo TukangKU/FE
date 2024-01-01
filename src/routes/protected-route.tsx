@@ -54,7 +54,7 @@ const ProtectedRoute = () => {
     }
     if (takeWorkerProtected.includes(pathname)) {
       if (client.nama === "" && client.alamat === "" && client.nohp === "")
-        return <Navigate to="/profile/client/edit" />;
+        return <Navigate to="/profile/client/edit" />
     }
     if (jobRequestProtected.includes(pathname)) {
       if (

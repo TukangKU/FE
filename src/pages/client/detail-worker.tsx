@@ -43,7 +43,7 @@ const DetailWorker = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-backgroundColor min-h-screen">
       <Head>
         <div className="flex justify-center item center text-gray-600 ">
           Detail Worker

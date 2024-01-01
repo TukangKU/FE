@@ -34,7 +34,7 @@ const AvailableData = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-backgroundColor min-h-screen">
       <Head>Available Worker</Head>
       <div className="grid grid-cols-1 gap-4 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
         {serviceData &&
