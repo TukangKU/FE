@@ -4,7 +4,7 @@
 
 ## 🔍 About Us
 
-TukangKU merupakan website e-commerce yang menyediakan berbagai layanan mulai dari servis AC, pembersihan hingga pemasangan CCTV. Website ini bertujuan untuk memudahkan klien dalam memilih pekerja berkualitas dengan harga terbaik.
+TukangKU is an e-commerce website that provides various services ranging from AC services, cleaning, plumbing to CCTV installation. This website aims to make it easier for clients to choose quality workers at the best prices.
 
 ## 🚀 Deployment
 
