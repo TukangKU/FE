@@ -105,10 +105,10 @@ export const WorkerAvailableCard = (props: WorkerProps) => {
           <p className="font-bold text-lg tracking-wide text-center">
             {name}
           </p>
-          <p className="text-muted-foreground text-sm text-center">
+          <p className=" text-sm text-center">
             {address}
           </p>
-          <div className="text-muted-foreground text-sm text-center">
+          <div className=" text-sm text-center">
             {skill &&
             Array.isArray(skill) &&
             skill.length > 0 ? (

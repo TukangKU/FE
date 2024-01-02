@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { getWorkerByID } from "@/utils/apis/client/api";
 import { useToast } from "@/components/ui/use-toast";
+import { AttachMoney } from "@mui/icons-material";
 import useWorkerStore from "@/utils/state";
 
 const DetailWorker = () => {
@@ -97,11 +98,12 @@ const DetailWorker = () => {
             </div>
             <div className="mt-6 text-center">
               <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
-              <div className="flex flex-wrap justify-center items-center text-muted-foreground">
-                {worker?.skill.slice(0, 3).map((singleSkill, index) => (
+              <div className="flex flex-wrap justify-center items-center">
+                {worker?.skill.slice(0, 5).map((singleSkill, index) => (
                   <span
                     key={index}
-                    className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2">
+                    className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
+                  >
                     {singleSkill.skill}
                   </span>
                 ))}
@@ -113,22 +115,25 @@ const DetailWorker = () => {
                 onClick={() => {
                   setShowTable(!showTable);
                   scrollToShowTable();
-                }}>
-                Total Project {1}
+                }}
+              >
+                Total Project {worker?.job_count}
               </h2>
               <div className="flex flex-cols-2 justify-center items-center gap-4">
                 <Button
                   className="w-24"
                   onClick={() => {
                     goBack();
-                  }}>
+                  }}
+                >
                   Batal
                 </Button>
                 <Button
                   className="w-24"
                   onClick={() => {
                     onClickTakeWorker();
-                  }}>
+                  }}
+                >
                   Pilih
                 </Button>
               </div>
@@ -138,34 +143,42 @@ const DetailWorker = () => {
       </div>
       <div className="flex justify-center items-center my-8">
         <div className="w-4/5">
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow style={{ backgroundColor: "#f5f5f5" }}>
-                  <TableCell style={{ fontWeight: "bold" }}>No</TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>
-                    Nama Project
-                  </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>Harga</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {worker?.job !== null ? (
-                  worker?.job.slice(0, 10).map((item, index) => (
+          {worker?.job && worker?.job.length > 0 ? (
+            <TableContainer component={Paper}>
+              <Table className="min-w-max">
+                <TableHead className="bg-tukangku">
+                  <TableRow>
+                    <TableCell className="font-bold text-white">No</TableCell>
+                    <TableCell className="font-bold text-white">
+                      Nama Project
+                    </TableCell>
+                    <TableCell className="font-bold text-white">
+                      Harga
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {worker?.job.slice(0, 5).map((job, index) => (
                     <TableRow
-                      key={item.job_id}
-                      style={{ backgroundColor: "#ffffff" }}>
+                      key={index}
+                      className={
+                        index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                      }
+                    >
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{item.category}</TableCell>
-                      <TableCell>{item.price}</TableCell>
+                      <TableCell>{job.category}</TableCell>
+                      <TableCell className="flex items-center">
+                        <AttachMoney className="mr-1" />
+                        Rp. {Number(job.price).toLocaleString("id-ID")}
+                      </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <div className="p-3">Belum ada pesanan</div>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <p className="text-center">Tidak ada data pekerjaan</p>
+          )}
         </div>
       </div>
       <Footer />
