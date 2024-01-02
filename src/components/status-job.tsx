@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
+
 interface Props {
   data: string;
 }
@@ -34,6 +35,8 @@ const StatusJob = (props: Props) => {
   const [job, setJob] = useState<JobWorker>();
   const params = useParams();
   const navigate = useNavigate();
+  const savedTransactionId = localStorage.getItem('transactionId');
+  console.log("data Payment",savedTransactionId);
 
   useEffect(() => {
     fetchData();
