@@ -21,8 +21,6 @@ import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import useWorkerStore from "@/utils/state";
-
 
 interface Props {
   data: string;
@@ -34,10 +32,9 @@ const StatusJob = (props: Props) => {
   const { role } = useToken();
   const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
   const [job, setJob] = useState<JobWorker>();
-  const { addPayment } = useWorkerStore();
   const params = useParams();
   const navigate = useNavigate();
-  console.log("data Payment",statusPayment)
+
   useEffect(() => {
     fetchData();
     getStatusPayment();
@@ -47,7 +44,7 @@ const StatusJob = (props: Props) => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
-      console.log(`data`,result)
+      console.log(`data`, result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -60,10 +57,10 @@ const StatusJob = (props: Props) => {
   const getStatusPayment = async () => {
     try {
       const result = await getTransaction(params.id as string);
-      
+
       setStatusPayment(result);
-      console.log(`data payment`,result)
-      console.log(result)
+      console.log(`data payment`, result);
+      console.log(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -105,10 +102,9 @@ const StatusJob = (props: Props) => {
     ) {
       try {
         const result = await getDetailJob(params.id as string);
-        console.log(`asdasd`,result)
+        console.log(`asdasd`, result);
         // addPayment()
-        navigate(`/client/payment/${result.job_id
-        }`);
+        navigate(`/client/payment/${result.job_id}`);
       } catch (error: any) {
         toast({
           title: "Oops! Something went wrong.",
@@ -227,31 +223,14 @@ const StatusJob = (props: Props) => {
               : "* Pekerjaan diterima, tunggu pekerja menyelesaikan pekerjaan."}
           </>
         )}
-        {role === "worker" && statusPayment?.status === "Pending" && (
+        {data === "finished" && (
           <>
-            {data === "finished" &&
-              "* Pekerjaan telah diselesaikan, silahkan tunggu pembayaran dari pelanggan."}
+            {role === "worker"
+              ? "* Pekerjaan telah diselesaikan, Silahkan tunggu pembayaran dari pelanggan"
+              : "Pekerjaan telah diselesaikan, silahkan lakukan pembayaran"}
           </>
         )}
-        {role === "worker" && (
-          <>
-            {statusPayment?.status === "Success" &&
-              "* Terima telah menggunakan TUKANGKU"}
-          </>
-        )}
-        {role === "client" && (
-          <>
-            {data === "finished" &&
-              statusPayment?.status === "Pending" &&
-              "* Pekerjaan telah diselesaikan, segera lakukan pembayaran."}
-          </>
-        )}
-        {role === "client" && (
-          <>
-            {statusPayment?.status === "Success" &&
-              "* Terima telah menggunakan TUKANGKU"}
-          </>
-        )}
+        {}
       </p>
     </div>
   );
