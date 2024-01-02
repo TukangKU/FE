@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
+
 interface Props {
   data: string;
 }
@@ -45,6 +46,7 @@ const StatusJob = (props: Props) => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
+      console.log(`data`,result)
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -57,7 +59,10 @@ const StatusJob = (props: Props) => {
   const getStatusPayment = async () => {
     try {
       const result = await getTransaction(params.id as string);
+      
       setStatusPayment(result);
+      console.log(`data payment`,result)
+      console.log(result)
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -99,7 +104,9 @@ const StatusJob = (props: Props) => {
     ) {
       try {
         const result = await getDetailJob(params.id as string);
-        navigate("/client/payment", { state: { jobData: result } });
+        console.log(`asdasd`,result)
+        navigate(`/client/payment/${result.job_id
+        }`);
       } catch (error: any) {
         toast({
           title: "Oops! Something went wrong.",

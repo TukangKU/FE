@@ -82,14 +82,9 @@ export const PostPayment = async (orderId: number, pricing: number) => {
         job_price: pricing,
       }
     );
-
-    const snapToken: string = response.data.data.token;
-    if (!snapToken) {
-      throw new Error("snapToken is required");
-    }
-
-    return snapToken;
+    return response.data;
   } catch (error) {
-    throw new Error("Error processing payment");
+    console.error("Error processing payment:", error);
+    throw new Error('Error processing payment');
   }
 };
