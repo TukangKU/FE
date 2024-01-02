@@ -16,6 +16,7 @@ const AvailableData = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [pagination, setPagination] = useState<Pagination>();
+  console.log("pagination", pagination)
 
   const [worker, setWorker] = useState<WorkerDetails[]>([]);
 
@@ -26,8 +27,10 @@ const AvailableData = () => {
   async function fetchData() {
     try {
       const result = await getDataByService(params.skill_id!);
+      const { ...rest } = result.data.pagination;
       setWorker(result.data.data);
-      setPagination(result.data.pagination);
+      setPagination(rest);
+      console.log('available worker', rest)
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
