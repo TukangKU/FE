@@ -22,7 +22,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
-
 interface Props {
   data: string;
 }
@@ -35,8 +34,7 @@ const StatusJob = (props: Props) => {
   const [job, setJob] = useState<JobWorker>();
   const params = useParams();
   const navigate = useNavigate();
-  const savedTransactionId = localStorage.getItem('transactionId');
-  console.log("data Payment",savedTransactionId);
+  const savedTransactionId = localStorage.getItem("transactionId");
 
   useEffect(() => {
     fetchData();
@@ -47,7 +45,7 @@ const StatusJob = (props: Props) => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
-      console.log(`data`,result)
+      console.log(`data`, result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -59,17 +57,13 @@ const StatusJob = (props: Props) => {
 
   const getStatusPayment = async () => {
     try {
-      const result = await getTransaction(params.id as string);
-      
+      const result = await getTransaction(savedTransactionId as string);
+
       setStatusPayment(result);
-      console.log(`data payment`,result)
-      console.log(result)
+      console.log(`data payment`, result);
+      console.log(result);
     } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
+      console.log(error);
     }
   };
 
@@ -105,10 +99,9 @@ const StatusJob = (props: Props) => {
     ) {
       try {
         const result = await getDetailJob(params.id as string);
-        console.log(`asdasd`,result)
+        console.log(`asdasd`, result);
         // addPayment()
-        navigate(`/client/payment/${result.job_id
-        }`);
+        navigate(`/client/payment/${result.job_id}`);
       } catch (error: any) {
         toast({
           title: "Oops! Something went wrong.",
@@ -178,22 +171,21 @@ const StatusJob = (props: Props) => {
           } ${data === "rejected" && "bg-red-600"} ${
             data === "negotiation_to_client" && "bg-slate-500"
           } ${data === "negotiation_to_worker" && "bg-slate-500"}
-           ${
-             data === "finished" || statusPayment?.status === "success"
-           } py-2 rounded-lg`}
+            py-2 rounded-lg`}
         >
           {role === "client" && (
             <>
               {data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
-                  className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500"
+                  disabled={statusPayment?.status === "Success"}
+                  className={`w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500`}
                 >
                   BAYAR
                 </Button>
               ) : (
                 <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
-                  {statusPayment?.status === "success"
+                  {statusPayment?.status === "Success"
                     ? "SELESAI"
                     : data === "accepted"
                     ? "DITERIMA"
@@ -227,18 +219,14 @@ const StatusJob = (props: Props) => {
               : "* Pekerjaan diterima, tunggu pekerja menyelesaikan pekerjaan."}
           </>
         )}
-        {role === "worker" && (
+        {data === "finished" && (
           <>
-            {data === "finished" &&
-              "* Pekerjaan telah diselesaikan, silahkan tunggu pembayaran dari pelanggan."}
+            {role === "worker"
+              ? "* Pekerjaan telah diselesaikan, Silahkan tunggu pembayaran dari pelanggan"
+              : "Pekerjaan telah diselesaikan, silahkan lakukan pembayaran"}
           </>
         )}
-        {role === "client" && (
-          <>
-            {data === "finished" &&
-              "* Pekerjaan telah diselesaikan, segera lakukan pembayaran."}
-          </>
-        )}
+        {}
       </p>
     </div>
   );

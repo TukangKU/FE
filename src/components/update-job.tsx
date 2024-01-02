@@ -12,7 +12,6 @@ import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { useToken } from "@/utils/contexts/token";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useTransaction } from "@/utils/contexts/transaksi";
 
 interface Props {
   data: JobWorker;
@@ -68,7 +67,8 @@ const UpdateJob = (props: Props) => {
               }}
               disabled={form.formState.isSubmitting}
               aria-disabled={form.formState.isSubmitting}
-              className="bg-red-600 hover:bg-red-500 lg:text-base md:text-base text-sm"
+              className="lg:text-base md:text-base text-sm"
+              variant={"destructive"}
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -95,7 +95,7 @@ const UpdateJob = (props: Props) => {
               {form.formState.isSubmitting ? (
                 <>
                   <Loader2 className="h-4 mr-2 animate-spin w-4" />
-                  Loading
+                  <span>Loading</span>
                 </>
               ) : (
                 "Terima"
