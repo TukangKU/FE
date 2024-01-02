@@ -9,7 +9,7 @@ export const setAxiosConfig = (token: string) => {
 
 axiosWithConfig.interceptors.request.use((axiosConfig) => {
   axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
-
+  axiosConfig.baseURL = import.meta.env.VITE_BASE_URL;
   return axiosConfig;
 });
 

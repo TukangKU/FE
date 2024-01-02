@@ -5,9 +5,7 @@ import { ClientPostJobType, ClientUpdateType } from "./types";
 
 export const getClientProfile = async (id: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/client/${id}`
-    );
+    const response = await axiosWithConfig.get(`/client/${id}`);
     return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -24,15 +22,11 @@ export const updateProfile = async (id: string, body: ClientUpdateType) => {
       }
     }
 
-    const response = await axiosWithConfig.put(
-      `https://tukangku.online/client/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axiosWithConfig.put(`/client/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -41,10 +35,7 @@ export const updateProfile = async (id: string, body: ClientUpdateType) => {
 
 export const postJobDetail = async (body: ClientPostJobType) => {
   try {
-    const response = await axiosWithConfig.post(
-      `https://tukangku.online/jobs`,
-      body
-    );
+    const response = await axiosWithConfig.post(`/jobs`, body);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -53,9 +44,7 @@ export const postJobDetail = async (body: ClientPostJobType) => {
 
 export const getDataByService = async (serviceId: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/worker?skill=${serviceId}`
-    );
+    const response = await axiosWithConfig.get(`/worker?skill=${serviceId}`);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -64,9 +53,7 @@ export const getDataByService = async (serviceId: string) => {
 
 export const getWorkerByID = async (id: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/worker/${id}`
-    );
+    const response = await axiosWithConfig.get(`/worker/${id}`);
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -75,16 +62,13 @@ export const getWorkerByID = async (id: string) => {
 
 export const PostPayment = async (orderId: number, pricing: number) => {
   try {
-    const response = await axiosWithConfig.post(
-      "https://tukangku.online/transaction",
-      {
-        job_id: orderId,
-        job_price: pricing,
-      }
-    );
+    const response = await axiosWithConfig.post("/transaction", {
+      job_id: orderId,
+      job_price: pricing,
+    });
     return response.data;
   } catch (error) {
     console.error("Error processing payment:", error);
-    throw new Error('Error processing payment');
+    throw new Error("Error processing payment");
   }
 };
