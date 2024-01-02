@@ -14,13 +14,13 @@ import Category from "@/pages/client/category";
 import NotFound from "@/pages/404";
 import Profile from "@/pages/profile";
 import Negotiation from "@/components/negotiation";
-import ProtectedRoute from "./protected-route";
+// import ProtectedRoute from "./protected-route";
 
 const App = () => {
   const router = createBrowserRouter([
-    {
-      element: <ProtectedRoute />,
-      children: [
+    // {
+    //   element: <ProtectedRoute />,
+    //   children: [
     { path: "/", element: <Home /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
@@ -29,15 +29,15 @@ const App = () => {
     { path: "/job/detail/:id", element: <DetailJob /> },
     { path: "/job/negotiation/:id", element: <Negotiation /> },
     { path: "/profile/client/edit", element: <EditProfileClient /> },
-    { path: "/client/available-worker", element: <AvailableWorker /> },
-    { path: "/client/detail-worker", element: <DetailWorker /> },
+    { path: "/client/available-worker/:skill_id", element: <AvailableWorker /> },
+    { path: "/client/detail-worker/:worker_id", element: <DetailWorker /> },
     { path: "/client/job-detail", element: <JobDetail /> },
-    { path: "/client/payment", element: <Payment /> },
+    { path: "/client/payment/:id", element: <Payment /> },
     { path: "/category", element: <Category /> },
     { path: "/profile", element: <Profile /> },
     { path: "*", element: <NotFound /> },
-      ],
-    },
+    //   ],
+    // },
   ]);
   return <RouterProvider router={router} />;
 };

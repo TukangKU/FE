@@ -1,4 +1,5 @@
 import Checklist from "@/assets/checklist.svg";
+import { Button } from "./ui/button";
 
 interface CardProps {
   image: string;
@@ -75,6 +76,60 @@ export const SkillCard = (props: Props) => {
     <div className="rounded-lg w-full flex flex-row gap-5 justify-between border border-slate-300 p-3">
       <h1 className="mt-2">{title}</h1>
       <img src={Checklist} alt="Checklist" className="w-10" />
+    </div>
+  );
+};
+
+interface WorkerProps {
+  image: string
+  name: string
+  address: string
+  skill: {
+    skill_id: number;
+    skill: string;
+  }[];
+  onClick: () => void;
+}
+
+export const WorkerAvailableCard = (props: WorkerProps) => {
+  const { image, name, address, skill, onClick } = props;
+  return (
+    <div className="bg-white border rounded-lg p-4 w-80 flex flex-col gap-3 shadow-md">
+      <img
+        className="aspect-square object-cover mx-auto rounded-lg"
+        src={image}
+        alt={name}
+      />
+      <div className="mt-4 flex flex-col gap-3">
+        <div className="h-[130px]">
+          <p className="font-bold text-lg tracking-wide text-center">
+            {name}
+          </p>
+          <p className=" text-sm text-center">
+            {address}
+          </p>
+          <div className=" text-sm text-center">
+            {skill &&
+            Array.isArray(skill) &&
+            skill.length > 0 ? (
+             skill.map((singleSkill, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-tukangku rounded-full px-2 py-1 m-1">
+                  {singleSkill.skill}
+                </span>
+              ))
+            ) : (
+              <span>Belum Mempunyai skill</span>
+            )}
+          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <Button className="w-40 rounded-md" onClick={onClick}>
+            Detail
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
