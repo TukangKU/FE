@@ -67,8 +67,7 @@ export const PostPayment = async (orderId: number, pricing: number) => {
       job_price: pricing,
     });
     return response.data;
-  } catch (error) {
-    console.error("Error processing payment:", error);
-    throw new Error("Error processing payment");
+  } catch (error:any) {
+    throw Error(error.response.data.message);
   }
 };

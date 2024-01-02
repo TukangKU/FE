@@ -23,7 +23,6 @@ const Payment = () => {
     try {
       const result = await getDetailJob(params.id as string);
       setJobData(result);
-      console.log("data", result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -49,23 +48,32 @@ const Payment = () => {
     if (jobData && jobData.start_date && jobData.end_date) {
       const startDate: Date = new Date(jobData.start_date);
       const endDate: Date = new Date(jobData.end_date);
-      const timeDifference: number = endDate.getTime() - startDate.getTime();
+      const startUTC = Date.UTC(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate()
+      );
+      const endUTC = Date.UTC(
+        endDate.getFullYear(),
+        endDate.getMonth(),
+        endDate.getDate()
+      );
+      const timeDifference: number = endUTC - startUTC;
       if (timeDifference === 0) {
         return 1;
       }
       const daysDifference: number = timeDifference / (1000 * 3600 * 24);
-      return daysDifference;
+      return daysDifference + 1;
     }
     return 1;
   };
-  
 
   const handlePayment = async () => {
     try {
       const formData = form.getValues();
       const respons = await PostPayment(formData.job_id, formData.job_price);
       const transactionId = respons.data.transaction_id;
-      localStorage.setItem('transactionId', transactionId);
+      localStorage.setItem("transactionId", transactionId);
       window.location.replace(respons.data.url);
     } catch (error: any) {
       console.error("Error processing payment:", error);
@@ -112,7 +120,12 @@ const Payment = () => {
                 </div>
                 <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-3 ">
                   <p className="cols-span-1">Harga</p>
-                  <p className="cols-span-1">Rp {jobData.harga}</p>
+                  <p className="cols-span-1">
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(jobData.harga)}
+                  </p>
                 </div>
                 <div className="flex justify-center items-center my-2 p-2">
                   <Button
