@@ -26,8 +26,7 @@ const PaginationButton = (props: Props) => {
         variant="outline"
         size="icon"
         disabled={meta?.page === 1}
-        onClick={onClickPrevious}
-      >
+        onClick={onClickPrevious}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
       {meta &&
@@ -38,8 +37,7 @@ const PaginationButton = (props: Props) => {
               size="icon"
               key={`${Page}-${index}`}
               disabled={meta?.page === Page}
-              onClick={() => onClickPage(Page)}
-            >
+              onClick={() => onClickPage(Page)}>
               {Page}
             </Button>
           );
@@ -48,8 +46,7 @@ const PaginationButton = (props: Props) => {
         variant="outline"
         size="icon"
         disabled={meta?.page === meta?.totalPages}
-        onClick={onClickNext}
-      >
+        onClick={onClickNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
