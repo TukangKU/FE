@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { WorkerDetails } from "./apis/client/types";
+import { WorkerDetails, } from "./apis/client/types";
 import { Category } from "./types/api";
 
 interface CartState {

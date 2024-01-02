@@ -21,6 +21,7 @@ import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import useWorkerStore from "@/utils/state";
 
 
 interface Props {
@@ -33,10 +34,10 @@ const StatusJob = (props: Props) => {
   const { role } = useToken();
   const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
   const [job, setJob] = useState<JobWorker>();
-
+  const { addPayment } = useWorkerStore();
   const params = useParams();
   const navigate = useNavigate();
-
+  console.log("data Payment",statusPayment)
   useEffect(() => {
     fetchData();
     getStatusPayment();
@@ -105,6 +106,7 @@ const StatusJob = (props: Props) => {
       try {
         const result = await getDetailJob(params.id as string);
         console.log(`asdasd`,result)
+        // addPayment()
         navigate(`/client/payment/${result.job_id
         }`);
       } catch (error: any) {

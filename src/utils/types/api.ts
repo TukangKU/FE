@@ -30,9 +30,3 @@ export interface Category {
   description: string;
   id: number;
 }
-export interface Payment {
-  transaction_id: string;
-  job_id: string;
-  job_price: string;
-  status: number;
-}
