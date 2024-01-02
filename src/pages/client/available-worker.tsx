@@ -49,7 +49,7 @@ const AvailableData = () => {
     <>
       <div className="bg-backgroundColor min-h-screen flex flex-col gap-5">
         <Head>Available Worker</Head>
-        <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-4  justify-items-center ">
+        <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
           {worker.map((item, index) => (
             <WorkerAvailableCard
               key={index}
