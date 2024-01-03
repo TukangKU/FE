@@ -26,9 +26,9 @@ const DetailWorker = () => {
   const { addWorker } = useWorkerStore();
   const [worker, setWorker] = useState<WorkerDetails>();
   const [showTable, setShowTable] = useState(false);
-
-  
+  const [loading, setLoading] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
+
   const scrollToShowTable = () => {
     if (tableRef.current) {
       tableRef.current.scrollIntoView({ behavior: "smooth" });
@@ -43,9 +43,11 @@ const DetailWorker = () => {
   }, []);
 
   async function fetchData() {
+    setLoading(true);
     try {
       const result = await getWorkerByID(params.worker_id!);
       setWorker(result.data);
+      setLoading(false);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -70,76 +72,80 @@ const DetailWorker = () => {
           Detail Worker
         </div>
       </Head>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 p-8">
-        <div className="grid justify-center items-center">
-          <img
-            src={worker?.foto}
-            alt={worker?.nama}
-            className="sm:w-32 sm:h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 object-cover rounded-lg"
-          />
-        </div>
-        <div className="grid justify-center">
-          <>
-            <h1 className="text-2xl font-bold mb-4 text-center">
-              Informasi Worker
-            </h1>
-            <div className="text-center">
-              <h2 className="text-lg ">{worker?.nama}</h2>
-            </div>
-            <div className="mt-2 text-center">
-              <h2 className="text-lg ">{worker?.email}</h2>
-            </div>
-            <div className="mt-2 text-center">
-              <h2 className="text-lg ">{worker?.nohp}</h2>
-            </div>
-            <div className="mt-2 text-center">
-              <h2 className="text-lg ">{worker?.alamat}</h2>
-            </div>
-            <div className="mt-6 text-center">
-              <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
-              <div className="flex flex-wrap justify-center items-center">
-                {worker?.skill.slice(0, 5).map((singleSkill, index) => (
-                  <span
-                    key={index}
-                    className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
+      {loading ? (
+        <div className="h-screen custom-loader mx-auto mt-20"></div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 p-8">
+          <div className="grid justify-center items-center">
+            <img
+              src={worker?.foto}
+              alt={worker?.nama}
+              className="sm:w-32 sm:h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 object-cover rounded-lg"
+            />
+          </div>
+          <div className="grid justify-center">
+            <>
+              <h1 className="text-2xl font-bold mb-4 text-center">
+                Informasi Worker
+              </h1>
+              <div className="text-center">
+                <h2 className="text-lg ">{worker?.nama}</h2>
+              </div>
+              <div className="mt-2 text-center">
+                <h2 className="text-lg ">{worker?.email}</h2>
+              </div>
+              <div className="mt-2 text-center">
+                <h2 className="text-lg ">{worker?.nohp}</h2>
+              </div>
+              <div className="mt-2 text-center">
+                <h2 className="text-lg ">{worker?.alamat}</h2>
+              </div>
+              <div className="mt-6 text-center">
+                <h2 className="text-2xl font-bold mb-4">Skill Worker</h2>
+                <div className="flex flex-wrap justify-center items-center">
+                  {worker?.skill.slice(0, 5).map((singleSkill, index) => (
+                    <span
+                      key={index}
+                      className="bg-tukangku rounded-full px-3 py-1 mr-2 mb-2"
+                    >
+                      {singleSkill.skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-4 text-center" ref={tableRef}>
+                <h2
+                  className="font-bold mb-4 cursor-pointer"
+                  onClick={() => {
+                    setShowTable(!showTable);
+                    scrollToShowTable();
+                  }}
+                >
+                  Total Project {worker?.job_count}
+                </h2>
+                <div className="flex flex-cols-2 justify-center items-center gap-4">
+                  <Button
+                    className="w-24"
+                    onClick={() => {
+                      goBack();
+                    }}
                   >
-                    {singleSkill.skill}
-                  </span>
-                ))}
+                    Batal
+                  </Button>
+                  <Button
+                    className="w-24"
+                    onClick={() => {
+                      onClickTakeWorker();
+                    }}
+                  >
+                    Pilih
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div className="mt-4 text-center" ref={tableRef}>
-              <h2
-                className="font-bold mb-4 cursor-pointer"
-                onClick={() => {
-                  setShowTable(!showTable);
-                  scrollToShowTable();
-                }}
-              >
-                Total Project {worker?.job_count}
-              </h2>
-              <div className="flex flex-cols-2 justify-center items-center gap-4">
-                <Button
-                  className="w-24"
-                  onClick={() => {
-                    goBack();
-                  }}
-                >
-                  Batal
-                </Button>
-                <Button
-                  className="w-24"
-                  onClick={() => {
-                    onClickTakeWorker();
-                  }}
-                >
-                  Pilih
-                </Button>
-              </div>
-            </div>
-          </>
+            </>
+          </div>
         </div>
-      </div>
+      )}
       <div className="flex justify-center items-center my-8">
         <div className="w-4/5">
           {worker?.job && worker?.job.length > 0 ? (

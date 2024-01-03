@@ -128,6 +128,7 @@ export interface JobWorker {
   end_date: string;
   alamat: string;
   harga: number;
+  status_payment:string
   deskripsi: string;
   note_negosiasi: string;
   status: string;

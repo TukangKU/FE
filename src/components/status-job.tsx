@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   JobWorker,
-  TransactionInfo,
   UpdateJobSchema,
   updateJobSchema,
 } from "@/utils/apis/worker/types";
@@ -12,11 +11,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 import { Form } from "./ui/form";
 import { Button } from "./ui/button";
-import {
-  getDetailJob,
-  getTransaction,
-  updateJob,
-} from "@/utils/apis/worker/api";
+import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
 import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -30,36 +25,26 @@ const StatusJob = (props: Props) => {
   const { data } = props;
   const { toast } = useToast();
   const { role } = useToken();
-  const [statusPayment, setStatusPayment] = useState<TransactionInfo>();
+  const [statusPayment, setStatusPayment] = useState<JobWorker>();
   const [job, setJob] = useState<JobWorker>();
   const params = useParams();
   const navigate = useNavigate();
-  const savedTransactionId = localStorage.getItem("transactionId");
 
   useEffect(() => {
     fetchData();
-    getStatusPayment();
   }, []);
 
   const fetchData = async () => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
+      setStatusPayment(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
         description: error.toString(),
         variant: "destructive",
       });
-    }
-  };
-
-  const getStatusPayment = async () => {
-    try {
-      const result = await getTransaction(savedTransactionId as string);
-      setStatusPayment(result);
-    } catch (error: any) {
-      console.log(error);
     }
   };
 
@@ -172,7 +157,7 @@ const StatusJob = (props: Props) => {
               {data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
-                  disabled={statusPayment?.status === "Success"}
+                  disabled={statusPayment?.status_payment === "Success"}
                   className={`w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500`}
                 >
                   BAYAR

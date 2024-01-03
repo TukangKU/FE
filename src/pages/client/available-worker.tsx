@@ -15,6 +15,7 @@ const AvailableData = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState<Pagination>();
   const [worker, setWorker] = useState<WorkerDetails[]>([]);
 
@@ -23,11 +24,14 @@ const AvailableData = () => {
   }, [searchParams]);
 
   async function fetchData() {
+    setLoading(true);
     try {
       const result = await getDataByService(params.skill_id!);
       const { ...rest } = result.data.pagination;
+      console.log("data pagination",rest)
       setWorker(result.data.data);
       setPagination(rest);
+      setLoading(false);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -46,20 +50,24 @@ const AvailableData = () => {
     <>
       <div className="bg-backgroundColor min-h-screen flex flex-col gap-5">
         <Head>Available Worker</Head>
-        <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
-          {worker.map((item, index) => (
-            <WorkerAvailableCard
-              key={index}
-              image={item.foto}
-              name={item.nama}
-              address={item.alamat}
-              skill={item.skill}
-              onClick={() => {
-                navigate(`/client/detail-worker/${item.id}`);
-              }}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="h-screen custom-loader mx-auto mt-20"></div>
+        ) : (
+          <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
+            {worker.map((item, index) => (
+              <WorkerAvailableCard
+                key={index}
+                image={item.foto}
+                name={item.nama}
+                address={item.alamat}
+                skill={item.skill}
+                onClick={() => {
+                  navigate(`/client/detail-worker/${item.id}`);
+                }}
+              />
+            ))}
+          </div>
+        )}
         <div className="my-3">
           {worker !== null && (
             <PaginationButton
@@ -71,6 +79,7 @@ const AvailableData = () => {
           )}
         </div>
       </div>
+
       <Footer />
     </>
   );
