@@ -15,6 +15,8 @@ const Payment = () => {
   const params = useParams();
   const [jobData, setJobData] = useState<any>();
 
+  
+
   useEffect(() => {
     fetchData();
   }, [params.id]);
@@ -23,7 +25,6 @@ const Payment = () => {
     try {
       const result = await getDetailJob(params.id as string);
       setJobData(result);
-      console.log("data", result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -58,17 +59,15 @@ const Payment = () => {
     }
     return 1;
   };
-  
 
   const handlePayment = async () => {
     try {
       const formData = form.getValues();
       const respons = await PostPayment(formData.job_id, formData.job_price);
       const transactionId = respons.data.transaction_id;
-      localStorage.setItem('transactionId', transactionId);
+      localStorage.setItem("transactionId", transactionId);
       window.location.replace(respons.data.url);
     } catch (error: any) {
-      console.error("Error processing payment:", error);
       toast({
         title: "Error",
         description: "Terjadi kesalahan dalam proses pembayaran.",
@@ -117,8 +116,7 @@ const Payment = () => {
                 <div className="flex justify-center items-center my-2 p-2">
                   <Button
                     onClick={handlePayment}
-                    className="text-lg w-full md:w-2/4 xl:w-1/3"
-                  >
+                    className="text-lg w-full md:w-2/4 xl:w-1/3">
                     Bayar
                   </Button>
                 </div>
