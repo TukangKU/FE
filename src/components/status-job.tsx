@@ -38,7 +38,6 @@ const StatusJob = (props: Props) => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
-      console.log(`data`, result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -48,8 +47,6 @@ const StatusJob = (props: Props) => {
     }
   };
 
-  const finishJob = useForm<UpdateJobSchema>({
-    resolver: zodResolver(updateJobSchema),
     defaultValues: {
       role: role,
       note_negosiasi: job?.note_negosiasi,
@@ -80,8 +77,6 @@ const StatusJob = (props: Props) => {
     ) {
       try {
         const result = await getDetailJob(params.id as string);
-        console.log(`asdasd`, result);
-        // addPayment()
         navigate(`/client/payment/${result.job_id}`);
       } catch (error: any) {
         toast({

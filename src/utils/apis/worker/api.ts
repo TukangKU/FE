@@ -5,9 +5,7 @@ import { RequestParams, UpdateJobSchema, WorkerUpdateType } from "./types";
 
 export const getWorkerProfile = async (id: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/worker/${id}`
-    );
+    const response = await axiosWithConfig.get(`/worker/${id}`);
     return response.data.data as ProfileType;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -30,15 +28,11 @@ export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
       }
     }
 
-    const response = await axiosWithConfig.put(
-      `https://tukangku.online/worker/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axiosWithConfig.put(`/worker/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -47,11 +41,9 @@ export const editWorkerProfile = async (id: string, body: WorkerUpdateType) => {
 
 export const getTransaction = async (id: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/transaction/${id}`
-    );
+    const response = await axiosWithConfig.get(`/transaction/${id}`);
     return response.data.data;
-  } catch (error:any) {
+  } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
@@ -71,9 +63,7 @@ export const getJobWorker = async (params?: RequestParams) => {
       query = queryParams.join("&");
     }
 
-    const url = query
-      ? `https://tukangku.online/jobs?${query}`
-      : `https://tukangku.online/jobs`;
+    const url = query ? `/jobs?${query}` : `/jobs`;
 
     const response = await axiosWithConfig.get(url);
     return response.data;
@@ -84,9 +74,7 @@ export const getJobWorker = async (params?: RequestParams) => {
 
 export const getDetailJob = async (id: string) => {
   try {
-    const response = await axiosWithConfig.get(
-      `https://tukangku.online/jobs/${id}`
-    );
+    const response = await axiosWithConfig.get(`/jobs/${id}`);
     return response.data.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -95,10 +83,7 @@ export const getDetailJob = async (id: string) => {
 
 export const updateJob = async (body: UpdateJobSchema, id: string) => {
   try {
-    const response = await axiosWithConfig.put(
-      `https://tukangku.online/jobs/${id}`,
-      body
-    );
+    const response = await axiosWithConfig.put(`/jobs/${id}`, body);
     return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);

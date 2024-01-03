@@ -24,11 +24,10 @@ const DetailWorker = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { addWorker } = useWorkerStore();
-
   const [worker, setWorker] = useState<WorkerDetails>();
-
   const [showTable, setShowTable] = useState(false);
 
+  
   const tableRef = useRef<HTMLDivElement>(null);
   const scrollToShowTable = () => {
     if (tableRef.current) {
