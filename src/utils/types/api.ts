@@ -21,7 +21,7 @@ export interface ProfileType {
 export type Pagination = {
   page: number;
   page_size: number;
-  total_Pages: number;
+  total_pages: number;
 };
 
 export interface Category {

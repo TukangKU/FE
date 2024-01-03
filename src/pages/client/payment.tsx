@@ -78,7 +78,6 @@ const Payment = () => {
       const respons = await PostPayment(formData.job_id, formData.job_price);
       window.location.replace(respons.data.url);
     } catch (error: any) {
-      console.error("Error processing payment:", error);
       toast({
         title: "Error",
         description: "Terjadi kesalahan dalam proses pembayaran.",

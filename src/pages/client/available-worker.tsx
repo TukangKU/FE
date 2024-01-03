@@ -15,8 +15,8 @@ const AvailableData = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [meta, setMeta] = useState<Pagination>();
   const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState<Pagination>();
   const [worker, setWorker] = useState<WorkerDetails[]>([]);
 
   useEffect(() => {
@@ -28,9 +28,8 @@ const AvailableData = () => {
     try {
       const result = await getDataByService(params.skill_id!);
       const { ...rest } = result.data.pagination;
-      console.log("data pagination",rest)
       setWorker(result.data.data);
-      setPagination(rest);
+      setMeta(rest);
       setLoading(false);
     } catch (error: any) {
       toast({
@@ -71,15 +70,14 @@ const AvailableData = () => {
         <div className="my-3">
           {worker !== null && (
             <PaginationButton
-              meta={pagination}
-              onClickPrevious={() => handlePrevNextPage(pagination!.page - 1)}
-              onClickNext={() => handlePrevNextPage(pagination!.page + 1)}
+              meta={meta}
+              onClickPrevious={() => handlePrevNextPage(meta!.page - 1)}
+              onClickNext={() => handlePrevNextPage(meta!.page + 1)}
               onClickPage={(page) => handlePrevNextPage(page)}
             />
           )}
         </div>
       </div>
-
       <Footer />
     </>
   );
