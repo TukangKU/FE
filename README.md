@@ -8,7 +8,7 @@ TukangKU is an e-commerce website that provides various services ranging from AC
 
 ## 🚀 Deployment
 
-- [Vercel](https://vercel.com/annisa-ainur-riskys-projects)
+- [Vercel](https://tukangku-annisa-ainur-riskys-projects.vercel.app/)
 
 ## 🎨 Prototype
 
