@@ -19,13 +19,13 @@ import { Loader2 } from "lucide-react";
 
 interface Props {
   data: string;
+  payment: string;
 }
 
 const StatusJob = (props: Props) => {
-  const { data } = props;
+  const { data, payment } = props;
   const { toast } = useToast();
   const { role } = useToken();
-  const [statusPayment, setStatusPayment] = useState<JobWorker>();
   const [job, setJob] = useState<JobWorker>();
   const params = useParams();
   const navigate = useNavigate();
@@ -38,7 +38,6 @@ const StatusJob = (props: Props) => {
     try {
       const result = await getDetailJob(params.id as string);
       setJob(result);
-      setStatusPayment(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -150,23 +149,22 @@ const StatusJob = (props: Props) => {
           } ${data === "rejected" && "bg-red-600"} ${
             data === "negotiation_to_client" && "bg-slate-500"
           } ${data === "negotiation_to_worker" && "bg-slate-500"}
-            py-2 rounded-lg`}
+            ${
+              data === "finished" && payment === "Success" && "bg-blue-500"
+            } py-2 rounded-lg`}
         >
           {role === "client" && (
             <>
-              {data === "finished" ? (
+              {payment !== "Success" && data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
-                  disabled={statusPayment?.status_payment === "Success"}
                   className={`w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500`}
                 >
                   BAYAR
                 </Button>
               ) : (
                 <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
-                  {statusPayment?.status === "Success"
-                    ? "SELESAI"
-                    : data === "accepted"
+                  {data === "accepted"
                     ? "DITERIMA"
                     : data === "rejected"
                     ? "DITOLAK"
@@ -198,14 +196,14 @@ const StatusJob = (props: Props) => {
               : "* Pekerjaan diterima, tunggu pekerja menyelesaikan pekerjaan."}
           </>
         )}
-        {data === "finished" && (
+        {data === "finished" && payment !== "Success" && (
           <>
             {role === "worker"
               ? "* Pekerjaan telah diselesaikan, Silahkan tunggu pembayaran dari pelanggan"
-              : "Pekerjaan telah diselesaikan, silahkan lakukan pembayaran"}
+              : "* Pekerjaan telah diselesaikan, silahkan lakukan pembayaran"}
           </>
         )}
-        {}
+        {data === "finished" && payment === "Success" && "* Terima kasih telah menggunakan layanan TUKANGKU"}
       </p>
     </div>
   );

@@ -60,7 +60,7 @@ const DetailJob = () => {
             {["pending", "negotiation_to_worker"].includes(job?.status!) ? (
               <UpdateJob data={job!} />
             ) : (
-              <StatusJob data={job?.status!} />
+              <StatusJob data={job?.status!} payment={job?.status_payment!}/>
             )}
           </>
         )}
@@ -76,7 +76,7 @@ const DetailJob = () => {
             {job?.status === "negotiation_to_client" ? (
               <UpdateJob data={job!} />
             ) : (
-              <StatusJob data={job?.status!} />
+              <StatusJob data={job?.status!} payment={job?.status_payment!}/>
             )}
           </>
         )}
