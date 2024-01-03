@@ -12,6 +12,7 @@ import UpdateJob from "@/components/update-job";
 import StatusJob from "@/components/status-job";
 import { useParams } from "react-router-dom";
 import { useToken } from "@/utils/contexts/token";
+import SkeletonDetailJob from "@/components/skeleton-detail-job";
 
 const DetailJob = () => {
   const [job, setJob] = useState<JobWorker>();
@@ -87,7 +88,7 @@ const DetailJob = () => {
   return (
     <Layout>
       {loading ? (
-        <div className="custom-loader mx-auto mt-20"></div>
+        <SkeletonDetailJob/>
       ) : (
         <div className="p-5 bg-backgroundColor">
           <div className="flex flex-col p-4 gap-5 cursor-default mx-auto shadow-md border rounded-md bg-white lg:w-[37rem] w-fit">

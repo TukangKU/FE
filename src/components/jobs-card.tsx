@@ -36,12 +36,12 @@ const JobsCard = (props: Props) => {
             className="lg:w-20 md:w-16 w-14 lg:mx-0 md:mx-0 mx-auto aspect-square object-cover rounded-full"
           />
           <div className="flex flex-col lg:gap-0 md:gap-0 gap-2 lg:mt-0 md:mt-0 mt-3 lg:items-start md:items-start items-center">
-            <p className="font-semibold lg:text-lg md:text-base text-sm text-slate-700 lg:text-start md:text-start text-center">
+            <p className="font-semibold lg:text-lg md:text-base text-sm lg:text-start md:text-start text-center">
               {role === "worker"
                 ? `${data.client_name}`
                 : `${data.worker_name}`}
             </p>
-            <p className="text-slate-500 font-semibold lg:text-lg md:text-base text-sm">
+            <p className="lg:text-lg md:text-base text-sm">
               {data.category}
             </p>
           </div>

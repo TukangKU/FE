@@ -5,6 +5,7 @@
 import JobsCard from "@/components/jobs-card";
 import Layout from "@/components/layout";
 import PaginationButton from "@/components/pagination";
+import SkeletonRequestJobs from "@/components/skeleton-request-jobs";
 import {
   Select,
   SelectContent,
@@ -93,7 +94,7 @@ const RequestJob = () => {
           </Select>
         </div>
         {loading ? (
-          <div className="custom-loader mx-auto my-auto"></div>
+          <SkeletonRequestJobs/>
         ) : (
           <div>
             {jobs === null || error ? (

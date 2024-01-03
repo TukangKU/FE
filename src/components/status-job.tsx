@@ -15,7 +15,6 @@ import { getDetailJob, updateJob } from "@/utils/apis/worker/api";
 import { useToken } from "@/utils/contexts/token";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 
 interface Props {
   data: string;
@@ -103,15 +102,9 @@ const StatusJob = (props: Props) => {
                   onClick={() => finishJob.setValue("status", "finished")}
                   className="w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-blue-500 hover:bg-blue-600"
                   disabled={finishJob.formState.isSubmitting}
-                  aria-disabled={finishJob.formState.isSubmitting}>
-                  {finishJob.formState.isSubmitting ? (
-                    <>
-                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
-                      Loading
-                    </>
-                  ) : (
-                    "SELESAIKAN PENGERJAAN"
-                  )}
+                  aria-disabled={finishJob.formState.isSubmitting}
+                >
+                  SELESAIKAN PENGERJAAN
                 </Button>
               </form>
             </Form>
@@ -123,7 +116,8 @@ const StatusJob = (props: Props) => {
                 data === "finished" && "bg-blue-600"
               } ${data === "negotiation_to_client" && "bg-slate-500"} ${
                 data === "negotiation_to_worker" && "bg-slate-500"
-              } py-2 rounded-lg`}>
+              } py-2 rounded-lg`}
+            >
               <p className="text-center lg:text-3xl md:text-2xl text-xl font-bold text-white">
                 {data === "rejected"
                   ? "DITOLAK"
@@ -149,13 +143,15 @@ const StatusJob = (props: Props) => {
           } ${data === "negotiation_to_worker" && "bg-slate-500"}
             ${
               data === "finished" && payment === "Success" && "bg-blue-500"
-            } py-2 rounded-lg`}>
+            } py-2 rounded-lg`}
+        >
           {role === "client" && (
             <>
               {payment !== "Success" && data === "finished" ? (
                 <Button
                   onClick={handleAcceptJob}
-                  className={`w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500`}>
+                  className={`w-full lg:text-3xl md:text-2xl text-xl font-bold h-16 bg-green-600 hover:bg-green-500`}
+                >
                   BAYAR
                 </Button>
               ) : (
