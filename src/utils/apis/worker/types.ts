@@ -131,6 +131,7 @@ export interface JobWorker {
   deskripsi: string;
   note_negosiasi: string;
   status: string;
+  status_payment: string;
 }
 
 export interface UpdateJob {
