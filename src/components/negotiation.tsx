@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useToken } from "@/utils/contexts/token";
@@ -19,6 +20,7 @@ import { Textarea } from "./ui/textarea";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Layout from "./layout";
+import SkeletonNegotiationJob from "./skeleton-negotiation-job";
 
 const Negotiation = () => {
   const { role, worker, client } = useToken();
@@ -75,7 +77,7 @@ const Negotiation = () => {
   return (
     <Layout>
       {loading ? (
-        <div className="custom-loader mx-auto mt-20"></div>
+        <SkeletonNegotiationJob status={job?.status!} />
       ) : (
         <div className="bg-backgroundColor p-4">
           <div className="cursor-default lg:w-[40rem] md:w-[40rem] mx-auto p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
