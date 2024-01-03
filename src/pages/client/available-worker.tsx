@@ -15,7 +15,8 @@ const AvailableData = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [pagination, setPagination] = useState<Pagination>();
+  const [meta, setMeta] = useState<Pagination>();
+
   const [worker, setWorker] = useState<WorkerDetails[]>([]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const AvailableData = () => {
       const result = await getDataByService(params.skill_id!);
       const { ...rest } = result.data.pagination;
       setWorker(result.data.data);
-      setPagination(rest);
+      setMeta(rest);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -63,9 +64,9 @@ const AvailableData = () => {
         <div className="my-3">
           {worker !== null && (
             <PaginationButton
-              meta={pagination}
-              onClickPrevious={() => handlePrevNextPage(pagination!.page - 1)}
-              onClickNext={() => handlePrevNextPage(pagination!.page + 1)}
+              meta={meta}
+              onClickPrevious={() => handlePrevNextPage(meta!.page - 1)}
+              onClickNext={() => handlePrevNextPage(meta!.page + 1)}
               onClickPage={(page) => handlePrevNextPage(page)}
             />
           )}

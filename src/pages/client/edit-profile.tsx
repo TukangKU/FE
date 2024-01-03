@@ -59,7 +59,7 @@ const EditProfile = () => {
         description: result.message,
       });
 
-      if (result.message === "posting updated successfully") {
+      if (result.message === "posting update successfully") {
         reFetch();
         navigate("/profile");
       }

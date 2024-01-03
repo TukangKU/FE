@@ -46,7 +46,6 @@ const RequestJob = () => {
       const { ...rest } = result.pagination;
       setJobs(result.data);
       setMeta(rest);
-      console.log('job request', rest)
       setError(false);
       setLoading(false);
     } catch (error: any) {

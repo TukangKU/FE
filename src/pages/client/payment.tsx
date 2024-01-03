@@ -75,7 +75,6 @@ const Payment = () => {
       const respons = await PostPayment(formData.job_id, formData.job_price);
       window.location.replace(respons.data.url);
     } catch (error: any) {
-      console.error("Error processing payment:", error);
       toast({
         title: "Error",
         description: "Terjadi kesalahan dalam proses pembayaran.",
@@ -129,8 +128,7 @@ const Payment = () => {
                 <div className="flex justify-center items-center my-2 p-2">
                   <Button
                     onClick={handlePayment}
-                    className="text-lg w-full md:w-2/4 xl:w-1/3"
-                  >
+                    className="text-lg w-full md:w-2/4 xl:w-1/3">
                     Bayar
                   </Button>
                 </div>
