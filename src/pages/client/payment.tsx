@@ -14,6 +14,7 @@ const Payment = () => {
   const { toast } = useToast();
   const params = useParams();
   const [jobData, setJobData] = useState<any>();
+  
 
   useEffect(() => {
     fetchData();
@@ -72,8 +73,6 @@ const Payment = () => {
     try {
       const formData = form.getValues();
       const respons = await PostPayment(formData.job_id, formData.job_price);
-      const transactionId = respons.data.transaction_id;
-      localStorage.setItem("transactionId", transactionId);
       window.location.replace(respons.data.url);
     } catch (error: any) {
       console.error("Error processing payment:", error);
