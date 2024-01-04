@@ -10,11 +10,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
 import { getDetailJob } from "@/utils/apis/worker/api";
 import Footer from "@/components/footer";
+import { PostJob } from "@/utils/apis/client/types";
 
 const Payment = () => {
   const { toast } = useToast();
   const params = useParams();
-  const [jobData, setJobData] = useState<any>();
+  const [jobData, setJobData] = useState<PostJob>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -75,7 +76,9 @@ const Payment = () => {
   const handlePayment = async () => {
     try {
       const formData = form.getValues();
-      const respons = await PostPayment(formData.job_id, formData.job_price);
+      const job_id = formData.job_id ?? 0; 
+      const job_price = formData.job_price ?? 0; 
+      const respons = await PostPayment(job_id, job_price);
       window.location.replace(respons.data.url);
     } catch (error: any) {
       toast({
