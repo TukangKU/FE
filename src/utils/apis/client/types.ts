@@ -89,3 +89,13 @@ export interface OrderInfoProps {
   pricing: string;
   address: string;
 }
+
+export interface PostJob {
+  job_id: number;
+  harga: number;
+  end_date: string;
+  start_date: string;
+  client_name: string;
+  worker_name: string;
+  category: string;
+}
