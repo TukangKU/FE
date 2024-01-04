@@ -23,6 +23,7 @@ import { useToken } from "@/utils/contexts/token";
 import Footer from "@/components/footer";
 import useWorkerStore from "@/utils/state";
 import { useState } from "react";
+import SkeletonPostJob from "@/components/skeleton-post-job";
 
 const JobDetail = () => {
   const { client } = useToken();
@@ -63,13 +64,12 @@ const JobDetail = () => {
       });
     }
   }
-
   return (
     <div className="bg-backgroundColor">
       <Head>Job Detail</Head>
       <div className="flex flex-col justify-center items-center py-20">
         {loading ? (
-          <div className="h-screen custom-loader mx-auto mt-20"></div>
+          <SkeletonPostJob />
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -106,7 +106,6 @@ const JobDetail = () => {
                       placeholder="Pilih Tanggal..."
                     />
                   </div>
-
                   <div className="grid grid-cols-2 justify-center items-center mb-2 rounded-md p-1 ">
                     <span className="font-semibold">Tanggal Berakhir:</span>
                     <CustomFormDatePicker
@@ -128,7 +127,6 @@ const JobDetail = () => {
                       )}
                     </CustomFormField>
                   </div>
-
                   <div className="grid grid-cols-1 justify-center items-center mb-2  ">
                     <span className="text-xl font-semibold text-center mb-4 flex gap-1">
                       Dekripsi
