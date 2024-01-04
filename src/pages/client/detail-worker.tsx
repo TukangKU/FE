@@ -59,9 +59,6 @@ const DetailWorker = () => {
   }
 
   function onClickTakeWorker() {
-    toast({
-      description: "Worker telah dipilih",
-    });
     addWorker(worker!);
     navigate("/client/job-detail");
   }
