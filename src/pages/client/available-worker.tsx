@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { WorkerAvailableCard } from "@/components/category-card";
 import { Pagination } from "@/utils/types/api";
 import PaginationButton from "@/components/pagination";
+import SkeletonAvailableWorker from "@/components/skeleton-available-worker";
 
 const AvailableData = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,9 +51,9 @@ const AvailableData = () => {
       <div className="bg-backgroundColor min-h-screen flex flex-col gap-5">
         <Head>Available Worker</Head>
         {loading ? (
-          <div className="h-screen custom-loader mx-auto mt-20"></div>
+          <SkeletonAvailableWorker />
         ) : (
-          <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-3  justify-items-center ">
+          <div className="grid grid-cols-1 gap-3 p-8 md:grid-cols-2 xl:grid-cols-3 justify-items-center">
             {worker.map((item, index) => (
               <WorkerAvailableCard
                 key={index}
